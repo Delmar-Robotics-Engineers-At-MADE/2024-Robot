@@ -65,6 +65,9 @@ public class MAXSwerveModule {
     m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor);
     m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
 
+    // Enable Voltage Compensation
+    m_drivingSparkMax.enableVoltageCompensation(12.6);
+    m_turningSparkMax.enableVoltageCompensation(12.6);
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
     // the steering motor in the MAXSwerve Module.
     m_turningEncoder.setInverted(ModuleConstants.kTurningEncoderInverted);
