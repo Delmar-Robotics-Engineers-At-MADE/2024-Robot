@@ -139,4 +139,30 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+
+  public static final class ShooterConstants {
+    public static final int kTopID = 8;
+    public static final int kBottomID = 9;
+    public static final double kSubwooferSpeed = 3;
+    public static final double kPodiumSpeed = 5;
+    public static final double kIdleSpeed = 1;
+    public static final double kAmpSpeed = 1;
+  }
+
+  public static final class IntakeConstants {
+    public static final int kIntakeID = 10;
+    public static final double kIntakeSpeed = 0.7;
+    public static final double kFeedSpeed = 1.0;
+    public static final double kReverseSpeed = 0.7;
+  }
+
+  public static final class ArmConstants {
+    public static final int kLeftID = 6;
+    public static final int kRightID = 7;
+    public static final double kIntakePos = 0.0;
+    public static final double kSubwooferPos = 0.2;
+    public static final double kFrontAmpPos = 0.4;
+    public static final double kPodiumPos = 0.4;
+    public static final double kBackAmpPos = 0.7;
+  }
 }
