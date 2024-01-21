@@ -67,6 +67,14 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getTwist(), OIConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
+    
+    if (m_driverController.getHID().getPOV() != -1) {
+        new RapidHeading(
+            m_driverController.getHID().getPOV(),
+            -MathUtil.applyDeadband(m_driverController.getY(), OIConstants.kDriveDeadband),
+            -MathUtil.applyDeadband(m_driverController.getX(), OIConstants.kDriveDeadband),
+            m_robotDrive);
+    }
   }
 
   /**
@@ -83,8 +91,8 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
-  }
-
+    }
+    
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

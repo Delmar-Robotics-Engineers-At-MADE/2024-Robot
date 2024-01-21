@@ -23,11 +23,11 @@ public class RapidHeading extends ProfiledPIDCommand {
                 DriveConstants.kMaxYawAccelerationDegPerSSquared));
                 
   /** Creates a new RapidHeading. */
-  public RapidHeading(double target, DriveSubsystem drivetrain) {
+  public RapidHeading(double target, double ySupplier, double xSupplier, DriveSubsystem drivetrain) {
     super(m_PID,
      drivetrain::getHeading, 
      target, 
-     (output, setpoint) -> drivetrain.drive(0, 0, output, true, true), drivetrain);
+     (output, setpoint) -> drivetrain.drive(xSupplier, ySupplier, output, true, true), drivetrain);
     
     // Use addRequirements() here to declare subsystem dependencies.
   }
