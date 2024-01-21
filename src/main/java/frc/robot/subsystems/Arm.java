@@ -4,6 +4,7 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 
@@ -30,11 +31,16 @@ public class Arm extends SubsystemBase{
 
         left.setSmartCurrentLimit(40);
         right.setSmartCurrentLimit(40);
+        left.setIdleMode(IdleMode.kBrake);
+        right.setIdleMode(IdleMode.kBrake);
 
         encoder = left.getAbsoluteEncoder(Type.kDutyCycle);
         armPID = left.getPIDController();
         armPID.setFeedbackDevice(encoder);
         right.follow(left);
+
+        left.burnFlash();
+        right.burnFlash();
     }
 
     public void runOpenLoop(double supplier, boolean isOverride) {
