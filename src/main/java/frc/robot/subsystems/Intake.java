@@ -36,9 +36,14 @@ public class Intake extends SubsystemBase{
         intakePID.setReference(setpoint, ControlType.kVelocity);
     }
 
-    public void runOpenLoop(double supplier) {
-        intake.setSmartCurrentLimit(20);
-        intake.set(supplier);
+    public void runOpenLoop(double supplier, boolean isOverride) {
+        if(!isOverride) {
+            hold();
+        }
+        else {
+            intake.setSmartCurrentLimit(20);
+            intake.set(supplier);
+        }
     }
 
     

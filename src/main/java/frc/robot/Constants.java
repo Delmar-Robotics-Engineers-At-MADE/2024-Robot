@@ -152,10 +152,10 @@ public final class Constants {
   public static final class ShooterConstants {
     public static final int kTopID = 8;
     public static final int kBottomID = 9;
-    public static final double kSubwooferSpeed = 3;
-    public static final double kPodiumSpeed = 5;
-    public static final double kIdleSpeed = 1;
-    public static final double kAmpSpeed = 1;
+    public static final double kSubwooferSpeed = 0.5;
+    public static final double kPodiumSpeed = 0.6;
+    public static final double kIdleSpeed = 0.3;
+    public static final double kAmpSpeed = 0.2;
 
     public static final double kP = 6e-5;
     public static final double kI = 0.0;
@@ -164,14 +164,23 @@ public final class Constants {
     public static final double kIz = 0;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
-    public static final double kMaxRPM = 5700;
+    public static final double kMaxRPM = 5676;
   }
 
   public static final class IntakeConstants {
     public static final int kIntakeID = 10;
-    public static final double kIntakeSpeed = 0.7;
-    public static final double kFeedSpeed = 1.0;
-    public static final double kReverseSpeed = 0.7;
+    public static final double kIntakeSpeed = 0.4;
+    public static final double kFeedSpeed = 0.8;
+    public static final double kReverseSpeed = 0.4;
+
+    public static final double kP = 6e-5;
+    public static final double kI = 0.0;
+    public static final double kD = 0.0;
+    public static final double kFF = 0.000015;
+    public static final double kIz = 0;
+    public static final double kMinOutput = -1;
+    public static final double kMaxOutput = 1;
+    public static final double kMaxRPM = 8000;    
   }
 
   public static final class ArmConstants {
@@ -185,5 +194,13 @@ public final class Constants {
     public static final double kUpperLimit = 0;
     public static final double kLowerLimit = 0;
     public static final double kOverrunLimit = 0;
+
+    public static final double kP = 0.1; 
+    public static final double kI = 1e-4;
+    public static final double kD = 1; 
+    public static final double kIz = 0; 
+    public static final double kFF = 0; 
+    public static final double kMaxOutput = 0.7; 
+    public static final double kMinOutput = -0.7;
   }
 }
