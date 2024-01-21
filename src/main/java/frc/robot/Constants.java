@@ -63,6 +63,14 @@ public final class Constants {
     public static final int kRearRightTurningCanId = 14;
 
     public static final boolean kGyroReversed = false;
+
+    public static final double kYawP = 0.011;
+    public static final double kYawI = 0.0;
+    public static final double kYawD = 0.012;
+    public static final double kMaxYawRateDegPerS = 8;
+    public static final double kMaxYawAccelerationDegPerSSquared = 20;
+    public static final double kYawToleranceDeg = 5;
+    public static final double kYawRateToleranceDegPerS = 10;
   }
 
   public static final class ModuleConstants {
@@ -119,6 +127,7 @@ public final class Constants {
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.05;
+    public static final int kOperatorControllerPort = 0;
   }
 
   public static final class AutoConstants {
@@ -147,6 +156,11 @@ public final class Constants {
     public static final double kPodiumSpeed = 5;
     public static final double kIdleSpeed = 1;
     public static final double kAmpSpeed = 1;
+
+    public static final double kP = 0.2;
+    public static final double kI = 0.0;
+    public static final double kD = 0.0;
+    public static final double kFF = 1.0;
   }
 
   public static final class IntakeConstants {
@@ -164,5 +178,8 @@ public final class Constants {
     public static final double kFrontAmpPos = 0.4;
     public static final double kPodiumPos = 0.4;
     public static final double kBackAmpPos = 0.7;
+    public static final double kUpperLimit = 0;
+    public static final double kLowerLimit = 0;
+    public static final double kOverrunLimit = 0;
   }
 }
