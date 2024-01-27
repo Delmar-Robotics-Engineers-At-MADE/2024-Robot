@@ -43,21 +43,17 @@ public class Arm extends SubsystemBase{
         right.burnFlash();
     }
 
-    public void runOpenLoop(double supplier, boolean isOverride) {
-        if(!isOverride) {
+    public void runOpenLoop(double supplier) {
+        if(getPos() >= ArmConstants.kUpperLimit) {
             hold();
+            System.out.println("¡TOO HIGH! ¡UPPER LIMIT!");
+        }
+        else if(getPos() <= ArmConstants.kLowerLimit) {
+            hold();
+            System.out.println("¡TOO LOW! ¡LOWER LIMIT!");
         }
         else {
-            if(supplier >= ArmConstants.kUpperLimit && supplier < 0) {
-                left.set(supplier);
-            }
-            else if((supplier <= ArmConstants.kLowerLimit || supplier >= ArmConstants.kOverrunLimit)
-            && supplier > 0) {
-                left.set(supplier);
-            }
-            else if(supplier >= ArmConstants.kUpperLimit && supplier <= ArmConstants.kLowerLimit){
-                left.set(supplier);
-            }
+            left.set(supplier);
         }
     }
 
@@ -66,7 +62,22 @@ public class Arm extends SubsystemBase{
     }
 
     public void runToPosition(double setpoint) {
-        armPID.setReference(setpoint, ControlType.kPosition);
+        //these are included safety measures. not necessary, but useful
+        if(getPos() >= ArmConstants.kUpperLimit) {
+            hold();
+            System.out.println("¡TOO HIGH! ¡UPPER LIMIT!");
+        }
+        else if(getPos() <= ArmConstants.kLowerLimit) {
+            hold();
+            System.out.println("¡TOO LOW! ¡LOWER LIMIT!");
+        }
+        else{
+            armPID.setReference(setpoint, ControlType.kPosition);
+        }
+    }
+
+    public double getPos() {
+        return encoder.getPosition();
     }
     
 }
