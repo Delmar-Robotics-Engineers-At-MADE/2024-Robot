@@ -216,6 +216,11 @@ public final class Constants {
     public static final double kFF = 0; 
     public static final double kMaxOutput = 1; 
     public static final double kMinOutput = -1;
+
+    public static final double kHomeSpeed = -0.4;
+    
+    public static final double kUpperLimit = 10;
+    public static final double kLowerLimit = 0;
     
   }
 }
