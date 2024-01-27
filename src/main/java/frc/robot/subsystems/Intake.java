@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ColorSensorV3;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
@@ -24,6 +25,8 @@ public class Intake extends SubsystemBase{
         intake.setSmartCurrentLimit(20);
         encoder = intake.getEncoder();
         intakePID = intake.getPIDController();
+
+        
     }
 
     public void hold() {
