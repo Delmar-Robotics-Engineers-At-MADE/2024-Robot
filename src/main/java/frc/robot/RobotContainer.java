@@ -14,9 +14,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Commands.Drivetrain.RapidHeading;
-import frc.robot.Commands.Intake.IntakeNoteAutomatic;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ClimberConstants;
@@ -40,15 +38,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.List;
 
-import javax.print.attribute.standard.MediaSize.NA;
-
 import com.pathplanner.lib.auto.NamedCommands;
 
-import frc.robot.Commands.HoldClimber;
 import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
 import frc.robot.Commands.Arm.RunArmOpenLoop;
-
+import frc.robot.Commands.Climbers.HoldClimber;
 import frc.robot.Commands.Climbers.HomeClimber;
 import frc.robot.Commands.Climbers.RunClimberManual;
 

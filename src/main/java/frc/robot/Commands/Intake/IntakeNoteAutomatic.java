@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 
 public class IntakeNoteAutomatic extends Command {
-  Intake intake;
+  private Intake intake;
   /** Creates a new IntakeNoteAutomatic. */
   public IntakeNoteAutomatic(Intake in) {
     intake = in;

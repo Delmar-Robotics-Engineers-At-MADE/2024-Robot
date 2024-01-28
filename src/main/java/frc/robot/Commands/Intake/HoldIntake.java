@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 
 public class HoldIntake extends Command {
-  Intake intake;
+  private Intake intake;
   /** Creates a new HoldIntake. */
   public HoldIntake(Intake in) {
     intake = in;

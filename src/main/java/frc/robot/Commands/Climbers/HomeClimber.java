@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Climber;
 
 public class HomeClimber extends Command {
-  Climber climber;
+  private Climber climber;
   /** Creates a new HomeClimber. */
   public HomeClimber(Climber climb) {
     climber = climb;
