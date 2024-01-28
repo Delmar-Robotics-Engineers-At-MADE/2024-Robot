@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -42,11 +43,6 @@ public class Climber extends SubsystemBase {
         homed = false;
     }
 
-    @Override
-    public void periodic() {
-        super.periodic();
-        isHomed();
-    }
     public boolean isHomed() {
         return homed;
     }
@@ -79,6 +75,25 @@ public class Climber extends SubsystemBase {
             else {
                 motor.set(speed);
             }
+        }
+    }
+
+    public void runToPos(double setpoint) {
+        if(!isHomed()) {
+            motor.set(0);
+            System.out.println("¡NOT HOMED! ¡HOMING IMPORTANT!");
+        }
+        else if(setpoint >= ClimberConstants.kLowerLimit && setpoint <= ClimberConstants.kUpperLimit) {
+            pid.setReference(setpoint, ControlType.kPosition);
+        }
+    }
+
+    public void hold() {
+        if(!isHomed()) {
+            motor.set(0);
+        }
+        else {
+            pid.setReference(getPos(), ControlType.kPosition);
         }
     }
 

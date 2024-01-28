@@ -44,6 +44,7 @@ import javax.print.attribute.standard.MediaSize.NA;
 
 import com.pathplanner.lib.auto.NamedCommands;
 
+import frc.robot.Commands.HoldClimber;
 import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
 import frc.robot.Commands.Arm.RunArmOpenLoop;
@@ -116,6 +117,13 @@ public class RobotContainer {
           -MathUtil.applyDeadband(m_operatorController.getLeftX(), OIConstants.kDriveDeadband),
           -MathUtil.applyDeadband(m_operatorController.getRightX(), OIConstants.kDriveDeadband),
           false, true), m_robotDrive));
+
+    // Subsystem Default Commands
+    m_intake.setDefaultCommand(new HoldIntake(m_intake));
+    m_arm.setDefaultCommand(new HoldArm(m_arm));
+    m_shooter.setDefaultCommand(new RunShooterAtVelocity(m_shooter, ShooterConstants.kIdleSpeed));
+    m_portClimber.setDefaultCommand(new HoldClimber(m_portClimber));
+    m_starboardClimber.setDefaultCommand(new HoldClimber(m_starboardClimber));
 
     // Register Named Commands
     NamedCommands.registerCommand("intake", new IntakeNoteAutomatic(m_intake));
