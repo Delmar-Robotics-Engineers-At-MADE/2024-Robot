@@ -169,6 +169,7 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int kIntakeID = 10;
+    public static final int kSensorDIOPort = 0;
     public static final double kIntakeSpeed = 0.4;
     public static final double kFeedSpeed = 0.8;
     public static final double kReverseSpeed = 0.4;
@@ -186,6 +187,7 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int kLeftID = 6;
     public static final int kRightID = 7;
+    public static final double kStowPos = 0.5;
     public static final double kIntakePos = 0.0;
     public static final double kSubwooferPos = 0.2;
     public static final double kFrontAmpPos = 0.4;
@@ -207,8 +209,10 @@ public final class Constants {
   }
 
   public static final class ClimberConstants {
-    public static final int kLeftID = 15;
-    public static final int kRightID = 16;
+    public static final int kPortID = 15;
+    public static final int kStarboardID = 16;
+    public static final int kPortDIO = 1;
+    public static final int kStarboardDIO = 2;
     public static final double kP = 0.1; 
     public static final double kI = 1e-4;
     public static final double kD = 1; 

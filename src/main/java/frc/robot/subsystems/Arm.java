@@ -23,7 +23,7 @@ public class Arm extends SubsystemBase{
     private final SparkPIDController armPID;
 
 
-    Arm (int leftID, int rightID) {
+    public Arm (int leftID, int rightID) {
         left = new CANSparkMax(leftID, MotorType.kBrushless);
         right = new CANSparkMax(rightID, MotorType.kBrushless);
         left.restoreFactoryDefaults();

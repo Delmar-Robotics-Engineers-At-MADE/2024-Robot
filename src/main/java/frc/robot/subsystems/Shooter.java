@@ -21,7 +21,7 @@ public class Shooter extends SubsystemBase{
     private final SparkPIDController topVelController;
     private final SparkPIDController bottomVelController;
 
-    Shooter(int topRollerID, int bottomRollerID) {
+    public Shooter(int topRollerID, int bottomRollerID) {
         top = new CANSparkMax(topRollerID, MotorType.kBrushless);
         bottom = new CANSparkMax(bottomRollerID, MotorType.kBrushless);
 

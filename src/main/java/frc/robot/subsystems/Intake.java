@@ -21,7 +21,7 @@ public class Intake extends SubsystemBase{
     private final DigitalInput optical;
 
 
-    Intake(int intakeID, int sensorDIO) {
+    public Intake(int intakeID, int sensorDIO) {
         intake = new CANSparkMax(intakeID, MotorType.kBrushless);
         intake.restoreFactoryDefaults();
 

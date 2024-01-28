@@ -18,7 +18,7 @@ public class Climber extends SubsystemBase {
     private DigitalInput limitSwitch;
     private boolean homed;
 
-    Climber(int ID, int DIO) {
+    public Climber(int ID, int DIO) {
 
         motor = new CANSparkMax(ID, MotorType.kBrushless);
         encoder = motor.getEncoder();
