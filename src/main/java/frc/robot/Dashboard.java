@@ -8,6 +8,7 @@ import frc.robot.subsystems.Shooter;
 
 public class Dashboard {
     // intend to use elastic
+    // will have separate tabs
     Dashboard(
      DriveSubsystem drivetrain,
      Arm arm,
