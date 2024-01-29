@@ -23,7 +23,9 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -42,11 +44,11 @@ import frc.robot.Commands.Climbers.HomeClimber;
 import frc.robot.Commands.Climbers.RunClimberManual;
 
 import frc.robot.Commands.Drivetrain.RapidHeading;
-
+import frc.robot.Commands.Intake.Feed;
 import frc.robot.Commands.Intake.HoldIntake;
 import frc.robot.Commands.Intake.IntakeNoteAutomatic;
 import frc.robot.Commands.Intake.RunIntakeOpenLoop;
-
+import frc.robot.Commands.Shooter.AccelerateShooter;
 import frc.robot.Commands.Shooter.RunShooterAtVelocity;
 
 /*
@@ -68,6 +70,30 @@ public class RobotContainer {
   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
   CommandJoystick m_driverController = new CommandJoystick(OIConstants.kDriverControllerPort);
 
+  // Command Groups
+  ParallelCommandGroup feedAndShootSubwoofer = new ParallelCommandGroup(
+    new RunShooterAtVelocity(m_shooter, ShooterConstants.kSubwooferSpeed),
+    new Feed(m_intake)
+  );
+  ParallelCommandGroup feedAndShootPodium = new ParallelCommandGroup(
+    new RunShooterAtVelocity(m_shooter, ShooterConstants.kPodiumSpeed),
+    new Feed(m_intake)
+  );
+  SequentialCommandGroup shootSubwoofer = new SequentialCommandGroup(
+    new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos),
+    new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed),
+    feedAndShootSubwoofer
+  );
+  SequentialCommandGroup shootPodium = new SequentialCommandGroup(
+    new RunArmClosedLoop(m_arm, ArmConstants.kPodiumPos),
+    new AccelerateShooter(m_shooter, ShooterConstants.kPodiumSpeed),
+    feedAndShootPodium
+  );
+  ParallelCommandGroup intake = new ParallelCommandGroup(
+    new IntakeNoteAutomatic(m_intake),
+    new RunArmClosedLoop(m_arm, ArmConstants.kIntakePos)
+  );
+
   private final SendableChooser<Command> autoChooser;
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -82,12 +108,9 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Register Named Commands
-    NamedCommands.registerCommand("intake", new IntakeNoteAutomatic(m_intake));
-    NamedCommands.registerCommand("shootSubWoofer", new RunShooterAtVelocity(m_shooter, ShooterConstants.kSubwooferSpeed));
-    NamedCommands.registerCommand("shootPodium", new RunShooterAtVelocity(m_shooter, ShooterConstants.kPodiumSpeed));
-    NamedCommands.registerCommand("armToIntake", new RunArmClosedLoop(m_arm, ArmConstants.kIntakePos));
-    NamedCommands.registerCommand("armToSubwoofer", new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
-    NamedCommands.registerCommand("armToPodium", new RunArmClosedLoop(m_arm, ArmConstants.kPodiumPos));
+    NamedCommands.registerCommand("intake", intake);
+    NamedCommands.registerCommand("shootSubWoofer", shootSubwoofer);
+    NamedCommands.registerCommand("shootPodium", shootPodium);
     NamedCommands.registerCommand("armInside", new RunArmClosedLoop(m_arm, ArmConstants.kStowPos));
     NamedCommands.registerCommand("homePort", new HomeClimber(m_portClimber));
     NamedCommands.registerCommand("homeStarboard", new HomeClimber(m_starboardClimber));
