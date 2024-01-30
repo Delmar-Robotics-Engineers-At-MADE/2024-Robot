@@ -165,6 +165,7 @@ public final class Constants {
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
     public static final double kMaxRPM = 5676;
+    public static final double kLaunchTime = 0.5;
   }
 
   public static final class IntakeConstants {
@@ -225,6 +226,16 @@ public final class Constants {
     
     public static final double kUpperLimit = 10;
     public static final double kLowerLimit = 0;
+    
+  }
+
+  public static final class DriverConstants {
+    public static final double kDefaultSpeed = 0.8;
+    
+  }
+
+  public static final class OperatorConstants {
+    public static final double kManoeuvreSpeed = 0.4;
     
   }
 }

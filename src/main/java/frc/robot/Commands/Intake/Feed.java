@@ -4,22 +4,30 @@
 
 package frc.robot.Commands.Intake;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Intake;
 
 public class Feed extends Command {
   private Intake intake;
+  private double startTime;
+  private double timeout;
   /** Creates a new Feed. */
   public Feed(Intake in) {
     intake = in;
+    startTime = 0.0;
+    timeout = ShooterConstants.kLaunchTime;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(in);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    startTime = Timer.getFPGATimestamp();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -34,6 +42,12 @@ public class Feed extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    double elapsed = Timer.getFPGATimestamp() - startTime;
+    if(elapsed >= timeout) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 }

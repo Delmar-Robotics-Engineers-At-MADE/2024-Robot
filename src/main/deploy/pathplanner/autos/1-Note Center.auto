@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6846238858040631,
+      "y": 4.419575196766288
+    },
+    "rotation": -60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "homePort"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "homeStarboard"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shootSubwoofer"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "armInside"
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "FieldCenterToEmptySide"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "FieldCenter",
+  "choreoAuto": false
+}

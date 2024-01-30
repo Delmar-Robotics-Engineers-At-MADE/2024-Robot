@@ -34,6 +34,9 @@ public class Arm extends SubsystemBase{
         left.setIdleMode(IdleMode.kBrake);
         right.setIdleMode(IdleMode.kBrake);
 
+        left.setInverted(false);
+        right.setInverted(true);
+
         encoder = left.getAbsoluteEncoder(Type.kDutyCycle);
         armPID = left.getPIDController();
         armPID.setFeedbackDevice(encoder);

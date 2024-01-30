@@ -14,8 +14,10 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
@@ -50,6 +52,7 @@ import frc.robot.Commands.Intake.IntakeNoteAutomatic;
 import frc.robot.Commands.Intake.RunIntakeOpenLoop;
 import frc.robot.Commands.Shooter.AccelerateShooter;
 import frc.robot.Commands.Shooter.RunShooterAtVelocity;
+import frc.robot.Commands.Shooter.ShootNote;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -72,11 +75,11 @@ public class RobotContainer {
 
   // Command Groups
   ParallelCommandGroup feedAndShootSubwoofer = new ParallelCommandGroup(
-    new RunShooterAtVelocity(m_shooter, ShooterConstants.kSubwooferSpeed),
+    new ShootNote(m_shooter, ShooterConstants.kSubwooferSpeed),
     new Feed(m_intake)
   );
   ParallelCommandGroup feedAndShootPodium = new ParallelCommandGroup(
-    new RunShooterAtVelocity(m_shooter, ShooterConstants.kPodiumSpeed),
+    new ShootNote(m_shooter, ShooterConstants.kPodiumSpeed),
     new Feed(m_intake)
   );
   SequentialCommandGroup shootSubwoofer = new SequentialCommandGroup(
@@ -129,9 +132,20 @@ public class RobotContainer {
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(m_driverController.getY(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getX(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getTwist(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getY() * DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getX() * DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getTwist() * DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
+                true, true),
+            m_robotDrive));
+
+    m_robotDrive.setDefaultCommand(
+        // The left stick controls translation of the robot.
+        // Turning is controlled by the X axis of the right stick.
+        new RunCommand(
+            () -> m_robotDrive.drive(
+                -MathUtil.applyDeadband(m_operatorController.getLeftY() * OperatorConstants.kManoeuvreSpeed, OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_operatorController.getLeftX() * OperatorConstants.kManoeuvreSpeed, OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_operatorController.getRightX() * OperatorConstants.kManoeuvreSpeed, OIConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
     

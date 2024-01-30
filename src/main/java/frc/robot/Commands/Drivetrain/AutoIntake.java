@@ -2,20 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands.Arm;
+package frc.robot.Commands.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Photonvision;
 
-public class RunArmOpenLoop extends Command {
-  private Arm arm;
-  private double supplier;
-  /** Creates a new RunArmOpenLoop. */
-  public RunArmOpenLoop(Arm ar, double input) {
-    supplier = input;
-    arm = ar;
+public class AutoIntake extends Command {
+  /** Creates a new AutoIntake. */
+  public AutoIntake(DriveSubsystem dt, Intake in, Photonvision pv) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(ar);
   }
 
   // Called when the command is initially scheduled.
@@ -24,9 +21,7 @@ public class RunArmOpenLoop extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    arm.runOpenLoop(supplier);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -35,6 +30,6 @@ public class RunArmOpenLoop extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

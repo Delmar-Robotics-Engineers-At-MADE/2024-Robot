@@ -9,9 +9,11 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeNoteAutomatic extends Command {
   private Intake intake;
+  private boolean end;
   /** Creates a new IntakeNoteAutomatic. */
   public IntakeNoteAutomatic(Intake in) {
     intake = in;
+    end = false;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(in);
   }
@@ -24,10 +26,10 @@ public class IntakeNoteAutomatic extends Command {
   @Override
   public void execute() {
     if(!intake.isNote()) {
-      isFinished();
+      intake.autoIntake();
     }
     else {
-      intake.autoIntake();
+      end = true;
     }
   }
 
@@ -38,6 +40,6 @@ public class IntakeNoteAutomatic extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return end;
   }
 }

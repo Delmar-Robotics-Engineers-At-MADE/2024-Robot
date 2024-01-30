@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.739393796668388,
-      "y": 4.4332676744823685
+      "x": 1.3226933473734497,
+      "y": 5.462941998731679
     },
-    "rotation": -60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -28,44 +28,38 @@
                 }
               },
               {
-                "type": "named",
-                "data": {
-                  "name": "shootSubwoofer"
-                }
-              },
-              {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "SubwooferToPodium"
+                        "name": "shootSubwoofer"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake"
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "SubwooferToMidNote"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "intake"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "NoteToPodium"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "shootpodium"
+                        "name": "shootSubwoofer"
                       }
                     }
                   ]
@@ -77,6 +71,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "MidSpeaker",
   "choreoAuto": false
 }

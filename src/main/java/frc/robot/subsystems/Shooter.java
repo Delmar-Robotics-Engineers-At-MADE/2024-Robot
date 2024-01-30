@@ -36,6 +36,9 @@ public class Shooter extends SubsystemBase{
         top.enableVoltageCompensation(12.6);
         bottom.enableVoltageCompensation(12.6);
 
+        top.setInverted(false);
+        bottom.setInverted(false);
+
         topEncoder = top.getEncoder();
         bottomEncoder = bottom.getEncoder();
 

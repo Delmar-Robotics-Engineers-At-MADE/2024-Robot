@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.38,
-        "y": 4.09
+        "x": 0.7257013189523068,
+        "y": 4.44696015219845
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4071375824870866,
-        "y": 4.074524758321038
+        "x": 1.2749813387137774,
+        "y": 3.4955792503891474
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Center Side Subwoofer"
     },
     {
       "anchor": {
-        "x": 2.62,
-        "y": 4.09
+        "x": 3.0260375752539583,
+        "y": 0.5719889585474544
       },
       "prevControl": {
-        "x": 2.6207402348579545,
-        "y": 4.107386704839634
+        "x": 2.7760375752539583,
+        "y": 2.071988958547454
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.0,
-      "rotationDegrees": 0,
+      "rotationDegrees": -60.0,
       "rotateFast": true
     }
   ],
@@ -51,5 +51,5 @@
   "reversed": false,
   "folder": "CenterSide",
   "previewStartingState": null,
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
