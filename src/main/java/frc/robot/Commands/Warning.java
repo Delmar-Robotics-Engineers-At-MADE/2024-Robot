@@ -2,20 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands.Climbers;
+package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Climber;
 
-public class RunClimberManual extends Command {
-  private Climber climber;
-  private double velocity;
-  /** Creates a new RunClimberManual. */
-  public RunClimberManual(Climber climb, double speed) {
-    climber = climb;
-    velocity = speed;
+public class Warning extends Command {
+  String yell;
+  /** Creates a new Warning. */
+  public Warning(String input) {
+    yell = input;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climb);
   }
 
   // Called when the command is initially scheduled.
@@ -25,8 +21,7 @@ public class RunClimberManual extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      climber.runOpenLoop(velocity);
-      System.out.println("¡CLIMBER! ¡EXCERCISE CAUTION!");
+    System.out.println(yell);
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +31,6 @@ public class RunClimberManual extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

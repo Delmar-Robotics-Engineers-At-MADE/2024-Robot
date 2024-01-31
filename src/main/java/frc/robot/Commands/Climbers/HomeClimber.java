@@ -9,9 +9,11 @@ import frc.robot.subsystems.Climber;
 
 public class HomeClimber extends Command {
   private Climber climber;
+  private boolean end;
   /** Creates a new HomeClimber. */
   public HomeClimber(Climber climb) {
     climber = climb;
+    end = false;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(climb);
   }
@@ -24,7 +26,8 @@ public class HomeClimber extends Command {
   @Override
   public void execute() {
     if (climber.isHomed()) {
-      isFinished();
+      System.out.println("¡HOMED!");
+      end = true;
     }
     else {
       climber.home();
@@ -38,6 +41,6 @@ public class HomeClimber extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return end;
   }
 }

@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.47923672006284407,
-        "y": 2.2150862844772052
+        "x": 1.2870929053116384,
+        "y": 5.45472651210203
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7389446699423199,
-        "y": 2.187701329045043
+        "x": 1.3071453459117035,
+        "y": 5.453597592985372
+      },
+      "isLocked": false,
+      "linkedName": "MidSubwoofer"
+    },
+    {
+      "anchor": {
+        "x": 2.604912892568107,
+        "y": 5.569955719489253
+      },
+      "prevControl": {
+        "x": 1.0842222599935514,
+        "y": 5.569955719489253
+      },
+      "nextControl": {
+        "x": 3.1862564205245776,
+        "y": 5.569955719489253
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.7384955432162523,
-        "y": 2.2150862844772052
+        "x": 1.2870929053116384,
+        "y": 5.45472651210203
       },
       "prevControl": {
-        "x": 1.1364756504347444,
-        "y": 2.201393806761124
+        "x": 2.0308284065144457,
+        "y": 5.4713363271865
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "MidSubwoofer"
     }
   ],
   "rotationTargets": [],
@@ -43,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Basic",
+  "folder": "MidSpeaker",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

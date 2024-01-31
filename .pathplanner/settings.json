@@ -9,9 +9,10 @@
     "AmpSide"
   ],
   "autoFolders": [
+    "AmpSide",
     "FieldCenter",
     "MidSpeaker",
-    "AmpSide"
+    "Basic"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

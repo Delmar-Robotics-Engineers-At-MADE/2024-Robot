@@ -1,0 +1,44 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3007853830277196,
+      "y": 5.4875884586206265
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "homePort"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "homeStarboard"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shootSubwoofer"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Basic",
+  "choreoAuto": false
+}

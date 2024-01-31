@@ -29,6 +29,7 @@ public class IntakeNoteAutomatic extends Command {
       intake.autoIntake();
     }
     else {
+      System.out.println("¡CAPTURE!");
       end = true;
     }
   }
