@@ -50,7 +50,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "SubwooferToMidNote"
+                              "pathName": "MidSpeakerToMidNoteReturn"
                             }
                           }
                         ]

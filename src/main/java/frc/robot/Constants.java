@@ -207,6 +207,7 @@ public final class Constants {
     public static final double kMinOutput = -0.7;
 
     public static final double kTolearance = 0.002;
+    public static final double kManualSpeed = 0.3;
   }
 
   public static final class ClimberConstants {
