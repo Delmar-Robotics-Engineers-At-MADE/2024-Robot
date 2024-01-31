@@ -107,7 +107,6 @@ public class RobotContainer {
     m_driverController.setYChannel(0);
     m_driverController.setTwistChannel(2);
 
-    Trigger override = m_operatorController.b();
     configureButtonBindings();
 
     // Register Named Commands
@@ -157,7 +156,7 @@ public class RobotContainer {
             m_robotDrive);
     }
 
-    override.whileTrue(
+    m_operatorController.start().whileTrue(
       new RunCommand(
         () -> m_robotDrive.drive(
           -MathUtil.applyDeadband(m_operatorController.getLeftY(), OIConstants.kDriveDeadband),
@@ -189,6 +188,8 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
+
+    m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));
     }
     
 
