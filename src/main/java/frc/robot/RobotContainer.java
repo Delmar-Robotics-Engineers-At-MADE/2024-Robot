@@ -80,7 +80,7 @@ public class RobotContainer {
     new Feed(m_intake)
   );
   ParallelCommandGroup feedAndShootPodium = new ParallelCommandGroup(
-    new ShootNote(m_shooter, ShooterConstants.kPodiumSpeed),
+    new ShootNote(m_shooter, ShooterConstants.k3mSpeed),
     new Feed(m_intake)
   );
   SequentialCommandGroup shootSubwoofer = new SequentialCommandGroup(
@@ -89,8 +89,8 @@ public class RobotContainer {
     feedAndShootSubwoofer
   );
   SequentialCommandGroup shootPodium = new SequentialCommandGroup(
-    new RunArmClosedLoop(m_arm, ArmConstants.kPodiumPos),
-    new AccelerateShooter(m_shooter, ShooterConstants.kPodiumSpeed),
+    new RunArmClosedLoop(m_arm, ArmConstants.k3mPos),
+    new AccelerateShooter(m_shooter, ShooterConstants.k3mSpeed),
     feedAndShootPodium
   );
   ParallelCommandGroup intake = new ParallelCommandGroup(

@@ -26,6 +26,7 @@ public class RunArmOpenLoop extends Command {
   @Override
   public void execute() {
     arm.runOpenLoop(supplier);
+    System.out.println("¡ARM! ¡EXCERCISE CAUTION!");
   }
 
   // Called once the command ends or is interrupted.

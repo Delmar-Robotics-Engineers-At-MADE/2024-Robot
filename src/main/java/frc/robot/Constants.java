@@ -152,8 +152,13 @@ public final class Constants {
   public static final class ShooterConstants {
     public static final int kTopID = 8;
     public static final int kBottomID = 9;
+
+    // init v should be 6.8 m/s for subwoofer at intake pos
     public static final double kSubwooferSpeed = 0.5;
-    public static final double kPodiumSpeed = 0.6;
+
+    // init v should be 7.6 m/s
+    public static final double k3mSpeed = 0.6;
+
     public static final double kIdleSpeed = 0.3;
     public static final double kAmpSpeed = 0.2;
 
@@ -189,10 +194,16 @@ public final class Constants {
     public static final int kLeftID = 6;
     public static final int kRightID = 7;
     public static final double kStowPos = 0.5;
+
+    //these 2 should be the same
     public static final double kIntakePos = 0.0;
-    public static final double kSubwooferPos = 0.2;
+    public static final double kSubwooferPos = 0.0;
+
     public static final double kFrontAmpPos = 0.4;
-    public static final double kPodiumPos = 0.4;
+
+    // 3m position
+    public static final double k3mPos = 0.03717;
+
     public static final double kBackAmpPos = 0.7;
     public static final double kUpperLimit = 0;
     public static final double kLowerLimit = 0;
