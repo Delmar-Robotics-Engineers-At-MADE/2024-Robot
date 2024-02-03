@@ -51,6 +51,16 @@ public class PIDDrive extends Command {
     addRequirements(dt);
   }
 
+  public PIDDrive(DriveSubsystem dt) {
+    drivetrain = dt;
+  }
+
+  public void setValues(double xErr, double yErr, double yawErr) {
+    x = xErr;
+    y = yErr;
+    yaw = yawErr;
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
