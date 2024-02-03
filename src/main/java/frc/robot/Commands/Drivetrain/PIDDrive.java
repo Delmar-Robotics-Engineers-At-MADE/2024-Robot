@@ -20,7 +20,6 @@ public class PIDDrive extends Command {
   private DriveSubsystem drivetrain;
   private double x;
   private double y;
-  private double z;
   private double yaw;
 
   private static ProfiledPIDController yawPID = new ProfiledPIDController(
@@ -61,7 +60,18 @@ public class PIDDrive extends Command {
   public void execute() {
     drivetrain.drive(latPID.calculate(x, PIDDriveConstants.latGoal),
     longPID.calculate(y, PIDDriveConstants.longGoal),
-    yawPID.calculate(yaw, PIDDriveConstants.yawGoal), false, true);
+    yawPID.calculate(yaw, PIDDriveConstants.yawGoal), 
+    false, 
+    true);
+  }
+
+  public boolean atGoal() {
+    if(latPID.atGoal() && longPID.atGoal() && yawPID.atGoal()) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   // Called once the command ends or is interrupted.

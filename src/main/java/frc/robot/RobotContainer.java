@@ -98,6 +98,20 @@ public class RobotContainer {
     new RunArmClosedLoop(m_arm, ArmConstants.kIntakePos)
   );
 
+  ParallelCommandGroup homeClimbers = new ParallelCommandGroup(
+    new HomeClimber(m_portClimber),
+    new HomeClimber(m_starboardClimber)
+  );
+
+  ParallelCommandGroup forceFeed = new ParallelCommandGroup(
+    new RunIntakeOpenLoop(m_intake, -IntakeConstants.kReverseSpeed),
+    new RunShooterAtVelocity(m_shooter, ShooterConstants.kAmpSpeed)
+  );
+  ParallelCommandGroup forceReverse = new ParallelCommandGroup(
+    new RunIntakeOpenLoop(m_intake, IntakeConstants.kReverseSpeed),
+    new RunShooterAtVelocity(m_shooter, -ShooterConstants.kAmpSpeed)
+  );
+
   private final SendableChooser<Command> autoChooser;
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -150,13 +164,13 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
     
-    if (m_driverController.getHID().getPOV() != -1) {
+    m_driverController.povCenter().whileFalse(
         new RapidHeading(
             m_driverController.getHID().getPOV(),
             -MathUtil.applyDeadband(m_driverController.getY(), OIConstants.kDriveDeadband),
             -MathUtil.applyDeadband(m_driverController.getX(), OIConstants.kDriveDeadband),
-            m_robotDrive);
-    }
+            m_robotDrive));
+    
 
     m_operatorController.start().whileTrue(
       new RunCommand(
@@ -193,6 +207,16 @@ public class RobotContainer {
 
     m_operatorController.start().whileTrue(new Warning("¡OVERRIDE!"));
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));
+    m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmClosedLoop(m_arm, -ArmConstants.kManualSpeed));
+    m_operatorController.start().and(m_operatorController.povRight()).whileTrue(forceFeed);
+    m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(forceReverse);
+
+    m_operatorController.back().whileTrue(homeClimbers);
+    m_operatorController.rightBumper().whileTrue(new RunClimberManual(m_starboardClimber, ClimberConstants.kManualSpeed));
+    m_operatorController.rightTrigger().whileTrue(new RunClimberManual(m_portClimber, -ClimberConstants.kManualSpeed));
+    m_operatorController.leftBumper().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
+    m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
+
     }
     
 

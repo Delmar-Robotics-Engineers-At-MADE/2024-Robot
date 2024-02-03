@@ -12,13 +12,10 @@ public class RunIntakeOpenLoop extends Command {
 
   private Intake intake;
   private double speed;
-  private boolean override;
   /** Creates a new RunIntakeOpenLoop. */
-  public RunIntakeOpenLoop(Intake in, double input, boolean isOverride) {
+  public RunIntakeOpenLoop(Intake in, double input) {
     intake = in;
     speed = input;
-    override = isOverride;
-
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(in);
   }
@@ -30,12 +27,7 @@ public class RunIntakeOpenLoop extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!override) {
-      intake.hold();
-    }
-    else {
-      intake.runOpenLoop(speed);
-    }
+    intake.runOpenLoop(speed);
   }
 
   // Called once the command ends or is interrupted.

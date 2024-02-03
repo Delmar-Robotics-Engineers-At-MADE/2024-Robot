@@ -9,9 +9,15 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Photonvision;
 
-public class AutoIntake extends Command {
+public class AutoIntake extends PIDDrive {
+  
+  private Intake intake;
+  private boolean end;
   /** Creates a new AutoIntake. */
   public AutoIntake(DriveSubsystem dt, Intake in, Photonvision pv) {
+    super(dt, pv.getObjData()[0], pv.getObjData()[1] , pv.getObjData()[2]);
+    intake = in;
+    end = false;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -21,7 +27,14 @@ public class AutoIntake extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if(!intake.isNote()) {
+      intake.autoIntake();
+    }
+    else {
+      end = true;
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -30,6 +43,6 @@ public class AutoIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return end;
   }
 }
