@@ -4,17 +4,12 @@
 
 package frc.robot.Commands.Drivetrain;
 
-import org.photonvision.PhotonCamera;
-
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.PIDDriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.Photonvision;
 
 public class PIDDrive extends Command {
   private DriveSubsystem drivetrain;

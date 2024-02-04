@@ -4,7 +4,6 @@
 
 package frc.robot.Commands.Drivetrain;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
 import frc.robot.Commands.Intake.HoldIntake;
 import frc.robot.Constants.ArmConstants;
@@ -16,7 +15,6 @@ import frc.robot.subsystems.Photonvision;
 public class AutoIntake extends PIDDrive {
   
   private Arm arm;
-  private PIDDrive pidDrive;
   private Intake intake;
   private Photonvision pCam;
   private boolean end;
