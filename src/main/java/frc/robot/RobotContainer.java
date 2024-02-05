@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Commands.Drivetrain.Drive;
 import frc.robot.Commands.Drivetrain.RapidHeading;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ClimberConstants;
@@ -146,25 +147,21 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
-        new RunCommand(
-            () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(m_driverController.getY() * DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getX() * DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getTwist() * DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
-                true, true),
-            m_robotDrive));
+
+        //refactor these
+        new Drive(
+          m_driverController.getX(), 
+          m_driverController.getY(), 
+          m_driverController.getTwist(), 
+        true, true, m_robotDrive, DriverConstants.kDefaultSpeed));
 
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
-        new RunCommand(
-            () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(m_operatorController.getLeftY() * OperatorConstants.kManoeuvreSpeed, OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_operatorController.getLeftX() * OperatorConstants.kManoeuvreSpeed, OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_operatorController.getRightX() * OperatorConstants.kManoeuvreSpeed, OIConstants.kDriveDeadband),
-                true, true),
-            m_robotDrive));
-    
+        new Drive(m_operatorController.getLeftX(), 
+          m_operatorController.getLeftY(), 
+          m_operatorController.getRightX(), 
+          true, true, m_robotDrive, OperatorConstants.kManoeuvreSpeed));
     m_driverController.povCenter().whileFalse(
         new RapidHeading(
             m_driverController.getHID().getPOV(),
@@ -173,14 +170,10 @@ public class RobotContainer {
             m_robotDrive));
 
     m_driverController.button(2).whileTrue(
-      new RunCommand(
-        () -> m_robotDrive.drive(
-          -MathUtil.applyDeadband(m_driverController.getY(), OIConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getX(), OIConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getTwist(), OIConstants.kDriveDeadband),
-           true, true),
-          m_robotDrive)
-    );
+      new Drive(m_operatorController.getLeftX(),
+      m_operatorController.getLeftY(),
+      m_operatorController.getRightX(),
+      false, true, m_robotDrive));
     
 
     m_operatorController.start().whileTrue(
