@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Commands.Drivetrain.RapidHeading;
@@ -46,6 +47,9 @@ import frc.robot.Commands.Shooter.AccelerateShooter;
 import frc.robot.Commands.Shooter.RunShooterAtVelocity;
 import frc.robot.Commands.Shooter.ShootNote;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -64,6 +68,8 @@ public class RobotContainer {
   // The driver's controller
   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
   CommandJoystick m_driverController = new CommandJoystick(OIConstants.kDriverControllerPort);
+
+  private final Dashboard dashboard;
 
   // Command Groups
   ParallelCommandGroup feedAndShootSubwoofer = new ParallelCommandGroup(
@@ -104,6 +110,8 @@ public class RobotContainer {
   );
 
   private final SendableChooser<Command> autoChooser;
+
+  
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -112,6 +120,8 @@ public class RobotContainer {
     m_driverController.setXChannel(1);
     m_driverController.setYChannel(0);
     m_driverController.setTwistChannel(2);
+
+
 
     configureButtonBindings();
 
@@ -130,7 +140,7 @@ public class RobotContainer {
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    dashboard = new Dashboard(m_robotDrive, m_arm, m_intake, m_shooter, m_portClimber, m_starboardClimber, autoChooser);
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
