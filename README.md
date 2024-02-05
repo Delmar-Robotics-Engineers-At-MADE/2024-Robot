@@ -17,7 +17,8 @@ m_operatorController is designed as a Logitech F310 in X setting.
 
 ## Calculations
   [Subwoofer trajectory](https://www.desmos.com/3d/a3cd6dc821)
-  [3 meter trajectory](https://www.desmos.com/3d/048392fc4b)
+  
+  [1.304 m from SUBWOOFER](https://www.desmos.com/3d/cbf728ffa3)
 
 ## Prerequisites
 
