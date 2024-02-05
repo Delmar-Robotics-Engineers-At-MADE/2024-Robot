@@ -145,10 +145,7 @@ public class RobotContainer {
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
 
-        //refactor these
         new Drive(
           m_driverController.getX(), 
           m_driverController.getY(), 

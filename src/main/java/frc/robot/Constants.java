@@ -158,10 +158,10 @@ public final class Constants {
     public static final int kTopID = 8;
     public static final int kBottomID = 9;
 
-    // init v should be 6.8 m/s for subwoofer at intake pos
+    // init v should be 6.7 m/s for subwoofer at intake pos
     public static final double kSubwooferSpeed = 0.5;
 
-    // init v should be 7.6 m/s
+    // init v should be 8.2 m/s
     public static final double k3mSpeed = 0.6;
 
     public static final double kIdleSpeed = 0.3;
@@ -207,7 +207,7 @@ public final class Constants {
     public static final double kFrontAmpPos = 0.4;
 
     // 3m position
-    public static final double k3mPos = 0.03717;
+    public static final double k3mPos = 0.42;
 
     public static final double kBackAmpPos = 0.7;
     public static final double kUpperLimit = 0;
