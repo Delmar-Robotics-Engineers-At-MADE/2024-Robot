@@ -11,9 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Commands.Drivetrain.RapidHeading;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
@@ -31,22 +29,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-
 import frc.robot.Commands.Warning;
 import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
-import frc.robot.Commands.Arm.RunArmOpenLoop;
 import frc.robot.Commands.Climbers.HoldClimber;
 import frc.robot.Commands.Climbers.HomeClimber;
 import frc.robot.Commands.Climbers.RunClimberManual;
 
-import frc.robot.Commands.Drivetrain.RapidHeading;
 import frc.robot.Commands.Intake.Feed;
 import frc.robot.Commands.Intake.HoldIntake;
 import frc.robot.Commands.Intake.IntakeNoteAutomatic;
@@ -170,6 +161,16 @@ public class RobotContainer {
             -MathUtil.applyDeadband(m_driverController.getY(), OIConstants.kDriveDeadband),
             -MathUtil.applyDeadband(m_driverController.getX(), OIConstants.kDriveDeadband),
             m_robotDrive));
+
+    m_driverController.button(2).whileTrue(
+      new RunCommand(
+        () -> m_robotDrive.drive(
+          -MathUtil.applyDeadband(m_driverController.getY(), OIConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getX(), OIConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getTwist(), OIConstants.kDriveDeadband),
+           true, true),
+          m_robotDrive)
+    );
     
 
     m_operatorController.start().whileTrue(
@@ -200,10 +201,13 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController.getHID(), 5)
+    m_driverController.button(DriverConstants.kSetX)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
+
+    m_driverController.button(DriverConstants.kIntake).whileTrue(intake);
+    m_driverController.button(DriverConstants.kHoldArmDown).toggleOnTrue(new RunArmClosedLoop(m_arm, ArmConstants.kIntakePos));
 
     m_operatorController.start().whileTrue(new Warning("¡OVERRIDE!"));
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));
