@@ -7,9 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Commands.Drivetrain.Drive;
 import frc.robot.Commands.Drivetrain.RapidHeading;
 import frc.robot.Constants.ArmConstants;
@@ -47,9 +45,6 @@ import frc.robot.Commands.Intake.RunIntakeOpenLoop;
 import frc.robot.Commands.Shooter.AccelerateShooter;
 import frc.robot.Commands.Shooter.RunShooterAtVelocity;
 import frc.robot.Commands.Shooter.ShootNote;
-
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
