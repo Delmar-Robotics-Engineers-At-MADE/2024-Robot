@@ -51,6 +51,7 @@ public class AutoFire3D extends PIDDrive {
   @Override
   public void execute() {
     if(photon.isTarget(tag)) {
+      this.setValues(photon.getTargetValues().getX(), photon.getTargetValues().getY(), photon.getTargetValues().getRotation().getAngle());
       if(this.atGoal()) {
       RunArmClosedLoop aCMD = new RunArmClosedLoop(arm, armSetpoint);
       if(aCMD.isFinished()) {

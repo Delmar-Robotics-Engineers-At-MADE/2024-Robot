@@ -23,6 +23,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -203,6 +204,12 @@ public class RobotContainer {
 
     m_driverController.button(DriverConstants.kIntake).whileTrue(intake);
     m_driverController.button(DriverConstants.kHoldArmDown).toggleOnTrue(new RunArmClosedLoop(m_arm, ArmConstants.kIntakePos));
+    m_driverController.button(DriverConstants.kAutoIntake).and(m_driverController.button(DriverConstants.kIntake)).onTrue(
+      new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)
+    );
+    m_driverController.button(DriverConstants.kIntake).and(m_driverController.button(DriverConstants.kAutoIntake)).onTrue(
+      new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)
+    );
 
     m_operatorController.start().whileTrue(new Warning("¡OVERRIDE!"));
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));

@@ -44,7 +44,7 @@ public class Photonvision extends SubsystemBase {
   }
 
 
-  public Transform3d targetValues() {
+  public Transform3d getTargetValues() {
     var result = backCam.getLatestResult();
     // boolean hasTargets = result.hasTargets();
 
@@ -53,7 +53,7 @@ public class Photonvision extends SubsystemBase {
     return targetVal;
   }
 
-  public boolean checkForObj() {
+  public boolean isObj() {
     var result = fronCam.getLatestResult();
     boolean hasTargets = result.hasTargets();
     if (hasTargets) {

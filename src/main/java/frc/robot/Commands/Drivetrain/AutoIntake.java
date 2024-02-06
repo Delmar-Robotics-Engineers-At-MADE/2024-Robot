@@ -36,7 +36,7 @@ public class AutoIntake extends PIDDrive {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(pCam.checkForObj()) {
+    if(pCam.isObj()) {
       new RunArmClosedLoop(arm, ArmConstants.kIntakePos);
       this.setValues(pCam.getObjData()[0], pCam.getObjData()[1], pCam.getObjData()[2]);
       if(!intake.isNote()) {
