@@ -43,7 +43,7 @@ public class Photonvision extends SubsystemBase {
     }
   }
 
-  // Notes
+
   public Transform3d targetValues() {
     var result = backCam.getLatestResult();
     // boolean hasTargets = result.hasTargets();
@@ -86,6 +86,25 @@ public class Photonvision extends SubsystemBase {
     return target.getSkew();
   }
 
+  
+  public boolean isTarget(int targetID) {
+    var result = backCam.getLatestResult();
+    boolean hasTargets = result.hasTargets();
+    if (hasTargets) {
+      PhotonTrackedTarget target = result.getBestTarget();
+      if (targetID == 0) {
+        return true;
+      } else {
+        if (targetID == target.getFiducialId()) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return false;
+    }
+  }
 
 }
 

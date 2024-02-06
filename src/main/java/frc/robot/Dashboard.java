@@ -2,8 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import frc.robot.Commands.Intake.RunIntakeOpenLoop;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveSubsystem;
@@ -16,7 +14,6 @@ public class Dashboard {
         Diagnostics controls go in subsystem tabs NOT in match tab.
         The match tab should provide a clean end user experiance that delivers only match critical information.
     */
-    private DriveSubsystem drivetrain;
 
     Dashboard(
      DriveSubsystem drivetrain,

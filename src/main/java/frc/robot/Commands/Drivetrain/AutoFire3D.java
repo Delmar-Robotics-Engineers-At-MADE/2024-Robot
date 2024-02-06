@@ -4,6 +4,7 @@
 
 package frc.robot.Commands.Drivetrain;
 
+
 import frc.robot.Commands.Arm.RunArmClosedLoop;
 import frc.robot.Commands.Intake.Feed;
 import frc.robot.Commands.Shooter.RunShooterAtVelocity;
@@ -14,25 +15,29 @@ import frc.robot.subsystems.Photonvision;
 import frc.robot.subsystems.Shooter;
 
 
-public class AutoFire extends PIDDrive {
+public class AutoFire3D extends PIDDrive {
 
   private Arm arm;
   private Intake intake;
   private Shooter whee;
+  private Photonvision photon;
 
   private double armSetpoint;
   private double wheeSeptoint;
+  private int tag;
   private boolean end;
   /** Creates a new AutoFire. */
-  public AutoFire(DriveSubsystem dt, Photonvision pv, int tagID, 
+  public AutoFire3D(DriveSubsystem dt, Photonvision pv, int tagID, 
     Arm ar, Intake in, Shooter sh, double armPos, double shooterVel) {
-    super(dt, pv.getTagData(tagID)[0], pv.getTagData(tagID)[1] , pv.getTagData(tagID)[2]);
+    super(dt);
     arm = ar;
     intake = in;
     whee = sh;
+    photon = pv;
 
     armSetpoint = armPos;
     wheeSeptoint = shooterVel;
+    tag = tagID;
     end = false;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(dt, pv, ar, in, sh);
@@ -45,24 +50,29 @@ public class AutoFire extends PIDDrive {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(this.atGoal()) {
-     RunArmClosedLoop aCMD = new RunArmClosedLoop(arm, armSetpoint);
-     if(aCMD.isFinished()) {
-      RunShooterAtVelocity wheeCMD = new RunShooterAtVelocity(whee, wheeSeptoint);
-      Feed feed = new Feed(intake);
-      if(wheeCMD.isFinished() && feed.isFinished()) {
-        end = true;
+    if(photon.isTarget(tag)) {
+      if(this.atGoal()) {
+      RunArmClosedLoop aCMD = new RunArmClosedLoop(arm, armSetpoint);
+      if(aCMD.isFinished()) {
+        RunShooterAtVelocity wheeCMD = new RunShooterAtVelocity(whee, wheeSeptoint);
+        Feed feed = new Feed(intake);
+        if(wheeCMD.isFinished() && feed.isFinished()) {
+          end = true;
+        }
+        else {
+          end = false;
+        }
       }
       else {
         end = false;
       }
-     }
-     else {
-      end = false;
-     }
+      }
+      else {
+        end = false;
+      }
     }
     else {
-      end = false;
+      end = true;
     }
   }
 
