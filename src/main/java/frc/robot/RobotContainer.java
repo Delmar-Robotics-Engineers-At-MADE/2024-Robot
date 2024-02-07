@@ -119,13 +119,12 @@ public class RobotContainer {
     m_driverController.setTwistChannel(2);
 
 
-
     configureButtonBindings();
 
     // Register Named Commands
     NamedCommands.registerCommand("intake", intake);
-    NamedCommands.registerCommand("shootSubWoofer", shootSubwoofer);
-    NamedCommands.registerCommand("shootPodium", shootPodium);
+    NamedCommands.registerCommand("shootSubwoofer", shootSubwoofer);
+    NamedCommands.registerCommand("shootpodium", shootPodium);
     NamedCommands.registerCommand("armInside", new RunArmClosedLoop(m_arm, ArmConstants.kStowPos));
     NamedCommands.registerCommand("homePort", new HomeClimber(m_portClimber));
     NamedCommands.registerCommand("homeStarboard", new HomeClimber(m_starboardClimber));
