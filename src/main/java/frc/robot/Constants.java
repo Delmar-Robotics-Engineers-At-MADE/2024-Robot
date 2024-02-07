@@ -255,10 +255,10 @@ public final class Constants {
     public static final int kHoldArmDown = 6;
     public static final int kAutoIntake = 3; 
     public static final int kAutoAmp = 4;
+    public static final int kSelfDestruct = 9;
   }
 
   public static final class OperatorConstants {
-    public static final double kManoeuvreSpeed = 0.4;
-    
+    public static final double kManoeuvreSpeed = 0.4; 
   }
 }

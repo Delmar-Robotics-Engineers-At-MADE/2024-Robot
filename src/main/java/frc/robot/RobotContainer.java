@@ -210,6 +210,9 @@ public class RobotContainer {
     m_driverController.button(DriverConstants.kIntake).and(m_driverController.button(DriverConstants.kAutoIntake)).onTrue(
       new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)
     );
+    m_driverController.button(DriverConstants.kSelfDestruct).onTrue(
+      new InstantCommand(() -> System.out.println("¡KABOOM!"))
+    );
 
     m_operatorController.start().whileTrue(new Warning("¡OVERRIDE!"));
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));
