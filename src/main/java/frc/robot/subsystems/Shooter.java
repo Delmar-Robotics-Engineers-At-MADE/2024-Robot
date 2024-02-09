@@ -52,18 +52,18 @@ public class Shooter extends SubsystemBase{
         topVelController.setD(ShooterConstants.kD);
         topVelController.setIZone(ShooterConstants.kIz);
         topVelController.setFF(ShooterConstants.kFF);
-        topVelController.setOutputRange(ShooterConstants.kMinOutput, ShooterConstants.kMaxOutput);
+        topVelController.setOutputRange(-ShooterConstants.kMaxRPM, ShooterConstants.kMaxRPM);
 
         bottomVelController.setP(ShooterConstants.kP);
         bottomVelController.setI(ShooterConstants.kI);
         bottomVelController.setD(ShooterConstants.kD);
         bottomVelController.setIZone(ShooterConstants.kIz);
         bottomVelController.setFF(ShooterConstants.kFF);
-        bottomVelController.setOutputRange(ShooterConstants.kMinOutput, ShooterConstants.kMaxOutput);
+        bottomVelController.setOutputRange(-ShooterConstants.kMaxRPM, ShooterConstants.kMaxRPM);
     }
 
     public void runAtSpeed(double target) {
-        double setpoint = target * ShooterConstants.kMaxRPM;
+        double setpoint = target * ShooterConstants.kCompenstion;
         topVelController.setReference(setpoint, ControlType.kVelocity);
         bottomVelController.setReference(setpoint, ControlType.kVelocity);
     }

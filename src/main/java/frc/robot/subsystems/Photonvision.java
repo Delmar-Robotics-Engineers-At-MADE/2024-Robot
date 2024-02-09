@@ -28,7 +28,7 @@ public class Photonvision extends SubsystemBase {
       PhotonTrackedTarget target = result.getBestTarget();
       if (target.getFiducialId() == id) {
         double[] pack = {target.getBestCameraToTarget().getX(), 
-        target.getBestCameraToTarget().getY(),
+        target.getBestCameraToTarget().getZ(),
         target.getBestCameraToTarget().getZ()};
         return pack;
       }

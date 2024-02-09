@@ -164,6 +164,8 @@ public final class Constants {
     // init v should be 8.2 m/s
     public static final double k3mSpeed = 1541;
 
+    public static final double kCompenstion = 1.13;
+    
     public static final double kIdleSpeed = 0.3;
     public static final double kAmpSpeed = 0.2;
 

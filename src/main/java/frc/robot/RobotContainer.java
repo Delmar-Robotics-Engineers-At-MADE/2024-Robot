@@ -32,6 +32,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import frc.robot.Commands.Warning;
 import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
@@ -108,6 +110,19 @@ public class RobotContainer {
 
   private final SendableChooser<Command> autoChooser;
 
+  // temp strings
+  private String k1NC = "1-Note Center";
+  private String k1NAS = "1-NoteAmpSide";
+  private String k2NAS = "2-NoteAmpSide";
+  private String k2NFC = "2-NoteFieldCenter";
+  private String k2NMS = "2-NoteMidSpeaker";
+  private String k2NMSA = "2-NoteMidSpeakerAmp";
+  private String k3NAS = "3-NoteAmpSide";
+  private String k3NMSC = "3-NoteMidSpeakerCenter";
+  private String kBL = "BasicLeave";
+  private String kBS = "BasicShoot";
+  private String kEntropy = "Entropy";
+
   
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -131,7 +146,19 @@ public class RobotContainer {
     NamedCommands.registerCommand("armDown", new RunArmClosedLoop(m_arm, ArmConstants.kIntakePos));
 
     // Build an auto chooser. This will use Commands.none() as the default option.
-    autoChooser = AutoBuilder.buildAutoChooser();
+    autoChooser = new SendableChooser<>();
+    autoChooser.addOption("1-Note Center", new PathPlannerAuto(k1NC));
+    autoChooser.addOption("1-NoteAmpSide", new PathPlannerAuto(k1NAS));
+    autoChooser.addOption("2-NoteAmpSide", new PathPlannerAuto(k2NAS));
+    autoChooser.addOption("2-NoteFieldCenter", new PathPlannerAuto(k2NFC));
+    autoChooser.addOption("2-NoteMidSpeaker", new PathPlannerAuto(k2NMS));
+    autoChooser.addOption("2-MidSpeakerAmp", new PathPlannerAuto(k2NMSA));
+    autoChooser.addOption("3-NoteAmpSide", new PathPlannerAuto(k3NAS));
+    autoChooser.addOption("3-NoteMidSpeakerCenter", new PathPlannerAuto(k3NMSC));
+    autoChooser.addOption("BasicLeave", new PathPlannerAuto(kBL));
+    autoChooser.addOption("BasicShoot", new PathPlannerAuto(kBS));
+    autoChooser.addOption("Entropy", new PathPlannerAuto(kEntropy));
+
 
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
@@ -141,19 +168,15 @@ public class RobotContainer {
     // Configure default commands
     m_robotDrive.setDefaultCommand(
 
-        new Drive(
-          m_driverController.getX(), 
-          m_driverController.getY(), 
-          m_driverController.getTwist(), 
-        true, true, m_robotDrive, DriverConstants.kDefaultSpeed));
+        new Drive(m_driverController.getX(), m_driverController.getY(), m_driverController.getTwist(), true, true, m_robotDrive));
 
-    m_robotDrive.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        new Drive(m_operatorController.getLeftX(), 
-          m_operatorController.getLeftY(), 
-          m_operatorController.getRightX(), 
-          true, true, m_robotDrive, OperatorConstants.kManoeuvreSpeed));
+    // m_robotDrive.setDefaultCommand(
+    //     // The left stick controls translation of the robot.
+    //     // Turning is controlled by the X axis of the right stick.
+    //     new Drive(m_operatorController.getLeftX(), 
+    //       m_operatorController.getLeftY(), 
+    //       m_operatorController.getRightX(), 
+    //       true, true, m_robotDrive, OperatorConstants.kManoeuvreSpeed));
     m_driverController.povCenter().whileFalse(
         new RapidHeading(
             m_driverController.getHID().getPOV(),
