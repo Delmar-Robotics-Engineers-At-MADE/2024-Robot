@@ -7,6 +7,7 @@ package frc.robot.Commands.Drivetrain;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
 import frc.robot.Commands.Intake.HoldIntake;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
@@ -15,6 +16,7 @@ import frc.robot.subsystems.Photonvision;
 public class AutoIntake extends PIDDrive {
   
   private Arm arm;
+  private DriveSubsystem drivetrain;
   private Intake intake;
   private Photonvision pCam;
   private boolean end;
@@ -25,6 +27,7 @@ public class AutoIntake extends PIDDrive {
     pCam = pv;
     arm = ar;
     end = false;
+    drivetrain = dt;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(dt, in, pv);
   }
@@ -38,12 +41,15 @@ public class AutoIntake extends PIDDrive {
   public void execute() {
     if(pCam.isObj()) {
       new RunArmClosedLoop(arm, ArmConstants.kIntakePos);
-      this.setValues(pCam.getObjData()[0], pCam.getObjData()[1], pCam.getObjData()[2]);
-      if(!intake.isNote()) {
-        intake.autoIntake();
-      }
-      else {
-        end = true;
+      this.setValues(0, 0, pCam.objYaw());
+      if(this.atGoal()) {
+        new Drive(OperatorConstants.kManoeuvreSpeed, 0, 0, false, true, drivetrain); 
+        if(!intake.isNote()) {
+          intake.autoIntake();
+        }
+        else {
+          end = true;
+        }
       }
     }
     else {

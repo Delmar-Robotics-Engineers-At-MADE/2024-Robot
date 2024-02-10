@@ -131,7 +131,7 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
-    public static final double kDriveDeadband = 0.05;
+    public static final double kDriveDeadband = 0.1;
     public static final int kOperatorControllerPort = 0;
   }
 
@@ -165,7 +165,7 @@ public final class Constants {
     public static final double k3mSpeed = 1541;
 
     public static final double kCompenstion = 1.13;
-    
+
     public static final double kIdleSpeed = 0.3;
     public static final double kAmpSpeed = 0.2;
 
@@ -258,6 +258,7 @@ public final class Constants {
     public static final int kAutoIntake = 3; 
     public static final int kAutoAmp = 4;
     public static final int kSelfDestruct = 9;
+    public static final int kTurbo = 2;
   }
 
   public static final class OperatorConstants {

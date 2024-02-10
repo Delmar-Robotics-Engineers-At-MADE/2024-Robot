@@ -168,15 +168,26 @@ public class RobotContainer {
     // Configure default commands
     m_robotDrive.setDefaultCommand(
 
-        new Drive(m_driverController.getX(), m_driverController.getY(), m_driverController.getTwist(), true, true, m_robotDrive));
+        new Drive(m_driverController.getX(),
+         m_driverController.getY(),
+         m_driverController.getTwist(),
+          true, true, m_robotDrive, DriverConstants.kDefaultSpeed));
 
-    // m_robotDrive.setDefaultCommand(
-    //     // The left stick controls translation of the robot.
-    //     // Turning is controlled by the X axis of the right stick.
-    //     new Drive(m_operatorController.getLeftX(), 
-    //       m_operatorController.getLeftY(), 
-    //       m_operatorController.getRightX(), 
-    //       true, true, m_robotDrive, OperatorConstants.kManoeuvreSpeed));
+    m_driverController.button(DriverConstants.kTurbo).whileTrue(
+      new Drive(m_driverController.getX(),
+        m_driverController.getY(),
+        m_driverController.getTwist(), true, true, m_robotDrive)
+    );
+
+    
+    // The left stick controls translation of the robot.
+    // Turning is controlled by the X axis of the right stick.
+    m_operatorController.leftStick().or(m_operatorController.rightStick()).toggleOnTrue(
+    new Drive(m_operatorController.getLeftX(), 
+      m_operatorController.getLeftY(), 
+      m_operatorController.getRightX(), 
+      true, true, m_robotDrive, OperatorConstants.kManoeuvreSpeed));
+
     m_driverController.povCenter().whileFalse(
         new RapidHeading(
             m_driverController.getHID().getPOV(),
