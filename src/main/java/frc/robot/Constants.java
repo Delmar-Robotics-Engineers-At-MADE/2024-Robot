@@ -64,9 +64,9 @@ public final class Constants {
 
     public static final boolean kGyroReversed = false;
 
-    public static final double kYawP = 0.011;
+    public static final double kYawP = 0.001;
     public static final double kYawI = 0.0;
-    public static final double kYawD = 0.012;
+    public static final double kYawD = 0.0;
     public static final double kMaxYawRateDegPerS = 8;
     public static final double kMaxYawAccelerationDegPerSSquared = 20;
     public static final double kYawToleranceDeg = 5;
