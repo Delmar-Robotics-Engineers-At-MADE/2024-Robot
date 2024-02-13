@@ -168,12 +168,11 @@ public class RobotContainer {
     // Configure default commands
     m_robotDrive.setDefaultCommand(
 
-       new RunCommand(
-        () -> m_robotDrive.drive(
-          -MathUtil.applyDeadband(m_driverController.getX(), OIConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getY(), OIConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getTwist(), OIConstants.kDriveDeadband),
-          true, true), m_robotDrive));
+       new Drive(
+       m_driverController.getX(), 
+       m_driverController.getY(), 
+       m_driverController.getTwist(), 
+       true, true, m_robotDrive, DriverConstants.kDefaultSpeed));
 
     m_driverController.button(DriverConstants.kTurbo).whileTrue(
       new Drive(m_driverController.getX(),

@@ -183,9 +183,10 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int kIntakeID = 10;
     public static final int kSensorDIOPort = 0;
-    public static final double kIntakeSpeed = 0.4;
-    public static final double kFeedSpeed = 0.8;
+    public static final double kIntakeSpeed = 3098;
+    public static final double kFeedSpeed = 3083;
     public static final double kReverseSpeed = 0.4;
+    public static final double kCompenstion = 1.83;
 
     public static final double kP = 6e-5;
     public static final double kI = 0.0;
@@ -194,7 +195,7 @@ public final class Constants {
     public static final double kIz = 0;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
-    public static final double kMaxRPM = 8000;    
+    public static final double kMaxRPM = 11000;    
   }
 
   public static final class ArmConstants {
@@ -223,6 +224,8 @@ public final class Constants {
     public static final double kFF = 0; 
     public static final double kMaxOutput = 0.7; 
     public static final double kMinOutput = -0.7;
+    public static final double kMaxAccel = 1;
+    public static final double kMaxVel = 1;
 
     public static final double kTolearance = 0.002;
     public static final double kManualSpeed = 0.3;
@@ -263,5 +266,11 @@ public final class Constants {
 
   public static final class OperatorConstants {
     public static final double kManoeuvreSpeed = 0.4; 
+  }
+
+  public static final class VisionConstants {
+    public static final double kObjCamXOffset = 0.3;
+    public static final double kTagCamXOffset = 0.3;
+    public static final double kTagCamYOffset = 0.3;
   }
 }

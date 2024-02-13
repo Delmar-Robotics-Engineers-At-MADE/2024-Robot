@@ -50,11 +50,10 @@ public class Drive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    new RunCommand( 
-      () ->
-    drivetrain.drive(-MathUtil.applyDeadband(x, OIConstants.kDriveDeadband) * multiplier, 
+    drivetrain.drive(
+    -MathUtil.applyDeadband(x, OIConstants.kDriveDeadband) * multiplier, 
     -MathUtil.applyDeadband(y, OIConstants.kDriveDeadband) * multiplier, 
-    -MathUtil.applyDeadband(z, OIConstants.kDriveDeadband) * multiplier, fieldRel, srl));
+    -MathUtil.applyDeadband(z, OIConstants.kDriveDeadband) * multiplier, fieldRel, srl);
   }
 
   // Called once the command ends or is interrupted.
