@@ -43,7 +43,7 @@ public class AutoIntake extends PIDDrive {
       new RunArmClosedLoop(arm, ArmConstants.kIntakePos);
       this.setValues(0, 0, pCam.objYaw());
       if(this.atGoal()) {
-        new Drive(OperatorConstants.kManoeuvreSpeed, 0, 0, false, true, drivetrain); 
+        drivetrain.drive(OperatorConstants.kManoeuvreSpeed, 0, 0, false, true); 
         if(!intake.isNote()) {
           intake.autoIntake();
         }

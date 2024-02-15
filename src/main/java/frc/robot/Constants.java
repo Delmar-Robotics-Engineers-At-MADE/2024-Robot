@@ -224,8 +224,8 @@ public final class Constants {
     public static final double kFF = 0; 
     public static final double kMaxOutput = 0.7; 
     public static final double kMinOutput = -0.7;
-    public static final double kMaxAccel = 1;
-    public static final double kMaxVel = 1;
+    public static final double kMaxAccel = 0.1;
+    public static final double kMaxVel = 0.7;
 
     public static final double kTolearance = 0.002;
     public static final double kManualSpeed = 0.3;
@@ -256,12 +256,12 @@ public final class Constants {
   public static final class DriverConstants {
     public static final double kDefaultSpeed = 0.8;
     public static final int kSetX = 5;
-    public static final int kIntake = 1;
+    public static final int kIntake = 0;
     public static final int kHoldArmDown = 6;
     public static final int kAutoIntake = 3; 
     public static final int kAutoAmp = 4;
     public static final int kSelfDestruct = 9;
-    public static final int kTurbo = 2;
+    public static final int kTurbo = 1;
   }
 
   public static final class OperatorConstants {
