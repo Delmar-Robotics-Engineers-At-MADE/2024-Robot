@@ -39,7 +39,7 @@ public class Arm extends SubsystemBase{
         right.setInverted(true);
 
         encoder = left.getAbsoluteEncoder(Type.kDutyCycle);
-        
+        encoder.setInverted(true);
         right.follow(left);
         armPID = left.getPIDController();
         armPID.setFeedbackDevice(encoder);
@@ -57,11 +57,11 @@ public class Arm extends SubsystemBase{
 
     public void runOpenLoop(double supplier) {
         if(getPos() >= ArmConstants.kUpperLimit) {
-            hold();
+            left.set(0);;
             System.out.println("¡TOO HIGH! ¡UPPER LIMIT!");
         }
         else if(getPos() <= ArmConstants.kLowerLimit) {
-            hold();
+            left.set(0);;
             System.out.println("¡TOO LOW! ¡LOWER LIMIT!");
         }
         else {
@@ -76,12 +76,12 @@ public class Arm extends SubsystemBase{
     public void runToPosition(double setpoint) {
         //these are included safety measures. not necessary, but useful
         if(getPos() >= ArmConstants.kUpperLimit) {
-            hold();
+            left.set(0);;
             System.out.println("¡TOO HIGH! ¡UPPER LIMIT!");
         }
         else if(getPos() <= ArmConstants.kLowerLimit) {
-            hold();
-            System.out.println("¡TOO LOW! ¡LOWER LIMIT!");
+            left.set(0);;
+            System.out.println("¡TOO LOW! ¡LOWER LIMIT! " + getPos());
         }
         else{
             armPID.setReference(setpoint, ControlType.kPosition);

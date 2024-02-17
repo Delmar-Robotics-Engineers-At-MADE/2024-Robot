@@ -17,6 +17,12 @@ public class RunArmClosedLoop extends Command {
     arm = ar;
     setpoint = target;
     end = false;
+    if(end == false) {
+      System.out.println("RunArmClosedLoop end false");
+    }
+    else{
+      System.out.println("RunArmClosedLoop end true");
+    }
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(ar);
   }
@@ -25,16 +31,19 @@ public class RunArmClosedLoop extends Command {
   @Override
   public void initialize() {
     System.out.println("CMD init - running arm");
+    end = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(Math.abs(arm.getPos() - setpoint) <= ArmConstants.kTolearance) {
+      System.out.println("Arm At Setpoint");
       end = true;
     }
     else {
-    arm.runToPosition(setpoint);
+      arm.runToPosition(setpoint);
+      end = false;
     }
   }
 
@@ -45,7 +54,9 @@ public class RunArmClosedLoop extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println("Arm At Setpoint");
+    if(end == true) {
+      System.out.println("END IS TRUE");
+    }
     return end;
   }
 }

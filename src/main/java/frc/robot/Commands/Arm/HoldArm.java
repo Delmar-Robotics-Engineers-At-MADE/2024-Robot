@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 
 public class HoldArm extends Command {
-  Arm arm;
+  private final Arm arm;
+  private double pos;
   /** Creates a new HoldArm. */
   public HoldArm(Arm ar) {
     arm = ar;
@@ -18,12 +19,15 @@ public class HoldArm extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    pos = arm.getPos();
+    System.out.println("holding arm");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.hold();
+    arm.runToPosition(pos);
   }
 
   // Called once the command ends or is interrupted.

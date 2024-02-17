@@ -132,7 +132,7 @@ public final class Constants {
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.1;
-    public static final int kOperatorControllerPort = 0;
+    public static final int kOperatorControllerPort = 1;
   }
 
   public static final class AutoConstants {
@@ -201,7 +201,8 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int kLeftID = 6;
     public static final int kRightID = 7;
-    public static final double kStowPos = 0.5;
+    public static final double kStowPos = 0.5
+    ;
 
     //these 2 should be the same
     public static final double kIntakePos = 0.06;
@@ -214,16 +215,16 @@ public final class Constants {
 
     public static final double kBackAmpPos = 0.27;
     public static final double kUpperLimit = 0.3;
-    public static final double kLowerLimit = 0.05;
+    public static final double kLowerLimit = 0.01;
     public static final double kOverrunLimit = 0;
 
-    public static final double kP = 0.1; 
-    public static final double kI = 1e-4;
-    public static final double kD = 1; 
+    public static final double kP = 1.5; 
+    public static final double kI = 0;
+    public static final double kD = 0; 
     public static final double kIz = 0; 
     public static final double kFF = 0; 
-    public static final double kMaxOutput = 0.5; 
-    public static final double kMinOutput = -0.5;
+    public static final double kMaxOutput = 0.7; 
+    public static final double kMinOutput = -0.7;
     public static final double kMaxAccel = 0.18;
     public static final double kMaxVel = 0.85;
 

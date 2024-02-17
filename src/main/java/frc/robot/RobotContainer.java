@@ -257,9 +257,9 @@ public class RobotContainer {
     m_operatorController.leftBumper().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
     m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
 
-    m_operatorController.a().onTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
-    m_operatorController.b().onTrue(new RunArmClosedLoop(m_arm, ArmConstants.k3mPos));
-    m_operatorController.y().onTrue(new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
+    m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
+    m_operatorController.b().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.k3mPos));
+    m_operatorController.y().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
 
   }
     
