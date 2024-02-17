@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import frc.robot.Commands.BlindFire;
 import frc.robot.Commands.Warning;
 import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
@@ -255,6 +256,10 @@ public class RobotContainer {
     m_operatorController.rightTrigger().whileTrue(new RunClimberManual(m_portClimber, -ClimberConstants.kManualSpeed));
     m_operatorController.leftBumper().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
     m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
+
+    m_operatorController.a().whileTrue(new BlindFire(m_arm, m_shooter, m_intake, ArmConstants.kBackAmpPos, ShooterConstants.kAmpSpeed));
+    m_operatorController.b().whileTrue(new BlindFire(m_arm, m_shooter, m_intake, ArmConstants.k3mPos, ShooterConstants.k3mSpeed));
+    m_operatorController.y().whileTrue(new BlindFire(m_arm, m_shooter, m_intake, ArmConstants.kSubwooferPos, ShooterConstants.kSubwooferSpeed));
 
     }
     
