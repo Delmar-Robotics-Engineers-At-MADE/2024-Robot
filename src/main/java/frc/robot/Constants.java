@@ -224,8 +224,8 @@ public final class Constants {
     public static final double kFF = 0; 
     public static final double kMaxOutput = 0.7; 
     public static final double kMinOutput = -0.7;
-    public static final double kMaxAccel = 0.1;
-    public static final double kMaxVel = 0.7;
+    public static final double kMaxAccel = 0.18;
+    public static final double kMaxVel = 0.85;
 
     public static final double kTolearance = 0.002;
     public static final double kManualSpeed = 0.3;
@@ -272,5 +272,16 @@ public final class Constants {
     public static final double kObjCamXOffset = 0.3;
     public static final double kTagCamXOffset = 0.3;
     public static final double kTagCamYOffset = 0.3;
+  }
+
+  public enum AprilTags {
+    SUBSTATION_CLOSE,
+    SUBSTATION_FAR,
+    SPEAKER_CENTRE,
+    SPEAKER_OFFSET,
+    AMP,
+    STAGE_LEFT,
+    STAGE_RIGHT,
+    STAGE_FAR
   }
 }
