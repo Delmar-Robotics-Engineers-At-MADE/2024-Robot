@@ -204,17 +204,17 @@ public final class Constants {
     public static final double kStowPos = 0.5;
 
     //these 2 should be the same
-    public static final double kIntakePos = 0.0;
-    public static final double kSubwooferPos = 0.0;
+    public static final double kIntakePos = 0.06;
+    public static final double kSubwooferPos = 0.06;
 
-    public static final double kFrontAmpPos = 0.4;
+    public static final double kFrontAmpPos = 0.15;
 
     // 3m position
-    public static final double k3mPos = 0.42;
+    public static final double k3mPos = 0.12;
 
-    public static final double kBackAmpPos = 0.7;
-    public static final double kUpperLimit = 0;
-    public static final double kLowerLimit = 0;
+    public static final double kBackAmpPos = 0.27;
+    public static final double kUpperLimit = 0.3;
+    public static final double kLowerLimit = 0.05;
     public static final double kOverrunLimit = 0;
 
     public static final double kP = 0.1; 
@@ -222,8 +222,8 @@ public final class Constants {
     public static final double kD = 1; 
     public static final double kIz = 0; 
     public static final double kFF = 0; 
-    public static final double kMaxOutput = 0.7; 
-    public static final double kMinOutput = -0.7;
+    public static final double kMaxOutput = 0.5; 
+    public static final double kMinOutput = -0.5;
     public static final double kMaxAccel = 0.18;
     public static final double kMaxVel = 0.85;
 

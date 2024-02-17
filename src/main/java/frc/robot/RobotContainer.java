@@ -257,11 +257,11 @@ public class RobotContainer {
     m_operatorController.leftBumper().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
     m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
 
-    m_operatorController.a().whileTrue(new BlindFire(m_arm, m_shooter, m_intake, ArmConstants.kBackAmpPos, ShooterConstants.kAmpSpeed));
-    m_operatorController.b().whileTrue(new BlindFire(m_arm, m_shooter, m_intake, ArmConstants.k3mPos, ShooterConstants.k3mSpeed));
-    m_operatorController.y().whileTrue(new BlindFire(m_arm, m_shooter, m_intake, ArmConstants.kSubwooferPos, ShooterConstants.kSubwooferSpeed));
+    m_operatorController.a().onTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
+    m_operatorController.b().onTrue(new RunArmClosedLoop(m_arm, ArmConstants.k3mPos));
+    m_operatorController.y().onTrue(new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
 
-    }
+  }
     
 
   /**

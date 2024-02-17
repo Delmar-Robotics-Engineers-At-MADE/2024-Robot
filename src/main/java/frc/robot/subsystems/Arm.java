@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
@@ -19,7 +21,7 @@ public class Arm extends SubsystemBase{
     private final CANSparkMax left;
     private final CANSparkMax right;
     private final AbsoluteEncoder encoder;
-    private final ProfiledPIDController armPID;
+    private final SparkPIDController armPID;
 
 
     public Arm (int leftID, int rightID) {
@@ -37,18 +39,20 @@ public class Arm extends SubsystemBase{
         right.setInverted(true);
 
         encoder = left.getAbsoluteEncoder(Type.kDutyCycle);
-
+        
         right.follow(left);
+        armPID = left.getPIDController();
+        armPID.setFeedbackDevice(encoder);
+
+        armPID.setP(ArmConstants.kP);
+        armPID.setI(ArmConstants.kI);
+        armPID.setD(ArmConstants.kD);
+        armPID.setIZone(ArmConstants.kIz);
+        armPID.setOutputRange(ArmConstants.kMinOutput, ArmConstants.kMaxOutput);
 
         left.burnFlash();
         right.burnFlash();
 
-        armPID = new ProfiledPIDController(
-            ArmConstants.kP, 
-            ArmConstants.kI, 
-            ArmConstants.kD, 
-            new TrapezoidProfile.Constraints(ArmConstants.kMaxVel, ArmConstants.kMaxAccel)
-        );
     }
 
     public void runOpenLoop(double supplier) {
@@ -66,7 +70,7 @@ public class Arm extends SubsystemBase{
     }
 
     public void hold() {
-        left.set(armPID.calculate(encoder.getPosition(), encoder.getPosition()));
+        armPID.setReference(encoder.getPosition(), ControlType.kPosition);
     }
 
     public void runToPosition(double setpoint) {
@@ -80,7 +84,7 @@ public class Arm extends SubsystemBase{
             System.out.println("¡TOO LOW! ¡LOWER LIMIT!");
         }
         else{
-            left.set(armPID.calculate(encoder.getPosition(), setpoint));;
+            armPID.setReference(setpoint, ControlType.kPosition);
         }
     }
 
