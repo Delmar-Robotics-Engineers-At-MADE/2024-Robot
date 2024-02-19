@@ -77,6 +77,25 @@ public class Climber extends SubsystemBase {
         }
     }
 
+    public void runAtVelocity(double speed) {
+        if(!isHomed()) {
+            pid.setReference(speed, ControlType.kVelocity);
+            System.out.println("¡NOT HOMED! ¡OVEREXTEND POSSIBLE!");
+        }
+        else if (isHomed() && speed < 0) {
+            motor.set(0);
+        }
+        else if (isHomed()) {
+            if(getPos() >= ClimberConstants.kUpperLimit) {
+                motor.set(0);
+                System.out.println("¡CLIMBER TOO HIGH! ¡OVEREXTEND! ¡OVEREXTEND!");
+            }
+            else {
+                motor.set(speed);
+            }
+        }
+    }    
+
     public void runToPos(double setpoint) {
         if(!isHomed()) {
             motor.set(0);

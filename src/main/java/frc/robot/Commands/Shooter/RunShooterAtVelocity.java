@@ -13,6 +13,7 @@ public class RunShooterAtVelocity extends Command {
   /** Creates a new RunShooterAtVelocity. */
   public RunShooterAtVelocity(Shooter launchingDevice, double velocity) {
     shooter = launchingDevice;
+    setpoint = velocity;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(launchingDevice);
   }

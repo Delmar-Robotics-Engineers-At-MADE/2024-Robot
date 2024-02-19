@@ -38,9 +38,9 @@ public class Intake extends SubsystemBase{
         intakePID.setOutputRange(IntakeConstants.kMinOutput, IntakeConstants.kMaxOutput);      
     }
 
-    public void hold() {
+    public void hold(double pos) {
         intake.setSmartCurrentLimit(5);
-        intakePID.setReference(encoder.getPosition(), ControlType.kPosition);
+        intakePID.setReference(pos, ControlType.kPosition);
     }
 
     public void runAtVelocity(double setpoint) {
@@ -58,7 +58,7 @@ public class Intake extends SubsystemBase{
             intakePID.setReference(IntakeConstants.kIntakeSpeed, ControlType.kVelocity);
         }
         else {
-            hold();
+            hold(encoder.getPosition());
         }
     }
 
@@ -66,5 +66,11 @@ public class Intake extends SubsystemBase{
         return optical.get();
     }
 
-    
+    public double getPosition() {
+        return encoder.getPosition();
+    }
+
+    public double getOutputCurrent() {
+        return intake.getOutputCurrent();
+    }
 }

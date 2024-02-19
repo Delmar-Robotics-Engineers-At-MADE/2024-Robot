@@ -260,6 +260,8 @@ public class RobotContainer {
     m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
     m_operatorController.b().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.k3mPos));
     m_operatorController.y().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
+    m_operatorController.x().whileTrue(new RunIntakeOpenLoop(m_intake, 0.9));
+    m_operatorController.x().whileTrue( new RunShooterAtVelocity(m_shooter, ShooterConstants.kSubwooferSpeed));
 
   }
     

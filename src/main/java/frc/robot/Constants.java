@@ -166,8 +166,8 @@ public final class Constants {
 
     public static final double kCompenstion = 1.13;
 
-    public static final double kIdleSpeed = 0.3;
-    public static final double kAmpSpeed = 0.2;
+    public static final double kIdleSpeed = 1000;
+    public static final double kAmpSpeed = 1100;
 
     public static final double kP = 6e-5;
     public static final double kI = 0.0;
@@ -205,20 +205,20 @@ public final class Constants {
     ;
 
     //these 2 should be the same
-    public static final double kIntakePos = 0.06;
-    public static final double kSubwooferPos = 0.06;
+    public static final double kIntakePos = 0.025;
+    public static final double kSubwooferPos = 0.025;
 
     public static final double kFrontAmpPos = 0.15;
 
     // 3m position
     public static final double k3mPos = 0.12;
 
-    public static final double kBackAmpPos = 0.27;
-    public static final double kUpperLimit = 0.3;
-    public static final double kLowerLimit = 0.01;
+    public static final double kBackAmpPos = 0.3;
+    public static final double kUpperLimit = 0.35;
+    public static final double kLowerLimit = 0.023;
     public static final double kOverrunLimit = 0;
 
-    public static final double kP = 1.5; 
+    public static final double kP = 2; 
     public static final double kI = 0;
     public static final double kD = 0; 
     public static final double kIz = 0; 

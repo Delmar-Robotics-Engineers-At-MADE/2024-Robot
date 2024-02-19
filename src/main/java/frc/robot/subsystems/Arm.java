@@ -40,7 +40,7 @@ public class Arm extends SubsystemBase{
 
         encoder = left.getAbsoluteEncoder(Type.kDutyCycle);
         encoder.setInverted(true);
-        right.follow(left);
+        right.follow(left, true);
         armPID = left.getPIDController();
         armPID.setFeedbackDevice(encoder);
 
@@ -57,11 +57,11 @@ public class Arm extends SubsystemBase{
 
     public void runOpenLoop(double supplier) {
         if(getPos() >= ArmConstants.kUpperLimit) {
-            left.set(0);;
+            left.set(supplier);
             System.out.println("¡TOO HIGH! ¡UPPER LIMIT!");
         }
         else if(getPos() <= ArmConstants.kLowerLimit) {
-            left.set(0);;
+            left.set(supplier);
             System.out.println("¡TOO LOW! ¡LOWER LIMIT!");
         }
         else {
@@ -91,5 +91,6 @@ public class Arm extends SubsystemBase{
     public double getPos() {
         return encoder.getPosition();
     }
+    
     
 }

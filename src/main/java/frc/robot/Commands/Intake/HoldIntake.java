@@ -9,6 +9,7 @@ import frc.robot.subsystems.Intake;
 
 public class HoldIntake extends Command {
   private Intake intake;
+  private double setpoint;
   /** Creates a new HoldIntake. */
   public HoldIntake(Intake in) {
     intake = in;
@@ -18,12 +19,14 @@ public class HoldIntake extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    setpoint = intake.getPosition();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.hold();
+    intake.hold(setpoint);
   }
 
   // Called once the command ends or is interrupted.
