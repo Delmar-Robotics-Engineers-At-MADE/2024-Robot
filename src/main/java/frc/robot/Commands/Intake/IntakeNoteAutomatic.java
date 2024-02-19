@@ -5,6 +5,7 @@
 package frc.robot.Commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
 public class IntakeNoteAutomatic extends Command {
@@ -26,7 +27,8 @@ public class IntakeNoteAutomatic extends Command {
   @Override
   public void execute() {
     if(!intake.isNote()) {
-      intake.autoIntake();
+      //intake.autoIntake();
+      intake.runOpenLoop(IntakeConstants.kReverseSpeed);
     }
     else {
       System.out.println("¡CAPTURE!");

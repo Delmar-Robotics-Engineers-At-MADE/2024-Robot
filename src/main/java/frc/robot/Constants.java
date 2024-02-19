@@ -188,7 +188,7 @@ public final class Constants {
     public static final double kReverseSpeed = 0.4;
     public static final double kCompenstion = 1.83;
 
-    public static final double kP = 6e-5;
+    public static final double kP = 6e-2;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.000015;
@@ -230,6 +230,11 @@ public final class Constants {
 
     public static final double kTolearance = 0.002;
     public static final double kManualSpeed = 0.3;
+
+    public static final double kSVolts = 0;
+    public static final double kGVolts = 0.34;
+    public static final double kVVoltSecondPerRad = 0;
+    public static final double kAVoltSecondSquaredPerRad = 0;
   }
 
   public static final class ClimberConstants {
@@ -256,11 +261,11 @@ public final class Constants {
   // Cannot remember if the Extreme 3D PRO is 0 index or not.
   public static final class DriverConstants {
     public static final double kDefaultSpeed = 0.8;
-    public static final int kSetX = 5;
+    public static final int kSetX = 4;
     public static final int kIntake = 0;
-    public static final int kHoldArmDown = 6;
-    public static final int kAutoIntake = 3; 
-    public static final int kAutoAmp = 4;
+    public static final int kHoldArmDown = 5;
+    public static final int kAutoIntake = 2; 
+    public static final int kAutoAmp = 3;
     public static final int kSelfDestruct = 9;
     public static final int kTurbo = 1;
   }

@@ -32,7 +32,8 @@ public class Feed extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.runAtVelocity(IntakeConstants.kFeedSpeed);
+    //intake.runAtVelocity(IntakeConstants.kFeedSpeed);
+    intake.runOpenLoop(IntakeConstants.kReverseSpeed);
   }
 
   // Called once the command ends or is interrupted.

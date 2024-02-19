@@ -73,4 +73,8 @@ public class Intake extends SubsystemBase{
     public double getOutputCurrent() {
         return intake.getOutputCurrent();
     }
+
+    public double getVelocity() {
+        return encoder.getVelocity();
+    }
 }

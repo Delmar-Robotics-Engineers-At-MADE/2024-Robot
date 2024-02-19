@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,6 +24,13 @@ public class Arm extends SubsystemBase{
     private final AbsoluteEncoder encoder;
     private final SparkPIDController armPID;
 
+    private final TrapezoidProfile profile = 
+        new TrapezoidProfile(new TrapezoidProfile.Constraints(ArmConstants.kBackAmpPos, ArmConstants.kMaxAccel));
+
+    private final ArmFeedforward ff =
+        new ArmFeedforward(
+        ArmConstants.kSVolts, ArmConstants.kGVolts,
+        ArmConstants.kVVoltSecondPerRad, ArmConstants.kAVoltSecondSquaredPerRad);
 
     public Arm (int leftID, int rightID) {
         left = new CANSparkMax(leftID, MotorType.kBrushless);
@@ -69,8 +77,10 @@ public class Arm extends SubsystemBase{
         }
     }
 
-    public void hold() {
-        armPID.setReference(encoder.getPosition(), ControlType.kPosition);
+  
+    public void hold(TrapezoidProfile.State setpoint) {
+        double feedforward = ff.calculate(setpoint.position, setpoint.velocity);
+        armPID.setReference(setpoint.position, ControlType.kPosition,0, feedforward);
     }
 
     public void runToPosition(double setpoint) {

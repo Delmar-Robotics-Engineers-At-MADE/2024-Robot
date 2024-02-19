@@ -42,6 +42,7 @@ public class Dashboard {
 
         Shuffleboard.getTab("intake").addBoolean("capture", () -> intake.isNote());
         Shuffleboard.getTab("intake").addDouble("current", () -> intake.getOutputCurrent());
+        Shuffleboard.getTab("intake").addDouble("velocity", () -> intake.getVelocity());
         
         Shuffleboard.getTab("shooter").addDouble("top speed", () -> shooter.getTopVelocity());
         Shuffleboard.getTab("shooter").addDouble("bottom Speed", () -> shooter.getBottomVelocity());

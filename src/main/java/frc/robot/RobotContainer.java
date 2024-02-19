@@ -99,12 +99,17 @@ public class RobotContainer {
   );
 
   ParallelCommandGroup forceFeed = new ParallelCommandGroup(
-    new RunIntakeOpenLoop(m_intake, -IntakeConstants.kReverseSpeed),
+    new RunIntakeOpenLoop(m_intake, IntakeConstants.kReverseSpeed),
     new RunShooterAtVelocity(m_shooter, ShooterConstants.kAmpSpeed)
   );
   ParallelCommandGroup forceReverse = new ParallelCommandGroup(
-    new RunIntakeOpenLoop(m_intake, IntakeConstants.kReverseSpeed),
+    new RunIntakeOpenLoop(m_intake, -IntakeConstants.kReverseSpeed),
     new RunShooterAtVelocity(m_shooter, -ShooterConstants.kAmpSpeed)
+  );
+
+  SequentialCommandGroup amp = new SequentialCommandGroup(
+    new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
+    forceFeed
   );
 
   private final SendableChooser<Command> autoChooser;
@@ -258,9 +263,9 @@ public class RobotContainer {
     m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
 
     m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
-    m_operatorController.b().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.k3mPos));
+    m_operatorController.b().whileTrue(shootSubwoofer);
     m_operatorController.y().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
-    m_operatorController.x().whileTrue(new RunIntakeOpenLoop(m_intake, 0.9));
+    m_operatorController.x().whileTrue(new IntakeNoteAutomatic(m_intake));
     m_operatorController.x().whileTrue( new RunShooterAtVelocity(m_shooter, ShooterConstants.kSubwooferSpeed));
 
   }
