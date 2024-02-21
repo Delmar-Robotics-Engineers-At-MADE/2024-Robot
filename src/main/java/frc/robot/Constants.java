@@ -260,7 +260,8 @@ public final class Constants {
 
   // Cannot remember if the Extreme 3D PRO is 0 index or not.
   public static final class DriverConstants {
-    public static final double kDefaultSpeed = 0.8;
+    public static final double kDefaultSpeed = 0.9;
+    public static final double kYawSpeed = 0.7;
     public static final int kSetX = 4;
     public static final int kIntake = 1;
     public static final int kHoldArmDown = 5;

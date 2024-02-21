@@ -99,20 +99,20 @@ public class RobotContainer {
     new HomeClimber(m_starboardClimber)
   );
 
-  ParallelCommandGroup forceFeed = new ParallelCommandGroup(
-    new RunIntakeOpenLoop(m_intake, IntakeConstants.kReverseSpeed),
-    new RunShooterAtVelocity(m_shooter, ShooterConstants.k3mSpeed)
-  );
+  // ParallelCommandGroup forceFeed = new ParallelCommandGroup(
+  //   new RunIntakeOpenLoop(m_intake, IntakeConstants.kReverseSpeed),
+  //   new RunShooterAtVelocity(m_shooter, ShooterConstants.k3mSpeed)
+  // );
   ParallelCommandGroup forceReverse = new ParallelCommandGroup(
     new RunIntakeOpenLoop(m_intake, -IntakeConstants.kReverseSpeed),
     new RunShooterAtVelocity(m_shooter, -ShooterConstants.kAmpSpeed)
   );
 
   // halp. thrrows exception
-  SequentialCommandGroup amp = new SequentialCommandGroup(
-    new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
-    forceFeed
-  );
+  // SequentialCommandGroup amp = new SequentialCommandGroup(
+  //   new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
+  //   forceFeed
+  // );
 
   private final SendableChooser<Command> autoChooser;
 
@@ -220,7 +220,7 @@ public class RobotContainer {
     // Subsystem Default Commands
     m_intake.setDefaultCommand(new HoldIntake(m_intake));
     m_arm.setDefaultCommand(new HoldArm(m_arm));
-    m_shooter.setDefaultCommand(new RunShooterAtVelocity(m_shooter, ShooterConstants.kIdleSpeed));
+    //m_shooter.setDefaultCommand(new RunShooterAtVelocity(m_shooter, ShooterConstants.kIdleSpeed));
     m_portClimber.setDefaultCommand(new HoldClimber(m_portClimber));
     m_starboardClimber.setDefaultCommand(new HoldClimber(m_starboardClimber));
 
@@ -260,7 +260,7 @@ public class RobotContainer {
     m_operatorController.start().onTrue(new Warning("¡OVERRIDE!"));
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmClosedLoop(m_arm, -ArmConstants.kManualSpeed));
-    m_operatorController.start().and(m_operatorController.povRight()).whileTrue(forceFeed);
+   // m_operatorController.start().and(m_operatorController.povRight()).whileTrue(forceFeed);
     m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(forceReverse);
 
     m_operatorController.back().whileTrue(homeClimbers);
@@ -269,8 +269,8 @@ public class RobotContainer {
     m_operatorController.leftBumper().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
     m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
 
-    m_operatorController.a().whileTrue(amp);
-    m_operatorController.b().whileTrue(shootSubwoofer);
+    m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
+    //m_operatorController.b().whileTrue(shootSubwoofer);
     m_operatorController.y().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
     m_operatorController.x().whileTrue(new IntakeNoteAutomatic(m_intake));
 
