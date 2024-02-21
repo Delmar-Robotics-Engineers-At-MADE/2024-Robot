@@ -66,7 +66,7 @@ public class Shooter extends SubsystemBase{
         double setpoint = target * ShooterConstants.kCompenstion;
         topVelController.setReference(setpoint, ControlType.kVelocity);
         bottomVelController.setReference(setpoint, ControlType.kVelocity);
-        System.out.println(setpoint + " " + top.getOutputCurrent());
+        //System.out.println(setpoint + " " + top.getOutputCurrent());
     }
 
     public void stop() {
@@ -88,6 +88,11 @@ public class Shooter extends SubsystemBase{
 
     public double[] getOutputCurrent() {
         double result[] = {top.getOutputCurrent(), bottom.getOutputCurrent()};
+        return result;
+    }
+
+    public double[] getTemp() {
+        double result[] = {top.getMotorTemperature(), bottom.getMotorTemperature()};
         return result;
     }
     

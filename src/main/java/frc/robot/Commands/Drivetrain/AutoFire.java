@@ -7,6 +7,7 @@ package frc.robot.Commands.Drivetrain;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
 import frc.robot.Commands.Intake.Feed;
 import frc.robot.Commands.Shooter.RunShooterAtVelocity;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
@@ -26,7 +27,7 @@ public class AutoFire extends PIDDrive {
   /** Creates a new AutoFire. */
   public AutoFire(DriveSubsystem dt, Photonvision pv, int tagID, 
     Arm ar, Intake in, Shooter sh, double armPos, double shooterVel) {
-    super(dt, pv.getTagData(tagID)[0], pv.getTagData(tagID)[1] , pv.getTagData(tagID)[2]);
+    super(dt, pv.getTagData(tagID)[0], pv.getTagData(tagID)[1] , pv.getTagData(tagID)[2], VisionConstants.kTagCamXOffset, VisionConstants.kTagCamYOffset);
     arm = ar;
     intake = in;
     whee = sh;

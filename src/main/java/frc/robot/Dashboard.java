@@ -33,23 +33,27 @@ public class Dashboard {
         Shuffleboard.getTab("climbers");
 
         Shuffleboard.getTab("match").addBoolean("capture", () -> intake.isNote());
-        Shuffleboard.getTab("match").addDouble("heading", () -> drivetrain.getHeading());
+        Shuffleboard.getTab("match").addDouble("heading", () -> drivetrain.getHeading()).withWidget("Gyro");
         Shuffleboard.getTab("match").addBoolean("port homed", () -> port.isHomed());
         Shuffleboard.getTab("match").addBoolean("starboard homed", () -> starboard.isHomed());
 
 
         Shuffleboard.getTab("arm").addDouble("arm pos", () -> arm.getPos());
+        Shuffleboard.getTab("arm").addDouble("left temp", () -> arm.getTemp()[0]);
+        Shuffleboard.getTab("arm").addDouble("right temp", () -> arm.getTemp()[1]);
 
         Shuffleboard.getTab("intake").addBoolean("capture", () -> intake.isNote());
         Shuffleboard.getTab("intake").addDouble("current", () -> intake.getOutputCurrent());
         Shuffleboard.getTab("intake").addDouble("velocity", () -> intake.getVelocity());
+        Shuffleboard.getTab("intake").addDouble("temp", () -> intake.getTemp());
         
         Shuffleboard.getTab("shooter").addDouble("top speed", () -> shooter.getTopVelocity());
         Shuffleboard.getTab("shooter").addDouble("bottom Speed", () -> shooter.getBottomVelocity());
         Shuffleboard.getTab("shooter").addDouble("avg speed", () -> shooter.getAvgVelocity());
         Shuffleboard.getTab("shooter").addDouble("bottom current", () -> shooter.getOutputCurrent()[1]);
         Shuffleboard.getTab("shooter").addDouble("top current", () -> shooter.getOutputCurrent()[0]);
-        
+        Shuffleboard.getTab("shooter").addDouble("top temp", () -> shooter.getTemp()[0]);
+        Shuffleboard.getTab("shooter").addDouble("bottom temp", () -> shooter.getTemp()[1]);
 
 
 

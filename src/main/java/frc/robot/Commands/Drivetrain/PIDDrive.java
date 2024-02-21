@@ -12,10 +12,12 @@ import frc.robot.Constants.PIDDriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class PIDDrive extends Command {
-  private DriveSubsystem drivetrain;
+  private final DriveSubsystem drivetrain;
   private double x;
   private double y;
   private double yaw;
+  private final double cameraOffset;
+  private final double cameraDepth;
 
   private static ProfiledPIDController yawPID = new ProfiledPIDController(
   DriveConstants.kYawP, DriveConstants.kYawI, DriveConstants.kYawD,
@@ -36,18 +38,22 @@ public class PIDDrive extends Command {
                 DriveConstants.kMaxYawAccelerationDegPerSSquared)); 
 
   /** Creates a new VisionDrive. */
-  public PIDDrive(DriveSubsystem dt, double xErr, double yErr, double yawErr) {
+  public PIDDrive(DriveSubsystem dt, double xErr, double yErr, double yawErr, double cameraOffset, double cameraDepth) {
     x = xErr;
     y = yErr;
     yaw = yawErr;
+    this.cameraOffset = cameraOffset;
+    this.cameraDepth = cameraDepth;
 
     drivetrain = dt;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(dt);
   }
 
-  public PIDDrive(DriveSubsystem dt) {
+  public PIDDrive(DriveSubsystem dt, double cameraOffset, double cameraDepth) {
     drivetrain = dt;
+    this.cameraOffset = cameraOffset;
+    this.cameraDepth = cameraDepth;
   }
 
   public void setValues(double xErr, double yErr, double yawErr) {
@@ -63,8 +69,8 @@ public class PIDDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(latPID.calculate(x, PIDDriveConstants.latGoal),
-    longPID.calculate(y, PIDDriveConstants.longGoal),
+    drivetrain.drive(latPID.calculate(x + cameraOffset, PIDDriveConstants.latGoal),
+    longPID.calculate(y + cameraDepth, PIDDriveConstants.longGoal),
     yawPID.calculate(yaw, PIDDriveConstants.yawGoal), 
     false, 
     true);

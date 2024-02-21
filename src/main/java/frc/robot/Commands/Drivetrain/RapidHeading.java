@@ -5,7 +5,6 @@
 package frc.robot.Commands.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -51,13 +50,18 @@ public class RapidHeading extends Command {
   
   public double convertCardinalDirections(int povAngleDeg) {
     // change d-pad values for left and right to specified angle
-    if (povAngleDeg == 270) {
-      povAngleDeg += 77;
-    } else if (povAngleDeg == 90) {
-      povAngleDeg -= 77;
-    }
+    // if (povAngleDeg == 270) {
+    //   povAngleDeg = -90;
+    // } 
+    // else if (povAngleDeg == 90) {
+    //   povAngleDeg = 90;
+    // }
+    // else if (povAngleDeg == 0) {
+    //   povAngleDeg = 1
+    // }
     // targetHeadingDegrees is counterclockwise so need to flip povAngle
-    povAngleDeg = 360 - povAngleDeg;
+    //povAngleDeg = 180 - povAngleDeg;
+    povAngleDeg = -povAngleDeg + 180;
     return povAngleDeg;
   }
 

@@ -8,6 +8,7 @@ import frc.robot.Commands.Arm.RunArmClosedLoop;
 import frc.robot.Commands.Intake.HoldIntake;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
@@ -22,12 +23,13 @@ public class AutoIntake extends PIDDrive {
   private boolean end;
   /** Creates a new AutoIntake. */
   public AutoIntake(DriveSubsystem dt, Intake in, Photonvision pv, Arm ar) {
-    super(dt);
+    super(dt, VisionConstants.kObjCamXOffset, 0.0);
     intake = in;
     pCam = pv;
     arm = ar;
     end = false;
     drivetrain = dt;
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(dt, in, pv);
   }

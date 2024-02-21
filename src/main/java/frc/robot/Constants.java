@@ -62,9 +62,9 @@ public final class Constants {
     public static final int kFrontRightTurningCanId = 11;
     public static final int kRearRightTurningCanId = 14;
 
-    public static final boolean kGyroReversed = false;
+    public static final boolean kGyroReversed = true;
 
-    public static final double kYawP = 0.001;
+    public static final double kYawP = 0.0005;
     public static final double kYawI = 0.0;
     public static final double kYawD = 0.0;
     public static final double kMaxYawRateDegPerS = 8;
@@ -162,17 +162,17 @@ public final class Constants {
     public static final double kSubwooferSpeed = 1259;
 
     // init v should be 8.2 m/s
-    public static final double k3mSpeed = 1541;
+    public static final double k3mSpeed = 1500;
 
     public static final double kCompenstion = 1.13;
 
     public static final double kIdleSpeed = 1000;
     public static final double kAmpSpeed = 1100;
 
-    public static final double kP = 6e-5;
+    public static final double kP = 6e-2;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
-    public static final double kFF = 0.000015;
+    public static final double kFF = 0.00015;
     public static final double kIz = 0;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
@@ -185,7 +185,7 @@ public final class Constants {
     public static final int kSensorDIOPort = 0;
     public static final double kIntakeSpeed = 3098;
     public static final double kFeedSpeed = 3083;
-    public static final double kReverseSpeed = 0.4;
+    public static final double kReverseSpeed = 0.8;
     public static final double kCompenstion = 1.83;
 
     public static final double kP = 6e-2;
@@ -232,9 +232,9 @@ public final class Constants {
     public static final double kManualSpeed = 0.3;
 
     public static final double kSVolts = 0;
-    public static final double kGVolts = 0.34;
-    public static final double kVVoltSecondPerRad = 0;
-    public static final double kAVoltSecondSquaredPerRad = 0;
+    public static final double kGVolts = 0.335;
+    public static final double kVVoltSecondPerRad = 6.24;
+    public static final double kAVoltSecondSquaredPerRad = 0.04;
   }
 
   public static final class ClimberConstants {
@@ -262,12 +262,12 @@ public final class Constants {
   public static final class DriverConstants {
     public static final double kDefaultSpeed = 0.8;
     public static final int kSetX = 4;
-    public static final int kIntake = 0;
+    public static final int kIntake = 1;
     public static final int kHoldArmDown = 5;
-    public static final int kAutoIntake = 2; 
-    public static final int kAutoAmp = 3;
+    public static final int kAutoIntake = 3; 
+    public static final int kAutoAmp = 6;
     public static final int kSelfDestruct = 9;
-    public static final int kTurbo = 1;
+    public static final int kTurbo = 2;
   }
 
   public static final class OperatorConstants {

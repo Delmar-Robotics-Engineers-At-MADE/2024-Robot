@@ -77,4 +77,8 @@ public class Intake extends SubsystemBase{
     public double getVelocity() {
         return encoder.getVelocity();
     }
+
+    public double getTemp() {
+        return intake.getMotorTemperature();
+    }
 }

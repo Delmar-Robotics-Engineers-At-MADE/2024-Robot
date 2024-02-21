@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Commands.Drivetrain.RapidHeading;
 import frc.robot.Constants.ArmConstants;
@@ -100,13 +101,14 @@ public class RobotContainer {
 
   ParallelCommandGroup forceFeed = new ParallelCommandGroup(
     new RunIntakeOpenLoop(m_intake, IntakeConstants.kReverseSpeed),
-    new RunShooterAtVelocity(m_shooter, ShooterConstants.kAmpSpeed)
+    new RunShooterAtVelocity(m_shooter, ShooterConstants.k3mSpeed)
   );
   ParallelCommandGroup forceReverse = new ParallelCommandGroup(
     new RunIntakeOpenLoop(m_intake, -IntakeConstants.kReverseSpeed),
     new RunShooterAtVelocity(m_shooter, -ShooterConstants.kAmpSpeed)
   );
 
+  // halp. thrrows exception
   SequentialCommandGroup amp = new SequentialCommandGroup(
     new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
     forceFeed
@@ -162,12 +164,14 @@ public class RobotContainer {
     autoChooser.addOption("BasicLeave", new PathPlannerAuto(kBL));
     autoChooser.addOption("BasicShoot", new PathPlannerAuto(kBS));
     autoChooser.addOption("Entropy", new PathPlannerAuto(kEntropy));
+    autoChooser.addOption("Entropy Path", new PathPlannerAuto("EntropyPath"));
 
 
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
     dashboard = new Dashboard(m_robotDrive, m_arm, m_intake, m_shooter, m_portClimber, m_starboardClimber, autoChooser);
+    Shuffleboard.getTab("match").add(autoChooser);
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -176,7 +180,7 @@ public class RobotContainer {
         () -> m_robotDrive.drive(
           -MathUtil.applyDeadband(m_driverController.getX()*DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
           -MathUtil.applyDeadband(m_driverController.getY()*DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getTwist()*DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getTwist()*DriverConstants.kYawSpeed, OIConstants.kDriveDeadband),
           true, true), m_robotDrive));
     
     // The left stick controls translation of the robot.
@@ -246,11 +250,14 @@ public class RobotContainer {
     m_driverController.button(DriverConstants.kIntake).and(m_driverController.button(DriverConstants.kAutoIntake)).onTrue(
       new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)
     );
+    m_driverController.button(DriverConstants.kIntake).and(m_driverController.button(DriverConstants.kAutoIntake)).onTrue(
+      new InstantCommand(() -> System.out.println("reset gyro"))
+    );
     m_driverController.button(DriverConstants.kSelfDestruct).onTrue(
       new InstantCommand(() -> System.out.println("¡KABOOM!"))
     );
 
-    m_operatorController.start().whileTrue(new Warning("¡OVERRIDE!"));
+    m_operatorController.start().onTrue(new Warning("¡OVERRIDE!"));
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmClosedLoop(m_arm, -ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povRight()).whileTrue(forceFeed);
@@ -262,11 +269,12 @@ public class RobotContainer {
     m_operatorController.leftBumper().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
     m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
 
-    m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
+    m_operatorController.a().whileTrue(amp);
     m_operatorController.b().whileTrue(shootSubwoofer);
     m_operatorController.y().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
     m_operatorController.x().whileTrue(new IntakeNoteAutomatic(m_intake));
-    m_operatorController.x().whileTrue( new RunShooterAtVelocity(m_shooter, ShooterConstants.kSubwooferSpeed));
+
+    m_operatorController.leftBumper().whileTrue(new RunShooterAtVelocity(m_shooter, ShooterConstants.k3mSpeed));
 
   }
     

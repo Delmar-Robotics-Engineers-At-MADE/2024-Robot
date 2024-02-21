@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
@@ -23,9 +22,6 @@ public class Arm extends SubsystemBase{
     private final CANSparkMax right;
     private final AbsoluteEncoder encoder;
     private final SparkPIDController armPID;
-
-    private final TrapezoidProfile profile = 
-        new TrapezoidProfile(new TrapezoidProfile.Constraints(ArmConstants.kBackAmpPos, ArmConstants.kMaxAccel));
 
     private final ArmFeedforward ff =
         new ArmFeedforward(
@@ -100,6 +96,11 @@ public class Arm extends SubsystemBase{
 
     public double getPos() {
         return encoder.getPosition();
+    }
+
+    public double[] getTemp() {
+       double result[] = {left.getMotorTemperature(), right.getMotorTemperature()};
+       return result;
     }
     
     
