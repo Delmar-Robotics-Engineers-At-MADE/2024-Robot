@@ -10,17 +10,21 @@ import frc.robot.subsystems.Shooter;
 public class RunShooterAtVelocity extends Command {
   private Shooter shooter;
   private double setpoint;
+  private boolean end;
   /** Creates a new RunShooterAtVelocity. */
   public RunShooterAtVelocity(Shooter launchingDevice, double velocity) {
     shooter = launchingDevice;
     setpoint = velocity;
+    end = false;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(launchingDevice);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("init RunShooterAtVelocity");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -30,11 +34,13 @@ public class RunShooterAtVelocity extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    end = true;
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return end;
   }
 }

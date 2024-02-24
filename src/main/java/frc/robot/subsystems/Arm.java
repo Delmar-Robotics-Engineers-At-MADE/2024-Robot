@@ -75,7 +75,7 @@ public class Arm extends SubsystemBase{
 
   
     public void hold(TrapezoidProfile.State setpoint) {
-        double feedforward = ff.calculate(setpoint.position, setpoint.velocity);
+        double feedforward = ff.calculate(setpoint.position*2*Math.PI, setpoint.velocity);
         armPID.setReference(setpoint.position, ControlType.kPosition,0, feedforward);
     }
 

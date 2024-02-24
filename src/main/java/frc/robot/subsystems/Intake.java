@@ -45,7 +45,7 @@ public class Intake extends SubsystemBase{
 
     public void runAtVelocity(double setpoint) {
         intake.setSmartCurrentLimit(20);
-        intakePID.setReference(setpoint, ControlType.kVelocity);
+        intakePID.setReference((setpoint/3)*5, ControlType.kVelocity);
     }
 
     public void runOpenLoop(double supplier) {

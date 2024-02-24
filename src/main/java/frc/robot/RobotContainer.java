@@ -30,6 +30,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -37,6 +39,7 @@ import frc.robot.Commands.BlindFire;
 import frc.robot.Commands.Warning;
 import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
+import frc.robot.Commands.CMDGroup.ForceFeed;
 import frc.robot.Commands.Climbers.HoldClimber;
 import frc.robot.Commands.Climbers.HomeClimber;
 import frc.robot.Commands.Climbers.RunClimberManual;
@@ -99,10 +102,8 @@ public class RobotContainer {
     new HomeClimber(m_starboardClimber)
   );
 
-  // ParallelCommandGroup forceFeed = new ParallelCommandGroup(
-  //   new RunIntakeOpenLoop(m_intake, IntakeConstants.kReverseSpeed),
-  //   new RunShooterAtVelocity(m_shooter, ShooterConstants.k3mSpeed)
-  // );
+  ForceFeed forceFeed = new ForceFeed(m_intake, m_shooter);
+
   ParallelCommandGroup forceReverse = new ParallelCommandGroup(
     new RunIntakeOpenLoop(m_intake, -IntakeConstants.kReverseSpeed),
     new RunShooterAtVelocity(m_shooter, -ShooterConstants.kAmpSpeed)
@@ -152,23 +153,23 @@ public class RobotContainer {
     NamedCommands.registerCommand("armDown", new RunArmClosedLoop(m_arm, ArmConstants.kIntakePos));
 
     // Build an auto chooser. This will use Commands.none() as the default option.
-    autoChooser = new SendableChooser<>();
-    autoChooser.addOption("1-Note Center", new PathPlannerAuto(k1NC));
-    autoChooser.addOption("1-NoteAmpSide", new PathPlannerAuto(k1NAS));
-    autoChooser.addOption("2-NoteAmpSide", new PathPlannerAuto(k2NAS));
-    autoChooser.addOption("2-NoteFieldCenter", new PathPlannerAuto(k2NFC));
-    autoChooser.addOption("2-NoteMidSpeaker", new PathPlannerAuto(k2NMS));
-    autoChooser.addOption("2-MidSpeakerAmp", new PathPlannerAuto(k2NMSA));
-    autoChooser.addOption("3-NoteAmpSide", new PathPlannerAuto(k3NAS));
-    autoChooser.addOption("3-NoteMidSpeakerCenter", new PathPlannerAuto(k3NMSC));
-    autoChooser.addOption("BasicLeave", new PathPlannerAuto(kBL));
-    autoChooser.addOption("BasicShoot", new PathPlannerAuto(kBS));
-    autoChooser.addOption("Entropy", new PathPlannerAuto(kEntropy));
-    autoChooser.addOption("Entropy Path", new PathPlannerAuto("EntropyPath"));
+    // autoChooser = new SendableChooser<>();
+    // autoChooser.addOption("1-Note Center", new PathPlannerAuto(k1NC));
+    // autoChooser.addOption("1-NoteAmpSide", new PathPlannerAuto(k1NAS));
+    // autoChooser.addOption("2-NoteAmpSide", new PathPlannerAuto(k2NAS));
+    // autoChooser.addOption("2-NoteFieldCenter", new PathPlannerAuto(k2NFC));
+    // autoChooser.addOption("2-NoteMidSpeaker", new PathPlannerAuto(k2NMS));
+    // autoChooser.addOption("2-MidSpeakerAmp", new PathPlannerAuto(k2NMSA));
+    // autoChooser.addOption("3-NoteAmpSide", new PathPlannerAuto(k3NAS));
+    // autoChooser.addOption("3-NoteMidSpeakerCenter", new PathPlannerAuto(k3NMSC));
+    // autoChooser.addOption("BasicLeave", new PathPlannerAuto(kBL));
+    // autoChooser.addOption("BasicShoot", new PathPlannerAuto(kBS));
+    // autoChooser.addOption("Entropy", new PathPlannerAuto(kEntropy));
+    // autoChooser.addOption("Entropy Path", new PathPlannerAuto("EntropyPath"));
 
 
     // Another option that allows you to specify the default auto by its name
-    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+    autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
     dashboard = new Dashboard(m_robotDrive, m_arm, m_intake, m_shooter, m_portClimber, m_starboardClimber, autoChooser);
     Shuffleboard.getTab("match").add(autoChooser);
@@ -220,7 +221,7 @@ public class RobotContainer {
     // Subsystem Default Commands
     m_intake.setDefaultCommand(new HoldIntake(m_intake));
     m_arm.setDefaultCommand(new HoldArm(m_arm));
-    //m_shooter.setDefaultCommand(new RunShooterAtVelocity(m_shooter, ShooterConstants.kIdleSpeed));
+    m_shooter.setDefaultCommand(new RunShooterAtVelocity(m_shooter, ShooterConstants.kIdleSpeed));
     m_portClimber.setDefaultCommand(new HoldClimber(m_portClimber));
     m_starboardClimber.setDefaultCommand(new HoldClimber(m_starboardClimber));
 
@@ -260,7 +261,7 @@ public class RobotContainer {
     m_operatorController.start().onTrue(new Warning("¡OVERRIDE!"));
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmClosedLoop(m_arm, -ArmConstants.kManualSpeed));
-   // m_operatorController.start().and(m_operatorController.povRight()).whileTrue(forceFeed);
+    m_operatorController.start().and(m_operatorController.povRight()).whileTrue(forceFeed);
     m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(forceReverse);
 
     m_operatorController.back().whileTrue(homeClimbers);
@@ -270,11 +271,12 @@ public class RobotContainer {
     m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
 
     m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
-    //m_operatorController.b().whileTrue(shootSubwoofer);
+    m_operatorController.b().whileTrue(new RunShooterAtVelocity(m_shooter, ShooterConstants.k3mSpeed));
     m_operatorController.y().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
     m_operatorController.x().whileTrue(new IntakeNoteAutomatic(m_intake));
 
-    m_operatorController.leftBumper().whileTrue(new RunShooterAtVelocity(m_shooter, ShooterConstants.k3mSpeed));
+    m_operatorController.leftBumper().whileTrue(new RunCommand(() ->
+    m_shooter.runOpenLoop(0.7), m_shooter));
 
   }
     

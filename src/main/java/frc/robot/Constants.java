@@ -166,13 +166,13 @@ public final class Constants {
 
     public static final double kCompenstion = 1.13;
 
-    public static final double kIdleSpeed = 1000;
+    public static final double kIdleSpeed = 700;
     public static final double kAmpSpeed = 1100;
 
-    public static final double kP = 6e-2;
+    public static final double kP = 0.0003;
     public static final double kI = 0.0;
-    public static final double kD = 0.0;
-    public static final double kFF = 0.00015;
+    public static final double kD = 0.000077;
+    public static final double kFF = 0.00018;
     public static final double kIz = 0;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
@@ -188,10 +188,10 @@ public final class Constants {
     public static final double kReverseSpeed = 0.8;
     public static final double kCompenstion = 1.83;
 
-    public static final double kP = 6e-2;
+    public static final double kP = 0.01;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
-    public static final double kFF = 0.000015;
+    public static final double kFF = 0.0003;
     public static final double kIz = 0;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;

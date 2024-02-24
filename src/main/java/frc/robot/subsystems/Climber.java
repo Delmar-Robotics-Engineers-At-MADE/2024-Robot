@@ -91,7 +91,7 @@ public class Climber extends SubsystemBase {
                 System.out.println("¡CLIMBER TOO HIGH! ¡OVEREXTEND! ¡OVEREXTEND!");
             }
             else {
-                motor.set(speed);
+                pid.setReference(speed, ControlType.kVelocity);
             }
         }
     }    
@@ -106,13 +106,8 @@ public class Climber extends SubsystemBase {
         }
     }
 
-    public void hold() {
-        if(!isHomed()) {
-            motor.set(0);
-        }
-        else {
-            pid.setReference(getPos(), ControlType.kPosition);
-        }
+    public void hold(double pos) {
+        pid.setReference(pos, ControlType.kPosition);
     }
 
     public double getPos() {

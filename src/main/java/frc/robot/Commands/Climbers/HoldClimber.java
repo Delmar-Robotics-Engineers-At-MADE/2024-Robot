@@ -9,6 +9,7 @@ import frc.robot.subsystems.Climber;
 
 public class HoldClimber extends Command {
   private Climber climber;
+  private double setpoint;
   /** Creates a new HoldClimber. */
   public HoldClimber(Climber climb) {
     climber = climb;
@@ -18,12 +19,14 @@ public class HoldClimber extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    setpoint = climber.getPos();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.hold();
+    climber.hold(setpoint);
   }
 
   // Called once the command ends or is interrupted.
