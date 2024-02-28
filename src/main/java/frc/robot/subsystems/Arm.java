@@ -82,11 +82,11 @@ public class Arm extends SubsystemBase{
     public void runToPosition(double setpoint) {
         //these are included safety measures. not necessary, but useful
         if(getPos() >= ArmConstants.kUpperLimit) {
-            left.set(0);;
+            left.set(0);
             System.out.println("¡TOO HIGH! ¡UPPER LIMIT!");
         }
         else if(getPos() <= ArmConstants.kLowerLimit) {
-            left.set(0);;
+            left.set(0);
             System.out.println("¡TOO LOW! ¡LOWER LIMIT! " + getPos());
         }
         else{

@@ -99,5 +99,14 @@ public class Shooter extends SubsystemBase{
         double result[] = {top.getMotorTemperature(), bottom.getMotorTemperature()};
         return result;
     }
+
+    public boolean isSafeTemp() {
+       if ((getTemp()[0] >= ShooterConstants.kThermalLimit) || (getTemp()[1] >= ShooterConstants.kThermalLimit)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
     
 }

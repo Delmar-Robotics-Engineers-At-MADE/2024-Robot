@@ -5,6 +5,8 @@
 package frc.robot.Commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.Utils.Toolkit;
 import frc.robot.subsystems.Shooter;
 
 public class AccelerateShooter extends Command {
@@ -26,7 +28,8 @@ public class AccelerateShooter extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(shooter.getTopVelocity() == setpoint && shooter.getBottomVelocity() == setpoint) {
+    if(Toolkit.isInTolarance(shooter.getTopVelocity(), setpoint, ShooterConstants.kTolerance) && 
+    Toolkit.isInTolarance(shooter.getBottomVelocity(), setpoint, ShooterConstants.kTolerance)) {
       end = true;
     }
     else {

@@ -17,6 +17,8 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Utils.Dashboard;
+import frc.robot.Utils.TagHandler;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveSubsystem;
@@ -72,6 +74,8 @@ public class RobotContainer {
   CommandJoystick m_driverController = new CommandJoystick(OIConstants.kDriverControllerPort);
 
   private final Dashboard dashboard;
+
+  private final TagHandler dave;
 
   // Command Groups
   ParallelCommandGroup feedAndShootSubwoofer = new ParallelCommandGroup(
@@ -174,6 +178,8 @@ public class RobotContainer {
     dashboard = new Dashboard(m_robotDrive, m_arm, m_intake, m_shooter, m_portClimber, m_starboardClimber, autoChooser);
     Shuffleboard.getTab("match").add(autoChooser);
 
+    dave = new TagHandler();
+
     // Configure default commands
     m_robotDrive.setDefaultCommand(
 
@@ -271,7 +277,7 @@ public class RobotContainer {
     m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
 
     m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
-    m_operatorController.b().whileTrue(new RunShooterAtVelocity(m_shooter, ShooterConstants.k3mSpeed));
+    m_operatorController.b().whileTrue(shootPodium);
     m_operatorController.y().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
     m_operatorController.x().whileTrue(new IntakeNoteAutomatic(m_intake));
 

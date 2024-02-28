@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.Utils;
 
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -33,7 +33,7 @@ public class Dashboard {
         Shuffleboard.getTab("climbers");
 
         Shuffleboard.getTab("match").addBoolean("capture", () -> intake.isNote());
-        Shuffleboard.getTab("match").addDouble("heading", () -> drivetrain.getHeading()).withWidget("Gyro");
+        Shuffleboard.getTab("match").addDouble("heading", () -> -drivetrain.getHeading()).withWidget("Gyro");
         Shuffleboard.getTab("match").addBoolean("port homed", () -> port.isHomed());
         Shuffleboard.getTab("match").addBoolean("starboard homed", () -> starboard.isHomed());
 
@@ -54,6 +54,7 @@ public class Dashboard {
         Shuffleboard.getTab("shooter").addDouble("top current", () -> shooter.getOutputCurrent()[0]);
         Shuffleboard.getTab("shooter").addDouble("top temp", () -> shooter.getTemp()[0]);
         Shuffleboard.getTab("shooter").addDouble("bottom temp", () -> shooter.getTemp()[1]);
+        Shuffleboard.getTab("shooter").addBoolean("thermal safe", () -> shooter.isSafeTemp());
 
 
 

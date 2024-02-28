@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.Utils;
 
 import java.util.Optional;
 
@@ -13,7 +13,7 @@ public class TagHandler {
         alliance = DriverStation.getAlliance();
     }
 
-    public int getTag(AprilTags tag) {
+    public int getFiducialID(AprilTags tag) {
         int result = 0;
         if(alliance.get() == Alliance.Red) {
             switch (tag) {
