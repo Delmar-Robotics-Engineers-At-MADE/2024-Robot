@@ -185,19 +185,28 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int kIntakeID = 10;
     public static final int kSensorDIOPort = 0;
-    public static final double kIntakeSpeed = 6000;
+    public static final double kIntakeSpeed = 3000
+    ;
     public static final double kFeedSpeed = 3083;
-    public static final double kReverseSpeed = 0.8;
+    public static final double kReverseSpeed = 0.2;
     public static final double kCompenstion = 1.83;
 
     public static final double kP = 0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
-    public static final double kFF = 0.000103;
+    public static final double kFF = 0.02;
     public static final double kIz = 0;
+    public static final double kS = 0;
+    public static final double kV = 0.96;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
-    public static final double kMaxRPM = 11000;    
+    public static final double kMaxRPM = 11000;
+    public static final double kVelTolerance = 200;
+
+    public static final double kpP = 0;
+    public static final double kpI = 0.0;
+    public static final double kpD = 0.0;
+    public static final double kpFF = 0.02;
   }
 
   public static final class ArmConstants {

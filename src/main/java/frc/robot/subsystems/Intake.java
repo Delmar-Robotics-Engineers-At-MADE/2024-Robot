@@ -6,9 +6,12 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ShooterConstants;
 
 public class Intake extends SubsystemBase{
     /*We need methods to intake and stop when note is detected, feed to shooter, reverse intake and feed manually.
@@ -18,7 +21,9 @@ public class Intake extends SubsystemBase{
     private final RelativeEncoder encoder;
     private final SparkPIDController intakePID;
     private final DigitalInput optical;
-
+    private final PIDController velPID;
+    private final PIDController posPID;
+    private final SimpleMotorFeedforward ff;
 
     public Intake(int intakeID, int sensorDIO) {
         intake = new CANSparkMax(intakeID, MotorType.kBrushless);
@@ -35,12 +40,21 @@ public class Intake extends SubsystemBase{
         intakePID.setD(IntakeConstants.kD);
         intakePID.setIZone(IntakeConstants.kIz);
         intakePID.setFF(IntakeConstants.kFF);
-        intakePID.setOutputRange(IntakeConstants.kMinOutput, IntakeConstants.kMaxOutput);      
+        intakePID.setOutputRange(IntakeConstants.kMinOutput, IntakeConstants.kMaxOutput);
+        
+
+        velPID = new PIDController(IntakeConstants.kP, IntakeConstants.kI, IntakeConstants.kD);
+        velPID.setTolerance(0, IntakeConstants.kVelTolerance);
+
+        posPID = new PIDController(IntakeConstants.kpP, IntakeConstants.kpI, IntakeConstants.kpD);
+
+        ff = new SimpleMotorFeedforward(IntakeConstants.kS, IntakeConstants.kV);
+
     }
 
     public void hold(double pos) {
         intake.setSmartCurrentLimit(5);
-        intakePID.setReference(pos, ControlType.kPosition);
+        intake.set(posPID.calculate(getPosition(), pos));
     }
 
     public void runAtVelocity(double setpoint) {
@@ -54,8 +68,8 @@ public class Intake extends SubsystemBase{
     }
 
     public void autoIntake() {
-        if(!isNote()){
-            intakePID.setReference(IntakeConstants.kIntakeSpeed, ControlType.kVelocity);
+        if(isNote()){
+            intake.set(velPID.calculate(getVelocity(), IntakeConstants.kIntakeSpeed) + ff.calculate(IntakeConstants.kIntakeSpeed));
         }
         else {
             hold(encoder.getPosition());
@@ -80,5 +94,14 @@ public class Intake extends SubsystemBase{
 
     public double getTemp() {
         return intake.getMotorTemperature();
+    }
+
+    public boolean isSafeTemp() {
+        if(getTemp() < ShooterConstants.kThermalLimit) {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

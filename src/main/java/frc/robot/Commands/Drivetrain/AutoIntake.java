@@ -44,6 +44,7 @@ public class AutoIntake extends PIDDrive {
     if(pCam.isObj()) {
       new RunArmClosedLoop(arm, ArmConstants.kIntakePos);
       this.setValues(0, 0, pCam.objYaw());
+      super.execute();
       if(this.atGoal()) {
         drivetrain.drive(OperatorConstants.kManoeuvreSpeed, 0, 0, false, true); 
         if(!intake.isNote()) {

@@ -15,7 +15,7 @@ public class Dashboard {
         The match tab should provide a clean end user experiance that delivers only match critical information.
     */
 
-    Dashboard(
+    public Dashboard(
      DriveSubsystem drivetrain,
      Arm arm,
      Intake intake, 
@@ -46,6 +46,7 @@ public class Dashboard {
         Shuffleboard.getTab("intake").addDouble("current", () -> intake.getOutputCurrent());
         Shuffleboard.getTab("intake").addDouble("velocity", () -> intake.getVelocity());
         Shuffleboard.getTab("intake").addDouble("temp", () -> intake.getTemp());
+        Shuffleboard.getTab("intake").addBoolean("thermal safe", () -> intake.isSafeTemp());
         
         Shuffleboard.getTab("shooter").addDouble("top speed", () -> shooter.getTopVelocity());
         Shuffleboard.getTab("shooter").addDouble("bottom Speed", () -> shooter.getBottomVelocity());
