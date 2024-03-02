@@ -44,6 +44,9 @@ public class PIDDrive extends Command {
     yaw = yawErr;
     this.cameraOffset = cameraOffset;
     this.cameraDepth = cameraDepth;
+    yawPID.setTolerance(DriveConstants.kYawToleranceDeg);
+    latPID.setTolerance(DriveConstants.kLatToleranceMeter);
+    longPID.setTolerance(DriveConstants.kLongToleranceMeter);
 
     drivetrain = dt;
     // Use addRequirements() here to declare subsystem dependencies.

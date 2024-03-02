@@ -74,6 +74,9 @@ public class RobotContainer {
 
   private final Dashboard dashboard;
 
+
+  private boolean override = false;
+
   // Command Groups
   ParallelCommandGroup feedAndShootSubwoofer = new ParallelCommandGroup(
     new ShootNote(m_shooter, ShooterConstants.kSubwooferSpeed),
@@ -226,7 +229,7 @@ public class RobotContainer {
     m_portClimber.setDefaultCommand(new HoldClimber(m_portClimber));
     m_starboardClimber.setDefaultCommand(new HoldClimber(m_starboardClimber));
 
-
+    Shuffleboard.getTab("match").addBoolean("override", () -> override);
   }
 
   /**
@@ -259,7 +262,8 @@ public class RobotContainer {
       new InstantCommand(() -> System.out.println("¡KABOOM!"))
     );
 
-    m_operatorController.start().onTrue(new Warning("¡OVERRIDE!"));
+    m_operatorController.start().onTrue(new InstantCommand(() -> override = true));
+    m_operatorController.start().onFalse(new InstantCommand(() -> override = false));
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmClosedLoop(m_arm, -ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povRight()).whileTrue(forceFeed);

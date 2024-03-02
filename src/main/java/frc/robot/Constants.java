@@ -71,6 +71,8 @@ public final class Constants {
     public static final double kMaxYawAccelerationDegPerSSquared = 20;
     public static final double kYawToleranceDeg = 5;
     public static final double kYawRateToleranceDegPerS = 10;
+    public static final double kLongToleranceMeter = 0.1;
+    public static final double kLatToleranceMeter = 0.1;
   }
 
   public static final class PIDDriveConstants {
