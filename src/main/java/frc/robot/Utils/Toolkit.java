@@ -3,14 +3,12 @@ package frc.robot.Utils;
 import java.util.Optional;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.AprilTags;
 
-public class Toolkit {
+public final class Toolkit {
     
     public static boolean isInTolarance(double input, double target, double tolerance) {
         double upLim = target + tolerance;
