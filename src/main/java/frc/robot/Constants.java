@@ -201,12 +201,12 @@ public final class Constants {
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
     public static final double kMaxRPM = 11000;
-    public static final double kVelTolerance = 200;
+    public static final double kVelTolerance = 400;
 
-    public static final double kpP = 0;
+    public static final double kpP = 0.05;
     public static final double kpI = 0.0;
     public static final double kpD = 0.0;
-    public static final double kpFF = 0.02;
+    public static final double kpFF = 0;
   }
 
   public static final class ArmConstants {
@@ -266,6 +266,7 @@ public final class Constants {
     public static final double kUpperLimit = 10;
     public static final double kLowerLimit = 0;
     public static final double kManualSpeed = 0;
+    public static final double kTolearance = 5;
     
   }
 

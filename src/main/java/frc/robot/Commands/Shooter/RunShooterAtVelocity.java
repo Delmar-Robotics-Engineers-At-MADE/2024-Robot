@@ -23,7 +23,7 @@ public class RunShooterAtVelocity extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("init RunShooterAtVelocity");
+    end = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

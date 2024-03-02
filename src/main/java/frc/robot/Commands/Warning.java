@@ -7,7 +7,8 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class Warning extends Command {
-  String yell;
+  private String yell;
+  private boolean end;
   /** Creates a new Warning. */
   public Warning(String input) {
     yell = input;
@@ -16,12 +17,15 @@ public class Warning extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    end = false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     System.out.println(yell);
+    end = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -31,6 +35,6 @@ public class Warning extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return end;
   }
 }

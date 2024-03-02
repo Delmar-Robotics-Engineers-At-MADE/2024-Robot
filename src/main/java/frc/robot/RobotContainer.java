@@ -119,17 +119,17 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
   // temp strings
-  private String k1NC = "1-Note Center";
-  private String k1NAS = "1-NoteAmpSide";
-  private String k2NAS = "2-NoteAmpSide";
-  private String k2NFC = "2-NoteFieldCenter";
-  private String k2NMS = "2-NoteMidSpeaker";
-  private String k2NMSA = "2-NoteMidSpeakerAmp";
-  private String k3NAS = "3-NoteAmpSide";
-  private String k3NMSC = "3-NoteMidSpeakerCenter";
-  private String kBL = "BasicLeave";
-  private String kBS = "BasicShoot";
-  private String kEntropy = "Entropy";
+  // private String k1NC = "1-Note Center";
+  // private String k1NAS = "1-NoteAmpSide";
+  // private String k2NAS = "2-NoteAmpSide";
+  // private String k2NFC = "2-NoteFieldCenter";
+  // private String k2NMS = "2-NoteMidSpeaker";
+  // private String k2NMSA = "2-NoteMidSpeakerAmp";
+  // private String k3NAS = "3-NoteAmpSide";
+  // private String k3NMSC = "3-NoteMidSpeakerCenter";
+  // private String kBL = "BasicLeave";
+  // private String kBS = "BasicShoot";
+  // private String kEntropy = "Entropy";
 
   
   /**
@@ -273,7 +273,7 @@ public class RobotContainer {
 
     m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
     m_operatorController.b().whileTrue(shootPodium);
-    m_operatorController.y().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos));
+    m_operatorController.y().whileTrue(shootSubwoofer);
     m_operatorController.x().whileTrue(new IntakeNoteAutomatic(m_intake));
 
     m_operatorController.leftBumper().whileTrue(new RunCommand(() ->

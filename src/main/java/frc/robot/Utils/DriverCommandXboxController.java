@@ -17,7 +17,15 @@ public class DriverCommandXboxController extends CommandXboxController {
     }
 
     public Trigger intake() {
+        return intake;
+    }
+
+    public Trigger frontAmp() {
         return b();
+    }
+
+    public Trigger backAmp() {
+        return a();
     }
 
     public Trigger xMode() {
@@ -56,4 +64,10 @@ public class DriverCommandXboxController extends CommandXboxController {
     public double getLeftY() {
         return Toolkit.stickAugments(super.getLeftY(), kDeadband);
     }
+
+    public Trigger intake = new Trigger(() -> leftBumper().getAsBoolean() || rightBumper().getAsBoolean());
+
+
+
 }
+

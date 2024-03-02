@@ -6,6 +6,7 @@ package frc.robot.Commands.Arm;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Utils.Toolkit;
 import frc.robot.subsystems.Arm;
 
 public class RunArmClosedLoop extends Command {
@@ -37,7 +38,7 @@ public class RunArmClosedLoop extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Math.abs(arm.getPos() - setpoint) <= ArmConstants.kTolearance) {
+    if(Toolkit.isInTolarance(arm.getPos(), setpoint, ArmConstants.kTolearance)) {
       System.out.println("Arm At Setpoint");
       end = true;
     }
