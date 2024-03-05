@@ -20,6 +20,10 @@ public class DriverCommandXboxController extends CommandXboxController {
         return intake;
     }
 
+    public Trigger gyroReset() {
+        return rightBumper().and(y());
+    }
+
     public Trigger frontAmp() {
         return b();
     }
@@ -67,6 +71,7 @@ public class DriverCommandXboxController extends CommandXboxController {
 
     public Trigger intake = new Trigger(() -> leftBumper().getAsBoolean() || rightBumper().getAsBoolean());
 
+    
 
 
 }

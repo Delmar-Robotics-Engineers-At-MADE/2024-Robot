@@ -118,12 +118,9 @@ public class RobotContainer {
     new RunShooterAtVelocity(m_shooter, ShooterConstants.kAmpSpeed, true)
   );
 
-  SequentialCommandGroup frontAmp = new SequentialCommandGroup(
-    new RunArmClosedLoop(m_arm, ArmConstants.kFrontAmpPos),
-    new RunIntakeOpenLoop(m_intake, -IntakeConstants.kReverseSpeed)
-  );
 
-  SequentialCommandGroup sFire =       new SequentialCommandGroup(
+  // Firing Sequences
+  SequentialCommandGroup subwooferFire = new SequentialCommandGroup(
         Toolkit.sout("sFire init"),
         new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos),
         new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed),
@@ -136,11 +133,42 @@ public class RobotContainer {
         Toolkit.sout("sFire end")
       );
 
-  // halp. thrrows exception
-  // SequentialCommandGroup amp = new SequentialCommandGroup(
-  //   new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
-  //   forceFeed
-  // );
+  SequentialCommandGroup distanceFire = new SequentialCommandGroup(
+        Toolkit.sout("Fire init"),
+        new RunArmClosedLoop(m_arm, ArmConstants.k3mPos),
+        new AccelerateShooter(m_shooter, ShooterConstants.k3mSpeed),
+        Toolkit.sout("shoot init"),
+        new ParallelRaceGroup(
+          new WaitCommand(ShooterConstants.kLaunchTime),
+          new RunShooterEternal(m_shooter, ShooterConstants.k3mSpeed, true),
+          new Feed(m_intake)
+        ),
+        Toolkit.sout("Fire end")
+      );
+
+  SequentialCommandGroup backAmp = new SequentialCommandGroup(
+        Toolkit.sout("AMP init"),
+        new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
+        new AccelerateShooter(m_shooter, ShooterConstants.kAmpSpeed),
+        Toolkit.sout("shoot init"),
+        new ParallelRaceGroup(
+          new WaitCommand(ShooterConstants.kLaunchTime),
+          new RunShooterEternal(m_shooter, ShooterConstants.kAmpSpeed, true),
+          new Feed(m_intake)
+        ),
+        Toolkit.sout("Amp end")
+      );
+
+  SequentialCommandGroup frontAmp = new SequentialCommandGroup(
+        Toolkit.sout("AMP init"),
+        new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
+        Toolkit.sout("shoot init"),
+        new ParallelRaceGroup(
+          new WaitCommand(ShooterConstants.kLaunchTime),
+          new RunIntakeOpenLoop(m_intake, IntakeConstants.kReverseSpeed)
+        ),
+        Toolkit.sout("Amp end")
+      );
 
   private final SendableChooser<Command> autoChooser;
 
@@ -172,8 +200,30 @@ public class RobotContainer {
 
     // Register Named Commands
     NamedCommands.registerCommand("intake", intake);
-    NamedCommands.registerCommand("shootSubwoofer", shootSubwoofer);
-    NamedCommands.registerCommand("shootpodium", shootPodium);
+    NamedCommands.registerCommand("shootSubwoofer", new SequentialCommandGroup(
+        Toolkit.sout("sFire init"),
+        new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos),
+        new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed),
+        Toolkit.sout("shoot init"),
+        new ParallelRaceGroup(
+          new WaitCommand(ShooterConstants.kLaunchTime),
+          new RunShooterEternal(m_shooter, ShooterConstants.kSubwooferSpeed, true),
+          new Feed(m_intake)
+        ),
+        Toolkit.sout("sFire end")
+      ));
+    NamedCommands.registerCommand("shootpodium", new SequentialCommandGroup(
+        Toolkit.sout("Fire init"),
+        new RunArmClosedLoop(m_arm, ArmConstants.k3mPos),
+        new AccelerateShooter(m_shooter, ShooterConstants.k3mSpeed),
+        Toolkit.sout("shoot init"),
+        new ParallelRaceGroup(
+          new WaitCommand(ShooterConstants.kLaunchTime),
+          new RunShooterEternal(m_shooter, ShooterConstants.k3mSpeed, true),
+          new Feed(m_intake)
+        ),
+        Toolkit.sout("Fire end")
+      ));
     NamedCommands.registerCommand("armInside", new RunArmClosedLoop(m_arm, ArmConstants.kStowPos));
     NamedCommands.registerCommand("homePort", new HomeClimber(m_portClimber));
     NamedCommands.registerCommand("homeStarboard", new HomeClimber(m_starboardClimber));
@@ -301,7 +351,7 @@ public class RobotContainer {
 
     m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
     m_operatorController.b().whileTrue(m_intake.run(() ->m_intake.runAtVelocity(IntakeConstants.kFeedSpeed)));
-    m_operatorController.y().whileTrue(sFire);
+    m_operatorController.y().whileTrue(subwooferFire);
     m_operatorController.x().whileTrue(new IntakeNoteAutomatic(m_intake));
 
     m_operatorController.leftBumper().whileTrue(new RunCommand(() ->

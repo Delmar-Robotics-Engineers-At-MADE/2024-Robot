@@ -25,7 +25,7 @@ public class RunClimberManual extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      climber.runOpenLoop(velocity);
+      climber.runAtVelocity(velocity);
       System.out.println("¡CLIMBER! ¡EXCERCISE CAUTION!");
   }
 
