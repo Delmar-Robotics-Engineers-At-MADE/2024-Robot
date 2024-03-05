@@ -5,8 +5,13 @@ import java.util.Optional;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.AprilTags;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.States;
 
 public final class Toolkit {
     
@@ -91,8 +96,8 @@ public final class Toolkit {
         return -MathUtil.applyDeadband(input, deadband);
     }
 
-    public static void sout(String input) {
-        new InstantCommand(() -> System.out.println(input));
+    public static Command sout(String input) {
+        return new InstantCommand(() -> System.out.println(input));
     }
 
     public static double manageTriggers(double left, double right) {
@@ -110,5 +115,21 @@ public final class Toolkit {
         povAngleDeg = 360 - povAngleDeg;
         return povAngleDeg;
     }
+
+    public static double compensate(double value) {
+        return value*ShooterConstants.kCompenstion;
+    }
+
+    // public static double[] getStateConstants(States state) {
+    //     switch (state) {
+    //         case INTAKE:
+    //             double result[] = {ArmConstants.kIntakePos, IntakeConstants.kIntakeSpeed};
+    //             break;
+            
+    //         default:
+    //             break;
+    //     }
+    //     return result;
+    // }
 
 }

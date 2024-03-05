@@ -63,9 +63,9 @@ public class Shooter extends SubsystemBase{
     }
 
     public void runAtSpeed(double target) {
-        double setpoint = target * ShooterConstants.kCompenstion;
-        topVelController.setReference(setpoint, ControlType.kVelocity);
-        bottomVelController.setReference(setpoint, ControlType.kVelocity);
+        //double setpoint = target * ShooterConstants.kCompenstion;
+        topVelController.setReference(target, ControlType.kVelocity);
+        bottomVelController.setReference(target, ControlType.kVelocity);
         //System.out.println(setpoint + " " + top.getOutputCurrent());
     }
 

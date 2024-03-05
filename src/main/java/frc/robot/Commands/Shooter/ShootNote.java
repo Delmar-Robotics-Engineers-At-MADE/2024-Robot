@@ -5,6 +5,7 @@
 package frc.robot.Commands.Shooter;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
@@ -22,12 +23,14 @@ public class ShootNote extends Command {
     timeout = ShooterConstants.kLaunchTime;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(launchingDevice);
+    //Shuffleboard.getTab("match").addBoolean("shoot", () -> !isFinished());
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     startTime = Timer.getFPGATimestamp();
+    System.out.println("shoot init");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

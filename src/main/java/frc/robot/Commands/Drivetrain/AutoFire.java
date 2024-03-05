@@ -49,7 +49,7 @@ public class AutoFire extends PIDDrive {
     if(this.atGoal()) {
      RunArmClosedLoop aCMD = new RunArmClosedLoop(arm, armSetpoint);
      if(aCMD.isFinished()) {
-      RunShooterAtVelocity wheeCMD = new RunShooterAtVelocity(whee, wheeSeptoint);
+      RunShooterAtVelocity wheeCMD = new RunShooterAtVelocity(whee, wheeSeptoint, true);
       Feed feed = new Feed(intake);
       if(wheeCMD.isFinished() && feed.isFinished()) {
         end = true;

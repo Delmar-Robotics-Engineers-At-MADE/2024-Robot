@@ -59,7 +59,7 @@ public class Intake extends SubsystemBase{
 
     public void runAtVelocity(double setpoint) {
         intake.setSmartCurrentLimit(20);
-        intakePID.setReference((setpoint/3)*5, ControlType.kVelocity);
+        intake.set(velPID.calculate(getVelocity(), setpoint + ff.calculate(setpoint)));
     }
 
     public void runOpenLoop(double supplier) {
@@ -68,13 +68,22 @@ public class Intake extends SubsystemBase{
     }
 
     public void autoIntake() {
-        if(isNote()){
+        if(!isNote()){
             intake.set(velPID.calculate(getVelocity(), IntakeConstants.kIntakeSpeed) + ff.calculate(IntakeConstants.kIntakeSpeed));
         }
         else {
             hold(encoder.getPosition());
         }
     }
+
+    // public void autoIntake() {
+    //     if(!isNote()) {
+    //         intake.set(IntakeConstants.kReverseSpeed);
+    //     }
+    //     else {
+    //         hold(getPosition());
+    //     }
+    // }
 
     public boolean isNote() {
         return optical.get();

@@ -22,7 +22,7 @@ public class ForceFeed extends Command {
     this.intake = intake;
     this.shooter = shooter;
     incmd = new RunIntakeOpenLoop(intake, IntakeConstants.kReverseSpeed);
-    shcmd = new RunShooterAtVelocity(shooter, ShooterConstants.k3mSpeed);
+    shcmd = new RunShooterAtVelocity(shooter, ShooterConstants.k3mSpeed, false);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

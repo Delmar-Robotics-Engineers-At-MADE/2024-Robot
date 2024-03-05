@@ -5,17 +5,20 @@
 package frc.robot.Commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 
 public class RunShooterAtVelocity extends Command {
   private Shooter shooter;
   private double setpoint;
   private boolean end;
+  private boolean compensate;
   /** Creates a new RunShooterAtVelocity. */
-  public RunShooterAtVelocity(Shooter launchingDevice, double velocity) {
+  public RunShooterAtVelocity(Shooter launchingDevice, double velocity, boolean compansation) {
     shooter = launchingDevice;
     setpoint = velocity;
     end = false;
+    compensate = compansation;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(launchingDevice);
   }
@@ -29,7 +32,12 @@ public class RunShooterAtVelocity extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(!compensate) {
     shooter.runAtSpeed(setpoint);
+    }
+    else {
+      shooter.runAtSpeed(setpoint*ShooterConstants.kCompenstion);
+    }
   }
 
   // Called once the command ends or is interrupted.

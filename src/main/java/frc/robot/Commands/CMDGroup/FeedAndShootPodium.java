@@ -5,25 +5,21 @@
 package frc.robot.Commands.CMDGroup;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.IntakeConstants;
+import frc.robot.Commands.Intake.Feed;
+import frc.robot.Commands.Shooter.ShootNote;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.Commands.Intake.RunIntakeOpenLoop;
-import frc.robot.Commands.Shooter.RunShooterAtVelocity;
 
-public class ForceReverse extends Command {
-  private final Intake intake;
+public class FeedAndShootPodium extends Command {
   private final Shooter shooter;
-  private final RunIntakeOpenLoop incmd;
-  private final RunShooterAtVelocity shcmd;
-  /** Creates a new ForceFeed. */
-  public ForceReverse(Intake intake, Shooter shooter) {
-    this.intake = intake;
+  private final Intake intake;
+  /** Creates a new FeedAndShootPodium. */
+  public FeedAndShootPodium(Shooter shooter, Intake intake) {
     this.shooter = shooter;
-    incmd = new RunIntakeOpenLoop(intake, -IntakeConstants.kReverseSpeed);
-    shcmd = new RunShooterAtVelocity(shooter, ShooterConstants.k3mSpeed, false);
+    this.intake = intake;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(shooter, intake);
   }
 
   // Called when the command is initially scheduled.
@@ -33,8 +29,8 @@ public class ForceReverse extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    incmd.execute();
-    shcmd.execute();
+    new ShootNote(shooter, ShooterConstants.k3mSpeed);
+    new Feed(intake);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +40,6 @@ public class ForceReverse extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return incmd.isFinished() && shcmd.isFinished();
+    return false;
   }
 }

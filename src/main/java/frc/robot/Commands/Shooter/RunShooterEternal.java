@@ -4,24 +4,19 @@
 
 package frc.robot.Commands.Shooter;
 
-import edu.wpi.first.hal.FRCNetComm.tResourceType;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Utils.Toolkit;
 import frc.robot.subsystems.Shooter;
 
-public class AccelerateShooter extends Command {
+public class RunShooterEternal extends Command {
   private Shooter shooter;
   private double setpoint;
-  private boolean end;
-  private boolean isAtSeptoint;
+  private boolean compensate;
   /** Creates a new RunShooterAtVelocity. */
-  public AccelerateShooter(Shooter launchingDevice, double velocity) {
+  public RunShooterEternal(Shooter launchingDevice, double velocity, boolean compansation) {
     shooter = launchingDevice;
     setpoint = velocity;
-    end = false;
-    isAtSeptoint = false;
+    compensate = compansation;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(launchingDevice);
   }
@@ -29,34 +24,28 @@ public class AccelerateShooter extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    isAtSeptoint = false;
-    end = false;
-    System.out.println("accel init");
-    //Shuffleboard.getTab("shooter").addBoolean("at setpoint", () -> isAtSeptoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Toolkit.isInTolarance(shooter.getTopVelocity(), setpoint, ShooterConstants.kTolerance) && 
-    Toolkit.isInTolarance(shooter.getBottomVelocity(), setpoint, ShooterConstants.kTolerance)) {
-      System.out.println("in tolearance");
-      isAtSeptoint = true;
-      end = true;
+    if(!compensate) {
+    shooter.runAtSpeed(setpoint);
     }
     else {
-      shooter.runAtSpeed(setpoint);
+      shooter.runAtSpeed(setpoint*ShooterConstants.kCompenstion);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println("accel end");
-    return end;
+    return false;
   }
 }

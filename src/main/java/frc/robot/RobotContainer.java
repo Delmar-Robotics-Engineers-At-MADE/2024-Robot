@@ -18,6 +18,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Utils.Dashboard;
+import frc.robot.Utils.Toolkit;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveSubsystem;
@@ -26,8 +27,10 @@ import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -40,6 +43,7 @@ import frc.robot.Commands.BlindFire;
 import frc.robot.Commands.Warning;
 import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
+import frc.robot.Commands.CMDGroup.FeedAndShootPodium;
 import frc.robot.Commands.CMDGroup.ForceFeed;
 import frc.robot.Commands.Climbers.HoldClimber;
 import frc.robot.Commands.Climbers.HomeClimber;
@@ -51,6 +55,7 @@ import frc.robot.Commands.Intake.IntakeNoteAutomatic;
 import frc.robot.Commands.Intake.RunIntakeOpenLoop;
 import frc.robot.Commands.Shooter.AccelerateShooter;
 import frc.robot.Commands.Shooter.RunShooterAtVelocity;
+import frc.robot.Commands.Shooter.RunShooterEternal;
 import frc.robot.Commands.Shooter.ShootNote;
 
 /*
@@ -109,9 +114,27 @@ public class RobotContainer {
   ForceFeed forceFeed = new ForceFeed(m_intake, m_shooter);
 
   ParallelCommandGroup forceReverse = new ParallelCommandGroup(
-    new RunIntakeOpenLoop(m_intake, -IntakeConstants.kReverseSpeed),
-    new RunShooterAtVelocity(m_shooter, -ShooterConstants.kAmpSpeed)
+    new RunIntakeOpenLoop(m_intake, IntakeConstants.kReverseSpeed),
+    new RunShooterAtVelocity(m_shooter, ShooterConstants.kAmpSpeed, true)
   );
+
+  SequentialCommandGroup frontAmp = new SequentialCommandGroup(
+    new RunArmClosedLoop(m_arm, ArmConstants.kFrontAmpPos),
+    new RunIntakeOpenLoop(m_intake, -IntakeConstants.kReverseSpeed)
+  );
+
+  SequentialCommandGroup sFire =       new SequentialCommandGroup(
+        Toolkit.sout("sFire init"),
+        new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos),
+        new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed),
+        Toolkit.sout("shoot init"),
+        new ParallelRaceGroup(
+          new WaitCommand(ShooterConstants.kLaunchTime),
+          new RunShooterEternal(m_shooter, ShooterConstants.kSubwooferSpeed, true),
+          new Feed(m_intake)
+        ),
+        Toolkit.sout("sFire end")
+      );
 
   // halp. thrrows exception
   // SequentialCommandGroup amp = new SequentialCommandGroup(
@@ -179,14 +202,14 @@ public class RobotContainer {
     Shuffleboard.getTab("match").add(autoChooser);
 
     // Configure default commands
-    m_robotDrive.setDefaultCommand(
+    // m_robotDrive.setDefaultCommand(
 
-      new RunCommand(
-        () -> m_robotDrive.drive(
-          -MathUtil.applyDeadband(m_driverController.getX()*DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getY()*DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getTwist()*DriverConstants.kYawSpeed, OIConstants.kDriveDeadband),
-          true, true), m_robotDrive));
+    //   new RunCommand(
+    //     () -> m_robotDrive.drive(
+    //       -MathUtil.applyDeadband(m_driverController.getX()*DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
+    //       -MathUtil.applyDeadband(m_driverController.getY()*DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
+    //       -MathUtil.applyDeadband(m_driverController.getTwist()*DriverConstants.kYawSpeed, OIConstants.kDriveDeadband),
+    //       true, true), m_robotDrive));
     
     // The left stick controls translation of the robot.
     // Turning is controlled by the X axis of the right stick.
@@ -224,8 +247,8 @@ public class RobotContainer {
 
     // Subsystem Default Commands
     m_intake.setDefaultCommand(new HoldIntake(m_intake));
-    m_arm.setDefaultCommand(new HoldArm(m_arm));
-    m_shooter.setDefaultCommand(new RunShooterAtVelocity(m_shooter, ShooterConstants.kIdleSpeed));
+    m_arm.setDefaultCommand(new RunArmClosedLoop(m_arm, ArmConstants.kStowPos));
+    m_shooter.setDefaultCommand(new RunShooterAtVelocity(m_shooter, ShooterConstants.kIdleSpeed, false));
     m_portClimber.setDefaultCommand(new HoldClimber(m_portClimber));
     m_starboardClimber.setDefaultCommand(new HoldClimber(m_starboardClimber));
 
@@ -248,7 +271,7 @@ public class RobotContainer {
             m_robotDrive));
 
     m_driverController.button(DriverConstants.kIntake).whileTrue(intake);
-    m_driverController.button(DriverConstants.kHoldArmDown).toggleOnTrue(new RunArmClosedLoop(m_arm, ArmConstants.kIntakePos));
+    m_driverController.button(DriverConstants.kHoldArmDown).toggleOnTrue(new RunCommand(() -> m_arm.runToPosition(ArmConstants.kIntakePos), m_arm));
     m_driverController.button(DriverConstants.kAutoIntake).and(m_driverController.button(DriverConstants.kIntake)).onTrue(
       new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)
     );
@@ -261,13 +284,14 @@ public class RobotContainer {
     m_driverController.button(DriverConstants.kSelfDestruct).onTrue(
       new InstantCommand(() -> System.out.println("¡KABOOM!"))
     );
+    m_driverController.button(6).whileTrue(frontAmp);
 
     m_operatorController.start().onTrue(new InstantCommand(() -> override = true));
     m_operatorController.start().onFalse(new InstantCommand(() -> override = false));
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmClosedLoop(m_arm, -ArmConstants.kManualSpeed));
-    m_operatorController.start().and(m_operatorController.povRight()).whileTrue(forceFeed);
-    m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(forceReverse);
+    //m_operatorController.start().and(m_operatorController.povRight()).whileTrue(new RunCommand(() -> Shuffleboard.getTab("match").addBoolean("pov right", () -> m_driverController.povRight().getAsBoolean())));
+    m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(new ForceFeed(m_intake, m_shooter));
 
     m_operatorController.back().whileTrue(homeClimbers);
     m_operatorController.rightBumper().whileTrue(new RunClimberManual(m_starboardClimber, ClimberConstants.kManualSpeed));
@@ -276,8 +300,8 @@ public class RobotContainer {
     m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
 
     m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
-    m_operatorController.b().whileTrue(shootPodium);
-    m_operatorController.y().whileTrue(shootSubwoofer);
+    m_operatorController.b().whileTrue(m_intake.run(() ->m_intake.runAtVelocity(IntakeConstants.kFeedSpeed)));
+    m_operatorController.y().whileTrue(sFire);
     m_operatorController.x().whileTrue(new IntakeNoteAutomatic(m_intake));
 
     m_operatorController.leftBumper().whileTrue(new RunCommand(() ->

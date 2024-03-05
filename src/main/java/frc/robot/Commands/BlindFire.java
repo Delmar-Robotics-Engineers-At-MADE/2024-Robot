@@ -40,7 +40,7 @@ public class BlindFire extends Command {
   public void execute() {
           RunArmClosedLoop aCMD = new RunArmClosedLoop(arm, armSetpoint);
       if(aCMD.isFinished()) {
-        RunShooterAtVelocity wheeCMD = new RunShooterAtVelocity(shooter, shooterSetpoint);
+        RunShooterAtVelocity wheeCMD = new RunShooterAtVelocity(shooter, shooterSetpoint, true);
         Feed feed = new Feed(intake);
         if(wheeCMD.isFinished() && feed.isFinished()) {
           end = true;

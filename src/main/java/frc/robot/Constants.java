@@ -64,7 +64,7 @@ public final class Constants {
 
     public static final boolean kGyroReversed = true;
 
-    public static final double kYawP = 0.0005;
+    public static final double kYawP = 0.05;
     public static final double kYawI = 0.0;
     public static final double kYawD = 0.0;
     public static final double kMaxYawRateDegPerS = 8;
@@ -166,22 +166,22 @@ public final class Constants {
     // init v should be 8.2 m/s
     public static final double k3mSpeed = 1500;
 
-    public static final double kCompenstion = 1.13;
+    public static final double kCompenstion = 1.5;
 
     public static final double kIdleSpeed = 700;
     public static final double kAmpSpeed = 1100;
 
-    public static final double kP = 0.0003;
+    public static final double kP = /*0.00025*/ 0;
     public static final double kI = 0.0;
-    public static final double kD = 0.000077;
-    public static final double kFF = 0.00018;
+    public static final double kD = /*0.000077*/ 0;
+    public static final double kFF = 0.00017;
     public static final double kIz = 0;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
     public static final double kMaxRPM = 5676;
-    public static final double kLaunchTime = 1.5;
+    public static final double kLaunchTime = 2;
     public static final double kThermalLimit = 48;
-    public static final double kTolerance = 16;
+    public static final double kTolerance = 80;
   }
 
   public static final class IntakeConstants {
@@ -190,16 +190,16 @@ public final class Constants {
     public static final double kIntakeSpeed = 3000
     ;
     public static final double kFeedSpeed = 3083;
-    public static final double kReverseSpeed = 0.2;
+    public static final double kReverseSpeed = 0.8;
     public static final double kCompenstion = 1.83;
 
-    public static final double kP = 0;
+    public static final double kP = 30;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.02;
     public static final double kIz = 0;
     public static final double kS = 0;
-    public static final double kV = 0.96;
+    public static final double kV = 1;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
     public static final double kMaxRPM = 11000;
@@ -214,14 +214,14 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int kLeftID = 6;
     public static final int kRightID = 7;
-    public static final double kStowPos = 0.5
+    public static final double kStowPos = 0.18
     ;
 
     //these 2 should be the same
-    public static final double kIntakePos = 0.025;
-    public static final double kSubwooferPos = 0.025;
+    public static final double kIntakePos = 0.027;
+    public static final double kSubwooferPos = 0.027;
 
-    public static final double kFrontAmpPos = 0.15;
+    public static final double kFrontAmpPos = 0.18;
 
     // 3m position
     public static final double k3mPos = 0.12;
@@ -231,9 +231,9 @@ public final class Constants {
     public static final double kLowerLimit = 0.023;
     public static final double kOverrunLimit = 0;
 
-    public static final double kP = 2; 
+    public static final double kP = 6; 
     public static final double kI = 0;
-    public static final double kD = 0; 
+    public static final double kD = 0.7; 
     public static final double kIz = 0; 
     public static final double kFF = 0; 
     public static final double kMaxOutput = 0.7; 
@@ -304,5 +304,15 @@ public final class Constants {
     STAGE_LEFT,
     STAGE_RIGHT,
     STAGE_FAR
+  }
+
+  public enum States {
+    STOW,
+    INTAKE,
+    CLOSE,
+    FAR,
+    AMP,
+    CLIMB,
+    DEFEND
   }
 }

@@ -33,7 +33,7 @@ public class Feed extends Command {
   @Override
   public void execute() {
     //intake.runAtVelocity(IntakeConstants.kFeedSpeed);
-    intake.runOpenLoop(IntakeConstants.kReverseSpeed);
+    intake.runAtVelocity(IntakeConstants.kFeedSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -43,12 +43,6 @@ public class Feed extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double elapsed = Timer.getFPGATimestamp() - startTime;
-    if(elapsed >= timeout) {
-      return false;
-    }
-    else {
-      return true;
-    }
+    return false;
   }
 }
