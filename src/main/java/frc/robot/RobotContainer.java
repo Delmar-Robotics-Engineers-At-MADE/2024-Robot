@@ -43,6 +43,7 @@ import frc.robot.Commands.BlindFire;
 import frc.robot.Commands.Warning;
 import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
+import frc.robot.Commands.Arm.RunArmOpenLoop;
 import frc.robot.Commands.CMDGroup.FeedAndShootPodium;
 import frc.robot.Commands.CMDGroup.ForceFeed;
 import frc.robot.Commands.Climbers.HoldClimber;
@@ -68,7 +69,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final Arm m_arm = new Arm(ArmConstants.kLeftID, ArmConstants.kRightID);
-  private final Intake m_intake = new Intake(IntakeConstants.kIntakeID, IntakeConstants.kSensorDIOPort);
+  private final Intake m_intake = new Intake(IntakeConstants.kIntakeID, IntakeConstants.kPortSensorDIOPort, IntakeConstants.kStarboardSensorDIOPort);
   private final Shooter m_shooter = new Shooter(ShooterConstants.kTopID, ShooterConstants.kBottomID);
   private final Climber m_portClimber = new Climber(ClimberConstants.kPortID, ClimberConstants.kPortDIO);
   private final Climber m_starboardClimber = new Climber(ClimberConstants.kStarboardID, ClimberConstants.kStarboardDIO);
@@ -338,9 +339,8 @@ public class RobotContainer {
 
     m_operatorController.start().onTrue(new InstantCommand(() -> override = true));
     m_operatorController.start().onFalse(new InstantCommand(() -> override = false));
-    m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kManualSpeed));
-    m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmClosedLoop(m_arm, -ArmConstants.kManualSpeed));
-    //m_operatorController.start().and(m_operatorController.povRight()).whileTrue(new RunCommand(() -> Shuffleboard.getTab("match").addBoolean("pov right", () -> m_driverController.povRight().getAsBoolean())));
+    m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmOpenLoop(m_arm, ArmConstants.kManualSpeed));
+    m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmOpenLoop(m_arm, -ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(new ForceFeed(m_intake, m_shooter));
 
     m_operatorController.back().whileTrue(homeClimbers);

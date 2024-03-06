@@ -20,16 +20,18 @@ public class Intake extends SubsystemBase{
     private final CANSparkMax intake;
     private final RelativeEncoder encoder;
     private final SparkPIDController intakePID;
-    private final DigitalInput optical;
+    private final DigitalInput opticalOne;
+    private final DigitalInput opticalTwo;
     private final PIDController velPID;
     private final PIDController posPID;
     private final SimpleMotorFeedforward ff;
 
-    public Intake(int intakeID, int sensorDIO) {
+    public Intake(int intakeID, int portSensorDIO, int starboardSensorDIO) {
         intake = new CANSparkMax(intakeID, MotorType.kBrushless);
         intake.restoreFactoryDefaults();
 
-        optical = new DigitalInput(sensorDIO);
+        opticalTwo = new DigitalInput(portSensorDIO);
+        opticalOne = new DigitalInput(starboardSensorDIO);
 
         intake.setSmartCurrentLimit(20);
         encoder = intake.getEncoder();
@@ -86,7 +88,7 @@ public class Intake extends SubsystemBase{
     // }
 
     public boolean isNote() {
-        return optical.get();
+        return opticalOne.get() || opticalTwo.get();
     }
 
     public double getPosition() {

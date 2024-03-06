@@ -2,19 +2,27 @@ package frc.robot.Utils;
 
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
-public class Dashboard {
+public class Dashboard extends SubsystemBase{
     // intend to use elastic
     /* only use accessor methods here except for diagnostics controls
         Diagnostics controls go in subsystem tabs NOT in match tab.
         The match tab should provide a clean end user experiance that delivers only match critical information.
     */
-
+    private static boolean overheat = false;
+    private static Shooter shooter;
+    private static Intake intake;
+    private static boolean warningLight;
     public Dashboard(
      DriveSubsystem drivetrain,
      Arm arm,
@@ -24,7 +32,8 @@ public class Dashboard {
      Climber starboard,
      Sendable autochooser) {
 
-
+        this.shooter = shooter;
+        this.intake = intake;
         
         Shuffleboard.getTab("drivetrain");
         Shuffleboard.getTab("arm");
@@ -65,5 +74,24 @@ public class Dashboard {
         Shuffleboard.getTab("climbers").addDouble("starboard pos", () -> starboard.getPos());
 
     }
-    
+
+    // @Override
+    // public void periodic() {
+    //     overheat = !(shooter.isSafeTemp() || intake.isSafeTemp());
+    //     warningLight();
+    //     Shuffleboard.getTab("match").addBoolean("overheat", () -> overheat);
+    // }
+
+    // private void warningLight() {
+    //     while (overheat) {
+    //             new ParallelRaceGroup(
+    //                 new WaitCommand(0.5),
+    //                 new InstantCommand(() -> warningLight = false)
+    //             );
+    //             new ParallelRaceGroup(
+    //                 new WaitCommand(0.5),
+    //                 new InstantCommand(() -> warningLight = true)
+    //             );
+    //     }
+    // }
 }

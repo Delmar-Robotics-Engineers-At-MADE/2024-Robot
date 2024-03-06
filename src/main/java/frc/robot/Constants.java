@@ -186,7 +186,8 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int kIntakeID = 10;
-    public static final int kSensorDIOPort = 0;
+    public static final int kStarboardSensorDIOPort = 0;
+    public static final int kPortSensorDIOPort = 1;
     public static final double kIntakeSpeed = 3000
     ;
     public static final double kFeedSpeed = 3083;
@@ -205,7 +206,7 @@ public final class Constants {
     public static final double kMaxRPM = 11000;
     public static final double kVelTolerance = 400;
 
-    public static final double kpP = 0.05;
+    public static final double kpP = 0.1;
     public static final double kpI = 0.0;
     public static final double kpD = 0.0;
     public static final double kpFF = 0;
@@ -253,11 +254,11 @@ public final class Constants {
   public static final class ClimberConstants {
     public static final int kPortID = 15;
     public static final int kStarboardID = 16;
-    public static final int kPortDIO = 1;
-    public static final int kStarboardDIO = 2;
-    public static final double kP = 0.1; 
-    public static final double kI = 1e-4;
-    public static final double kD = 1; 
+    public static final int kPortDIO = 3;
+    public static final int kStarboardDIO = 4;
+    public static final double kP = 2; 
+    public static final double kI = 0;
+    public static final double kD = 0; 
     public static final double kIz = 0; 
     public static final double kFF = 0; 
     public static final double kMaxOutput = 1; 

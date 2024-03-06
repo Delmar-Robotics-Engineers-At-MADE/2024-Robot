@@ -88,6 +88,18 @@ public final class Toolkit {
         return result;
     }
 
+    public static int[] getStageFiducialIDs() {
+        Optional<Alliance> alliance = DriverStation.getAlliance();
+        if(alliance.get() == Alliance.Red) {
+            int[] result = {11,12,13};
+            return result;
+        } 
+        else {
+            int[] result = {15,16,14};
+            return result;
+        }
+    }
+
     public static boolean invert(boolean input) {
         return !input;
     }
@@ -120,16 +132,6 @@ public final class Toolkit {
         return value*ShooterConstants.kCompenstion;
     }
 
-    // public static double[] getStateConstants(States state) {
-    //     switch (state) {
-    //         case INTAKE:
-    //             double result[] = {ArmConstants.kIntakePos, IntakeConstants.kIntakeSpeed};
-    //             break;
-            
-    //         default:
-    //             break;
-    //     }
-    //     return result;
-    // }
+    
 
 }

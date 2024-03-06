@@ -43,6 +43,29 @@ public class Photonvision extends SubsystemBase {
     }
   }
 
+  public double[] getStageTagData(int[] ids) {
+    var result = backCam.getLatestResult();
+    boolean hasTargets = result.hasTargets();
+    if (hasTargets) {
+      PhotonTrackedTarget target = result.getBestTarget();
+      int id = target.getFiducialId();
+      if (id == ids[0] || id == ids[1] || id == ids[2]) {
+        double[] pack = {target.getBestCameraToTarget().getX(), 
+        target.getBestCameraToTarget().getZ(),
+        target.getBestCameraToTarget().getZ()};
+        return pack;
+      }
+      else {
+        double[] mt = {0};
+        return mt;
+    }
+    }
+    else {
+      double[] mt = {0};
+      return mt;
+    }
+  }
+
 
   public Transform3d getTargetValues() {
     var result = backCam.getLatestResult();
@@ -86,7 +109,6 @@ public class Photonvision extends SubsystemBase {
     return target.getSkew();
   }
 
-  
   public boolean isTarget(int targetID) {
     var result = backCam.getLatestResult();
     boolean hasTargets = result.hasTargets();
@@ -105,7 +127,6 @@ public class Photonvision extends SubsystemBase {
       return false;
     }
   }
-
 }
 
 

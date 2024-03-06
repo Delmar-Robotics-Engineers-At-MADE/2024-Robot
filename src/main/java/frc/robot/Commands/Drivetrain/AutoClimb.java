@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Commands.Climbers.RunClimberToPos;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.VisionConstants;
+import frc.robot.Utils.Toolkit;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Photonvision;
@@ -21,7 +22,7 @@ public class AutoClimb extends PIDDrive {
   private final Photonvision pCam;
   private boolean end;
   public AutoClimb(DriveSubsystem dt, Climber port, Climber starboard, Photonvision photonvision) {
-    super(dt, photonvision.getTagData(1)[0], photonvision.getTagData(0)[1], photonvision.getTagData(1)[2], VisionConstants.kTagCamXOffset, VisionConstants.kTagCamYOffset);
+    super(dt, photonvision.getStageTagData(Toolkit.getStageFiducialIDs())[0], photonvision.getStageTagData(Toolkit.getStageFiducialIDs())[1], photonvision.getStageTagData(Toolkit.getStageFiducialIDs())[2], VisionConstants.kTagCamXOffset, VisionConstants.kTagCamYOffset);
     drivetrain = dt;
     this.port = port;
     this.starboard = starboard;

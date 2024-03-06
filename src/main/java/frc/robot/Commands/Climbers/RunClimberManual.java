@@ -26,7 +26,6 @@ public class RunClimberManual extends Command {
   @Override
   public void execute() {
       climber.runAtVelocity(velocity);
-      System.out.println("¡CLIMBER! ¡EXCERCISE CAUTION!");
   }
 
   // Called once the command ends or is interrupted.
