@@ -268,7 +268,8 @@ public final class Constants {
     
     public static final double kUpperLimit = 10;
     public static final double kLowerLimit = 0;
-    public static final double kManualSpeed = 0;
+    public static final double kManualSpeed = 1000;
+    public static final double kDirectSpeed = 0.5;
     public static final double kTolearance = 5;
     
   }

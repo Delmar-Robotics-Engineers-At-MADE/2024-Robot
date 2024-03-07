@@ -48,7 +48,8 @@ import frc.robot.Commands.CMDGroup.FeedAndShootPodium;
 import frc.robot.Commands.CMDGroup.ForceFeed;
 import frc.robot.Commands.Climbers.HoldClimber;
 import frc.robot.Commands.Climbers.HomeClimber;
-import frc.robot.Commands.Climbers.RunClimberManual;
+import frc.robot.Commands.Climbers.RunClimberDirectLaw;
+import frc.robot.Commands.Climbers.RunClimberNormalLaw;
 
 import frc.robot.Commands.Intake.Feed;
 import frc.robot.Commands.Intake.HoldIntake;
@@ -71,8 +72,8 @@ public class RobotContainer {
   private final Arm m_arm = new Arm(ArmConstants.kLeftID, ArmConstants.kRightID);
   private final Intake m_intake = new Intake(IntakeConstants.kIntakeID, IntakeConstants.kPortSensorDIOPort, IntakeConstants.kStarboardSensorDIOPort);
   private final Shooter m_shooter = new Shooter(ShooterConstants.kTopID, ShooterConstants.kBottomID);
-  private final Climber m_portClimber = new Climber(ClimberConstants.kPortID, ClimberConstants.kPortDIO);
-  private final Climber m_starboardClimber = new Climber(ClimberConstants.kStarboardID, ClimberConstants.kStarboardDIO);
+  private final Climber m_portClimber = new Climber(ClimberConstants.kPortID, ClimberConstants.kPortDIO, false);
+  private final Climber m_starboardClimber = new Climber(ClimberConstants.kStarboardID, ClimberConstants.kStarboardDIO, true);
 
   // The driver's controller
   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
@@ -342,21 +343,19 @@ public class RobotContainer {
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmOpenLoop(m_arm, ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmOpenLoop(m_arm, -ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(new ForceFeed(m_intake, m_shooter));
+    m_operatorController.start().and(m_operatorController.rightBumper().whileTrue(new RunClimberDirectLaw(m_starboardClimber)));
+    m_operatorController.start().and(m_operatorController.leftBumper().whileTrue(new RunClimberDirectLaw(m_portClimber)));
 
     m_operatorController.back().whileTrue(homeClimbers);
-    m_operatorController.rightBumper().whileTrue(new RunClimberManual(m_starboardClimber, ClimberConstants.kManualSpeed));
-    m_operatorController.rightTrigger().whileTrue(new RunClimberManual(m_portClimber, -ClimberConstants.kManualSpeed));
-    m_operatorController.leftBumper().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
-    m_operatorController.leftTrigger().whileTrue(new RunClimberManual(m_portClimber, ClimberConstants.kManualSpeed));
+    m_operatorController.rightBumper().whileTrue(new RunClimberNormalLaw(m_starboardClimber, ClimberConstants.kManualSpeed));
+    m_operatorController.rightTrigger().whileTrue(new RunClimberNormalLaw(m_portClimber, -ClimberConstants.kManualSpeed));
+    m_operatorController.leftBumper().whileTrue(new RunClimberNormalLaw(m_portClimber, ClimberConstants.kManualSpeed));
+    m_operatorController.leftTrigger().whileTrue(new RunClimberNormalLaw(m_portClimber, -ClimberConstants.kManualSpeed));
 
-    m_operatorController.a().whileTrue(new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos));
-    m_operatorController.b().whileTrue(m_intake.run(() ->m_intake.runAtVelocity(IntakeConstants.kFeedSpeed)));
+    m_operatorController.a().whileTrue(backAmp);
+    m_operatorController.b().whileTrue(distanceFire);
     m_operatorController.y().whileTrue(subwooferFire);
     m_operatorController.x().whileTrue(new IntakeNoteAutomatic(m_intake));
-
-    m_operatorController.leftBumper().whileTrue(new RunCommand(() ->
-    m_shooter.runOpenLoop(0.7), m_shooter));
-
   }
     
 

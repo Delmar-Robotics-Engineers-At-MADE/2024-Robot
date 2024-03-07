@@ -7,11 +7,11 @@ package frc.robot.Commands.Climbers;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Climber;
 
-public class RunClimberManual extends Command {
+public class RunClimberNormalLaw extends Command {
   private Climber climber;
   private double velocity;
   /** Creates a new RunClimberManual. */
-  public RunClimberManual(Climber climb, double speed) {
+  public RunClimberNormalLaw(Climber climb, double speed) {
     climber = climb;
     velocity = speed;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -35,6 +35,6 @@ public class RunClimberManual extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

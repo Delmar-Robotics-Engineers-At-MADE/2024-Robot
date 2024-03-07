@@ -120,9 +120,9 @@ public final class Toolkit {
     public static int convertCardinalDirections(int povAngleDeg) {
         // change d-pad values for left and right to specified angle
         if (povAngleDeg == 270) {
-          povAngleDeg += 77;
+          povAngleDeg += 90;
         } else if (povAngleDeg == 90) {
-          povAngleDeg -= 77;
+          povAngleDeg -= 90;
         }
         // targetHeadingDegrees is counterclockwise so need to flip povAngle
         povAngleDeg = 360 - povAngleDeg;
@@ -136,5 +136,4 @@ public final class Toolkit {
     public static double calculateDistanceOffset(double subsysOffset, double fieldOffset) {
         return subsysOffset + fieldOffset;
     }
-
 }

@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -19,7 +17,6 @@ public class Intake extends SubsystemBase{
      */
     private final CANSparkMax intake;
     private final RelativeEncoder encoder;
-    private final SparkPIDController intakePID;
     private final DigitalInput opticalOne;
     private final DigitalInput opticalTwo;
     private final PIDController velPID;
@@ -35,15 +32,6 @@ public class Intake extends SubsystemBase{
 
         intake.setSmartCurrentLimit(20);
         encoder = intake.getEncoder();
-        intakePID = intake.getPIDController();
-
-        intakePID.setP(IntakeConstants.kP);
-        intakePID.setI(IntakeConstants.kI);
-        intakePID.setD(IntakeConstants.kD);
-        intakePID.setIZone(IntakeConstants.kIz);
-        intakePID.setFF(IntakeConstants.kFF);
-        intakePID.setOutputRange(IntakeConstants.kMinOutput, IntakeConstants.kMaxOutput);
-        
 
         velPID = new PIDController(IntakeConstants.kP, IntakeConstants.kI, IntakeConstants.kD);
         velPID.setTolerance(0, IntakeConstants.kVelTolerance);

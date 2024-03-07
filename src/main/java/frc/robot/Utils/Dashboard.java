@@ -2,11 +2,7 @@ package frc.robot.Utils;
 
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveSubsystem;
@@ -19,10 +15,7 @@ public class Dashboard extends SubsystemBase{
         Diagnostics controls go in subsystem tabs NOT in match tab.
         The match tab should provide a clean end user experiance that delivers only match critical information.
     */
-    private static boolean overheat = false;
-    private static Shooter shooter;
-    private static Intake intake;
-    private static boolean warningLight;
+
     public Dashboard(
      DriveSubsystem drivetrain,
      Arm arm,
@@ -32,9 +25,6 @@ public class Dashboard extends SubsystemBase{
      Climber starboard,
      Sendable autochooser) {
 
-        this.shooter = shooter;
-        this.intake = intake;
-        
         Shuffleboard.getTab("drivetrain");
         Shuffleboard.getTab("arm");
         Shuffleboard.getTab("intake");
@@ -45,6 +35,7 @@ public class Dashboard extends SubsystemBase{
         Shuffleboard.getTab("match").addDouble("heading", () -> -drivetrain.getHeading()).withWidget("Gyro");
         Shuffleboard.getTab("match").addBoolean("port homed", () -> port.isHomed());
         Shuffleboard.getTab("match").addBoolean("starboard homed", () -> starboard.isHomed());
+        Shuffleboard.getTab("match").addBoolean("overheat", () -> !intake.isSafeTemp() || !shooter.isSafeTemp());
 
 
         Shuffleboard.getTab("arm").addDouble("arm pos", () -> arm.getPos());
@@ -72,26 +63,5 @@ public class Dashboard extends SubsystemBase{
         Shuffleboard.getTab("climbers").addBoolean("starboard homed", () -> starboard.isHomed());
         Shuffleboard.getTab("climbers").addDouble("port pos", () -> port.getPos());
         Shuffleboard.getTab("climbers").addDouble("starboard pos", () -> starboard.getPos());
-
     }
-
-    // @Override
-    // public void periodic() {
-    //     overheat = !(shooter.isSafeTemp() || intake.isSafeTemp());
-    //     warningLight();
-    //     Shuffleboard.getTab("match").addBoolean("overheat", () -> overheat);
-    // }
-
-    // private void warningLight() {
-    //     while (overheat) {
-    //             new ParallelRaceGroup(
-    //                 new WaitCommand(0.5),
-    //                 new InstantCommand(() -> warningLight = false)
-    //             );
-    //             new ParallelRaceGroup(
-    //                 new WaitCommand(0.5),
-    //                 new InstantCommand(() -> warningLight = true)
-    //             );
-    //     }
-    // }
 }

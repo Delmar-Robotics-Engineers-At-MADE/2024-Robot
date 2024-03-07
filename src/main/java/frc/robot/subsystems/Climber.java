@@ -18,7 +18,7 @@ public class Climber extends SubsystemBase {
     private DigitalInput limitSwitch;
     private boolean homed;
 
-    public Climber(int ID, int DIO) {
+    public Climber(int ID, int DIO, boolean invert) {
 
         motor = new CANSparkMax(ID, MotorType.kBrushless);
         encoder = motor.getEncoder();
@@ -29,7 +29,7 @@ public class Climber extends SubsystemBase {
         motor.setSmartCurrentLimit(40);
         motor.enableVoltageCompensation(12.6);
         motor.setIdleMode(IdleMode.kBrake);
-
+        motor.setInverted(invert);
         pid.setFeedbackDevice(encoder);
 
         pid.setP(ClimberConstants.kP);
@@ -59,22 +59,8 @@ public class Climber extends SubsystemBase {
     }
 
     public void runOpenLoop(double speed) {
-        if(!isHomed()) {
-            motor.set(speed);
-            System.out.println("¡NOT HOMED! ¡OVEREXTEND POSSIBLE!");
-        }
-        else if (isHomed() && speed < 0) {
-            motor.set(0);
-        }
-        else if (isHomed()) {
-            if(getPos() >= ClimberConstants.kUpperLimit) {
-                motor.set(0);
-                System.out.println("¡CLIMBER TOO HIGH! ¡OVEREXTEND! ¡OVEREXTEND!");
-            }
-            else {
-                motor.set(speed);
-            }
-        }
+        motor.set(speed);
+        System.out.println("¡DIRECT CTRL! ¡OVEREXTEND POSSIBLE!");
     }
 
     public void runAtVelocity(double speed) {
@@ -118,5 +104,4 @@ public class Climber extends SubsystemBase {
     public void periodic() {
         homed = limitSwitch.get();
     }
-    
 }

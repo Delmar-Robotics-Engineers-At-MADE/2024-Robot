@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.util.List;
+
+import org.opencv.photo.Photo;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -12,8 +15,9 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Photonvision extends SubsystemBase {
-  PhotonCamera backCam;
-  PhotonCamera fronCam;
+  private PhotonCamera backCam;
+  private PhotonCamera fronCam;
+  private Transform3d fake = new Transform3d();
   /** Creates a new Photonvision. */
   public Photonvision(NetworkTableInstance nt) {
     fronCam = new PhotonCamera(nt, "Microsoft_LifeCam_HD-3000");
@@ -25,7 +29,7 @@ public class Photonvision extends SubsystemBase {
     var result = backCam.getLatestResult();
     boolean hasTargets = result.hasTargets();
     if (hasTargets) {
-      PhotonTrackedTarget target = result.getBestTarget();
+      PhotonTrackedTarget target = findCorrectTarget(id, result.getTargets());
       if (target.getFiducialId() == id) {
         double[] pack = {target.getBestCameraToTarget().getX(), 
         target.getBestCameraToTarget().getZ(),
@@ -43,28 +47,30 @@ public class Photonvision extends SubsystemBase {
     }
   }
 
-  public double[] getStageTagData(int[] ids) {
-    var result = backCam.getLatestResult();
-    boolean hasTargets = result.hasTargets();
-    if (hasTargets) {
-      PhotonTrackedTarget target = result.getBestTarget();
-      int id = target.getFiducialId();
-      if (id == ids[0] || id == ids[1] || id == ids[2]) {
-        double[] pack = {target.getBestCameraToTarget().getX(), 
-        target.getBestCameraToTarget().getZ(),
-        target.getBestCameraToTarget().getZ()};
-        return pack;
-      }
-      else {
-        double[] mt = {0};
-        return mt;
-    }
-    }
-    else {
-      double[] mt = {0};
-      return mt;
-    }
-  }
+  // public double[] getStageTagData(int[] ids) {
+  //   var result = backCam.getLatestResult();
+  //   boolean hasTargets = result.hasTargets();
+  //   if (hasTargets) {
+  //     PhotonTrackedTarget target = findCorrectTarget(ids, result.getTargets());
+  //     int id = target.getFiducialId();
+  //     if (id == ids[0] || id == ids[1] || id == ids[2]) {
+  //       double[] pack = {getTargetValues().getX(),
+  //         getTargetValues().getZ(),
+  //         getTargetValues().getRotation().getAngle()};
+  //       return pack;
+  //     }
+  //     else {
+  //       double[] mt = {0};
+  //       return mt;
+  //   }
+  //   }
+  //   else {
+  //     double[] mt = {0};
+  //     return mt;
+  //   }
+   
+  // }
+
 
 
   public Transform3d getTargetValues() {
@@ -126,6 +132,15 @@ public class Photonvision extends SubsystemBase {
     } else {
       return false;
     }
+  }
+
+  private PhotonTrackedTarget findCorrectTarget(int id, List<PhotonTrackedTarget> lstTarget) {
+    for(int x = 0; x<lstTarget.size(); x++) {
+      if(lstTarget.get(x).getFiducialId() == id) {
+        return lstTarget.get(x);
+      }
+    }
+    return new PhotonTrackedTarget(0, 0, 0, 0, -1, fake, fake, 0.0, null, null);
   }
 }
 

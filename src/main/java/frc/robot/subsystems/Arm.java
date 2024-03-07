@@ -101,7 +101,5 @@ public class Arm extends SubsystemBase{
     public double[] getTemp() {
        double result[] = {left.getMotorTemperature(), right.getMotorTemperature()};
        return result;
-    }
-    
-    
+    } 
 }

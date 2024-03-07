@@ -45,7 +45,7 @@ public class RapidHeading extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(x, y, m_PID.calculate(drivetrain.getHeading(), Toolkit.convertCardinalDirections(heading)), true, true);
+    drivetrain.drive(x, y, m_PID.calculate(drivetrain.getHeading(), heading), true, true);
   }
 
   
