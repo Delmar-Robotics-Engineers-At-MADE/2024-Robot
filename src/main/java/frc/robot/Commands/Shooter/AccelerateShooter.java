@@ -19,7 +19,7 @@ public class AccelerateShooter extends Command {
   /** Creates a new RunShooterAtVelocity. */
   public AccelerateShooter(Shooter launchingDevice, double velocity) {
     shooter = launchingDevice;
-    setpoint = velocity;
+    setpoint = velocity*ShooterConstants.kCompenstion;
     end = false;
     isAtSeptoint = false;
     // Use addRequirements() here to declare subsystem dependencies.

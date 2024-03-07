@@ -12,6 +12,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.States;
+import frc.robot.Constants.VisionConstants;
 
 public final class Toolkit {
     
@@ -132,6 +133,8 @@ public final class Toolkit {
         return value*ShooterConstants.kCompenstion;
     }
 
-    
+    public static double calculateDistanceOffset(double subsysOffset, double fieldOffset) {
+        return subsysOffset + fieldOffset;
+    }
 
 }

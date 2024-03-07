@@ -113,5 +113,10 @@ public class Climber extends SubsystemBase {
     public double getPos() {
         return encoder.getPosition();
     }
+
+    @Override
+    public void periodic() {
+        homed = limitSwitch.get();
+    }
     
 }

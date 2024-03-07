@@ -316,4 +316,9 @@ public final class Constants {
     CLIMB,
     DEFEND
   }
+
+  public static final class FieldConstants {
+    public static final double kSubwooferDepth = 0.917575;
+    public static final double kChainDist = 0.422275;
+  }
 }
