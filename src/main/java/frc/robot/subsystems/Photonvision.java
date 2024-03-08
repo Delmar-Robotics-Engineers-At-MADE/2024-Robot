@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import java.util.List;
 
-import org.opencv.photo.Photo;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -47,29 +46,29 @@ public class Photonvision extends SubsystemBase {
     }
   }
 
-  // public double[] getStageTagData(int[] ids) {
-  //   var result = backCam.getLatestResult();
-  //   boolean hasTargets = result.hasTargets();
-  //   if (hasTargets) {
-  //     PhotonTrackedTarget target = findCorrectTarget(ids, result.getTargets());
-  //     int id = target.getFiducialId();
-  //     if (id == ids[0] || id == ids[1] || id == ids[2]) {
-  //       double[] pack = {getTargetValues().getX(),
-  //         getTargetValues().getZ(),
-  //         getTargetValues().getRotation().getAngle()};
-  //       return pack;
-  //     }
-  //     else {
-  //       double[] mt = {0};
-  //       return mt;
-  //   }
-  //   }
-  //   else {
-  //     double[] mt = {0};
-  //     return mt;
-  //   }
+  public double[] getStageTagData(int[] ids) {
+    var result = backCam.getLatestResult();
+    boolean hasTargets = result.hasTargets();
+    if (hasTargets) {
+      PhotonTrackedTarget target = findCorrectTarget(ids, result.getTargets());
+      int id = target.getFiducialId();
+      if (id == ids[0] || id == ids[1] || id == ids[2]) {
+        double[] pack = {getTargetValues().getX(),
+          getTargetValues().getZ(),
+          getTargetValues().getRotation().getAngle()};
+        return pack;
+      }
+      else {
+        double[] mt = {0};
+        return mt;
+    }
+    }
+    else {
+      double[] mt = {0};
+      return mt;
+    }
    
-  // }
+  }
 
 
 
@@ -137,6 +136,15 @@ public class Photonvision extends SubsystemBase {
   private PhotonTrackedTarget findCorrectTarget(int id, List<PhotonTrackedTarget> lstTarget) {
     for(int x = 0; x<lstTarget.size(); x++) {
       if(lstTarget.get(x).getFiducialId() == id) {
+        return lstTarget.get(x);
+      }
+    }
+    return new PhotonTrackedTarget(0, 0, 0, 0, -1, fake, fake, 0.0, null, null);
+  }
+
+  private PhotonTrackedTarget findCorrectTarget(int[] ids, List<PhotonTrackedTarget> lstTarget) {
+    for(int x = 0; x<lstTarget.size(); x++) {
+      if(lstTarget.get(x).getFiducialId() == ids[0] || lstTarget.get(x).getFiducialId() == ids[1] || lstTarget.get(x).getFiducialId() == ids[2]) {
         return lstTarget.get(x);
       }
     }

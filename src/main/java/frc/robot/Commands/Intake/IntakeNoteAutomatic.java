@@ -5,7 +5,6 @@
 package frc.robot.Commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
 public class IntakeNoteAutomatic extends Command {
@@ -23,6 +22,7 @@ public class IntakeNoteAutomatic extends Command {
   @Override
   public void initialize() {
     end = false;
+    intake.hiCurrent();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

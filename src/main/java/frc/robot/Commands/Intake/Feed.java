@@ -27,6 +27,7 @@ public class Feed extends Command {
   @Override
   public void initialize() {
     startTime = Timer.getFPGATimestamp();
+    intake.hiCurrent();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

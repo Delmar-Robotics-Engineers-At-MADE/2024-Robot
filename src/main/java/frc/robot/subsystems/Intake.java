@@ -43,17 +43,14 @@ public class Intake extends SubsystemBase{
     }
 
     public void hold(double pos) {
-        intake.setSmartCurrentLimit(5);
         intake.set(posPID.calculate(getPosition(), pos));
     }
 
     public void runAtVelocity(double setpoint) {
-        intake.setSmartCurrentLimit(20);
         intake.set(velPID.calculate(getVelocity(), setpoint + ff.calculate(setpoint)));
     }
 
     public void runOpenLoop(double supplier) {
-        intake.setSmartCurrentLimit(20);
         intake.set(supplier);
     }
 
@@ -102,5 +99,13 @@ public class Intake extends SubsystemBase{
         else{
             return false;
         }
+    }
+
+    public void hiCurrent() {
+        intake.setSmartCurrentLimit(20);
+    }
+
+    public void loCurrent() {
+        intake.setSmartCurrentLimit(5);
     }
 }
