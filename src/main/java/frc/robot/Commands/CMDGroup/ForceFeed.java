@@ -13,14 +13,10 @@ import frc.robot.Commands.Intake.RunIntakeOpenLoop;
 import frc.robot.Commands.Shooter.RunShooterAtVelocity;
 
 public class ForceFeed extends Command {
-  private final Intake intake;
-  private final Shooter shooter;
   private final RunIntakeOpenLoop incmd;
   private final RunShooterAtVelocity shcmd;
   /** Creates a new ForceFeed. */
   public ForceFeed(Intake intake, Shooter shooter) {
-    this.intake = intake;
-    this.shooter = shooter;
     incmd = new RunIntakeOpenLoop(intake, IntakeConstants.kReverseSpeed);
     shcmd = new RunShooterAtVelocity(shooter, ShooterConstants.k3mSpeed, false);
     // Use addRequirements() here to declare subsystem dependencies.
