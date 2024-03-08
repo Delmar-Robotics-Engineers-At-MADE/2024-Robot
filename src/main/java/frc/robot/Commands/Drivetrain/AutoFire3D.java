@@ -53,8 +53,8 @@ public class AutoFire3D extends PIDDrive {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(photon.isTarget(tag)) {
-      this.setValues(photon.getTargetValues().getX(), photon.getTargetValues().getZ(), photon.getTargetValues().getRotation().getAngle());
+    if(!(photon.get3DTagData(tag).length == 0)) {
+      this.setValues(photon.get3DTagData(tag)[0], photon.get3DTagData(tag)[1], photon.get3DTagData(tag)[2]);
       super.execute();
       if(this.atGoal()) {
       RunArmClosedLoop aCMD = new RunArmClosedLoop(arm, armSetpoint);
