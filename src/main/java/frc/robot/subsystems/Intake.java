@@ -56,7 +56,8 @@ public class Intake extends SubsystemBase{
 
     public void autoIntake() {
         if(!isNote()){
-            intake.set(velPID.calculate(getVelocity(), IntakeConstants.kIntakeSpeed) + ff.calculate(IntakeConstants.kIntakeSpeed));
+            intake.set((velPID.calculate(getVelocity(), IntakeConstants.kIntakeSpeed) + ff.calculate(IntakeConstants.kIntakeSpeed))/11000);
+            System.out.println(intake.getAppliedOutput());
         }
         else {
             hold(encoder.getPosition());
@@ -73,7 +74,8 @@ public class Intake extends SubsystemBase{
     // }
 
     public boolean isNote() {
-        return opticalOne.get() || opticalTwo.get();
+        //return opticalOne.get() || opticalTwo.get();
+        return opticalOne.get();
     }
 
     public double getPosition() {

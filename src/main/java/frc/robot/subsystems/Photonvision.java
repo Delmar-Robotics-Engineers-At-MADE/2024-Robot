@@ -52,9 +52,9 @@ public class Photonvision extends SubsystemBase {
     if (hasTargets) {
       PhotonTrackedTarget target = findCorrectTarget(ids, result.getTargets());
       if (!(target.getFiducialId() == -1)) {
-        double[] pack = {getTargetValues().getX(),
-          getTargetValues().getZ(),
-          getTargetValues().getRotation().getAngle()};
+        double[] pack = {getTargetValues(target).getX(),
+          getTargetValues(target).getZ(),
+          getTargetValues(target).getRotation().getAngle()};
         return pack;
       }
       else {
@@ -74,9 +74,9 @@ public class Photonvision extends SubsystemBase {
     if (hasTargets) {
       PhotonTrackedTarget target = findCorrectTarget(id, result.getTargets());
       if (!(target.getFiducialId() == -1)) {
-        double[] pack = {getTargetValues().getX(),
-          getTargetValues().getZ(),
-          getTargetValues().getRotation().getAngle()};
+        double[] pack = {getTargetValues(target).getX(),
+          getTargetValues(target).getZ(),
+          getTargetValues(target).getRotation().getAngle()};
         return pack;
       }
       else {
@@ -93,11 +93,7 @@ public class Photonvision extends SubsystemBase {
 
 
 
-  public Transform3d getTargetValues() {
-    var result = backCam.getLatestResult();
-    // boolean hasTargets = result.hasTargets();
-
-    PhotonTrackedTarget target = result.getBestTarget();
+  public Transform3d getTargetValues(PhotonTrackedTarget target) {
     Transform3d targetVal = target.getBestCameraToTarget();
     return targetVal;
   }

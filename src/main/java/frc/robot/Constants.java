@@ -166,7 +166,7 @@ public final class Constants {
     // init v should be 8.2 m/s
     public static final double k3mSpeed = 1500;
 
-    public static final double kCompenstion = 1.5;
+    public static final double kCompenstion = 1.75;
 
     public static final double kIdleSpeed = 700;
     public static final double kAmpSpeed = 1100;
@@ -188,7 +188,7 @@ public final class Constants {
     public static final int kIntakeID = 10;
     public static final int kStarboardSensorDIOPort = 0;
     public static final int kPortSensorDIOPort = 1;
-    public static final double kIntakeSpeed = 3000
+    public static final double kIntakeSpeed = 3000;
     ;
     public static final double kFeedSpeed = 3083;
     public static final double kReverseSpeed = 0.8;
@@ -200,7 +200,7 @@ public final class Constants {
     public static final double kFF = 0.02;
     public static final double kIz = 0;
     public static final double kS = 0;
-    public static final double kV = 1;
+    public static final double kV = 1.2;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
     public static final double kMaxRPM = 11000;
