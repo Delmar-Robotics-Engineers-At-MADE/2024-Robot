@@ -32,6 +32,7 @@ public class Intake extends SubsystemBase{
 
         intake.setSmartCurrentLimit(20);
         encoder = intake.getEncoder();
+        intake.setOpenLoopRampRate(1);
 
         velPID = new PIDController(IntakeConstants.kP, IntakeConstants.kI, IntakeConstants.kD);
         velPID.setTolerance(0, IntakeConstants.kVelTolerance);
@@ -56,11 +57,16 @@ public class Intake extends SubsystemBase{
 
     public void autoIntake() {
         if(!isNote()){
-            intake.set((velPID.calculate(getVelocity(), IntakeConstants.kIntakeSpeed) + ff.calculate(IntakeConstants.kIntakeSpeed))/11000);
-            System.out.println(intake.getAppliedOutput());
+            if(!(intake.getOutputCurrent() >= 15)) {
+                intake.set((velPID.calculate(getVelocity(), IntakeConstants.kIntakeSpeed) + ff.calculate(IntakeConstants.kIntakeSpeed))/11000);
+                System.out.println(intake.getAppliedOutput());
+            }
+            else {
+                intake.set((velPID.calculate(getVelocity(), IntakeConstants.kIntakeCaptureSpeed) + ff.calculate(IntakeConstants.kIntakeCaptureSpeed))/11000);           
+            }
         }
         else {
-            hold(encoder.getPosition());
+            intake.set(0);
         }
     }
 

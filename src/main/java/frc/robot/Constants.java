@@ -188,19 +188,20 @@ public final class Constants {
     public static final int kIntakeID = 10;
     public static final int kStarboardSensorDIOPort = 0;
     public static final int kPortSensorDIOPort = 1;
-    public static final double kIntakeSpeed = 3000;
-    ;
+    public static final double kIntakeSpeed = 2500;
+    public static final double kIntakeCaptureSpeed = 2100;
+
     public static final double kFeedSpeed = 3083;
     public static final double kReverseSpeed = 0.8;
     public static final double kCompenstion = 1.83;
 
-    public static final double kP = 0;
+    public static final double kP = 1.5;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.02;
     public static final double kIz = 0;
     public static final double kS = 0;
-    public static final double kV = 1.2;
+    public static final double kV = 1.11;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
     public static final double kMaxRPM = 11000;
