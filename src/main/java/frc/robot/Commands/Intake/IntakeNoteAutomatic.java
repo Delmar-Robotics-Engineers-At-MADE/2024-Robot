@@ -10,6 +10,7 @@ import frc.robot.subsystems.Intake;
 public class IntakeNoteAutomatic extends Command {
   private Intake intake;
   private boolean end;
+  private boolean capture;
   /** Creates a new IntakeNoteAutomatic. */
   public IntakeNoteAutomatic(Intake in) {
     intake = in;
@@ -22,13 +23,17 @@ public class IntakeNoteAutomatic extends Command {
   @Override
   public void initialize() {
     end = false;
+    capture = intake.isNote();
     intake.hiCurrent();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!intake.isNote()) {
+    if(intake.isNote()) {
+      capture = true;
+    }
+    if(!capture) {
       intake.autoIntake();
     }
     else {

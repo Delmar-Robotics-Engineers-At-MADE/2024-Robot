@@ -166,7 +166,7 @@ public final class Constants {
     // init v should be 8.2 m/s
     public static final double k3mSpeed = 1500;
 
-    public static final double kCompenstion = 1.75;
+    public static final double kCompenstion = 1.6;
 
     public static final double kIdleSpeed = 700;
     public static final double kAmpSpeed = 1100;
@@ -195,19 +195,19 @@ public final class Constants {
     public static final double kReverseSpeed = 0.8;
     public static final double kCompenstion = 1.83;
 
-    public static final double kP = 1.5;
+    public static final double kP = 0.01;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.02;
     public static final double kIz = 0;
     public static final double kS = 0;
-    public static final double kV = 1.11;
+    public static final double kV = 2;
     public static final double kMinOutput = -1;
     public static final double kMaxOutput = 1;
     public static final double kMaxRPM = 11000;
     public static final double kVelTolerance = 400;
 
-    public static final double kpP = 0.1;
+    public static final double kpP = 0.05;
     public static final double kpI = 0.0;
     public static final double kpD = 0.0;
     public static final double kpFF = 0;
@@ -219,14 +219,14 @@ public final class Constants {
     public static final double kStowPos = 0.18
     ;
 
-    //these 2 should be the same
+
     public static final double kIntakePos = 0.027;
-    public static final double kSubwooferPos = 0.027;
+    public static final double kSubwooferPos = 0.037;
 
     public static final double kFrontAmpPos = 0.18;
 
     // 3m position
-    public static final double k3mPos = 0.12;
+    public static final double k3mPos = 0.06;
 
     public static final double kBackAmpPos = 0.3;
     public static final double kUpperLimit = 0.35;

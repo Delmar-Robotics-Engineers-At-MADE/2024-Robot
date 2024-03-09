@@ -32,7 +32,6 @@ public class Intake extends SubsystemBase{
 
         intake.setSmartCurrentLimit(20);
         encoder = intake.getEncoder();
-        intake.setOpenLoopRampRate(1);
 
         velPID = new PIDController(IntakeConstants.kP, IntakeConstants.kI, IntakeConstants.kD);
         velPID.setTolerance(0, IntakeConstants.kVelTolerance);
