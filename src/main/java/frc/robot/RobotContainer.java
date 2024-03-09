@@ -353,7 +353,7 @@ public class RobotContainer {
     m_operatorController.leftTrigger().whileTrue(new RunClimberNormalLaw(m_portClimber, -ClimberConstants.kManualSpeed));
 
     m_operatorController.a().whileTrue(backAmp);
-    m_operatorController.b().whileTrue(distanceFire);
+    m_operatorController.b().whileTrue(new Feed(m_intake));
     m_operatorController.y().whileTrue(subwooferFire);
     m_operatorController.x().whileTrue(new IntakeNoteAutomatic(m_intake));
   }

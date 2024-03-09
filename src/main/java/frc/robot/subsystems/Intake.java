@@ -47,7 +47,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void runAtVelocity(double setpoint) {
-        intake.set(velPID.calculate(getVelocity(), setpoint + ff.calculate(setpoint)));
+        intake.set(velPID.calculate(getVelocity(), setpoint) + ff.calculate(setpoint));
     }
 
     public void runOpenLoop(double supplier) {

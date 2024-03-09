@@ -27,7 +27,7 @@ public class AutoFire extends PIDDrive {
   /** Creates a new AutoFire. */
   public AutoFire(DriveSubsystem dt, Photonvision pv, int tagID, 
     Arm ar, Intake in, Shooter sh, double armPos, double shooterVel) {
-    super(dt, pv.getTagData(tagID)[0], pv.getTagData(tagID)[1] , pv.getTagData(tagID)[2], VisionConstants.kTagCamXOffset, VisionConstants.kTagCamYOffset);
+    super(dt, VisionConstants.kTagCamXOffset, VisionConstants.kTagCamYOffset);
     arm = ar;
     intake = in;
     whee = sh;

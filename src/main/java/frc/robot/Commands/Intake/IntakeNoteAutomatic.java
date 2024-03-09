@@ -28,14 +28,13 @@ public class IntakeNoteAutomatic extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if(!intake.isNote()) {
-    //   intake.autoIntake();
-    // }
-    // else {
-    //   System.out.println("¡CAPTURE!");
-    //   end = true;
-    // }
-    intake.autoIntake();
+    if(!intake.isNote()) {
+      intake.autoIntake();
+    }
+    else {
+      System.out.println("¡CAPTURE!");
+      end = true;
+    }
   }
 
   // Called once the command ends or is interrupted.

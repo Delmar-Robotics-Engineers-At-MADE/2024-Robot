@@ -71,10 +71,10 @@ public class AutoFire3D extends PIDDrive {
       else {
         end = false;
       }
-      }
-      else {
-        end = false;
-      }
+    }
+    else {
+      end = false;
+    }
     }
     else {
       end = true;
