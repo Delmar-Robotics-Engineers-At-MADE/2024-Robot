@@ -124,8 +124,9 @@ public class RobotContainer {
   // Firing Sequences
   SequentialCommandGroup subwooferFire = new SequentialCommandGroup(
         Toolkit.sout("sFire init"),
-        new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos),
-        new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed),
+        new ParallelCommandGroup(
+          new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos),
+          new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed)),
         Toolkit.sout("shoot init"),
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
@@ -137,8 +138,9 @@ public class RobotContainer {
 
   SequentialCommandGroup distanceFire = new SequentialCommandGroup(
         Toolkit.sout("Fire init"),
-        new RunArmClosedLoop(m_arm, ArmConstants.k3mPos),
-        new AccelerateShooter(m_shooter, ShooterConstants.k3mSpeed),
+        new ParallelCommandGroup(
+          new RunArmClosedLoop(m_arm, ArmConstants.k3mPos),
+          new AccelerateShooter(m_shooter, ShooterConstants.k3mSpeed)),
         Toolkit.sout("shoot init"),
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
@@ -150,8 +152,9 @@ public class RobotContainer {
 
   SequentialCommandGroup backAmp = new SequentialCommandGroup(
         Toolkit.sout("AMP init"),
-        new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
-        new AccelerateShooter(m_shooter, ShooterConstants.kAmpSpeed),
+        new ParallelCommandGroup(
+          new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
+          new AccelerateShooter(m_shooter, ShooterConstants.kAmpSpeed)),
         Toolkit.sout("shoot init"),
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
@@ -204,8 +207,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("intake", intake);
     NamedCommands.registerCommand("shootSubwoofer", new SequentialCommandGroup(
         Toolkit.sout("sFire init"),
-        new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos),
-        new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed),
+        new ParallelCommandGroup(
+          new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos),
+          new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed)),
         Toolkit.sout("shoot init"),
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
@@ -216,8 +220,9 @@ public class RobotContainer {
       ));
     NamedCommands.registerCommand("shootpodium", new SequentialCommandGroup(
         Toolkit.sout("Fire init"),
-        new RunArmClosedLoop(m_arm, ArmConstants.k3mPos),
-        new AccelerateShooter(m_shooter, ShooterConstants.k3mSpeed),
+        new ParallelCommandGroup(
+          new RunArmClosedLoop(m_arm, ArmConstants.k3mPos),
+          new AccelerateShooter(m_shooter, ShooterConstants.k3mSpeed)),
         Toolkit.sout("shoot init"),
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
@@ -299,7 +304,7 @@ public class RobotContainer {
 
     // Subsystem Default Commands
     m_intake.setDefaultCommand(new HoldIntake(m_intake));
-    m_arm.setDefaultCommand(new RunArmClosedLoop(m_arm, ArmConstants.kStowPos));
+    m_arm.setDefaultCommand(new RunArmClosedLoop(m_arm, ArmConstants.kDefaultPos));
     m_shooter.setDefaultCommand(new RunShooterAtVelocity(m_shooter, ShooterConstants.kIdleSpeed, false));
     m_portClimber.setDefaultCommand(new HoldClimber(m_portClimber));
     m_starboardClimber.setDefaultCommand(new HoldClimber(m_starboardClimber));
@@ -323,7 +328,7 @@ public class RobotContainer {
             m_robotDrive));
 
     m_driverController.button(DriverConstants.kIntake).whileTrue(intake);
-    m_driverController.button(DriverConstants.kHoldArmDown).toggleOnTrue(new RunCommand(() -> m_arm.runToPosition(ArmConstants.kIntakePos), m_arm));
+    m_driverController.button(DriverConstants.kStowArm).toggleOnTrue(new RunCommand(() -> m_arm.runToPosition(ArmConstants.kStowPos), m_arm));
     m_driverController.button(DriverConstants.kAutoIntake).and(m_driverController.button(DriverConstants.kIntake)).onTrue(
       new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)
     );

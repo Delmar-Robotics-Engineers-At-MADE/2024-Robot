@@ -169,7 +169,7 @@ public final class Constants {
     public static final double kCompenstion = 1.6;
 
     public static final double kIdleSpeed = 700;
-    public static final double kAmpSpeed = 1100;
+    public static final double kAmpSpeed = 900;
 
     public static final double kP = /*0.00025*/ 0;
     public static final double kI = 0.0;
@@ -216,9 +216,8 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int kLeftID = 6;
     public static final int kRightID = 7;
-    public static final double kStowPos = 0.18
-    ;
-
+    public static final double kStowPos = 0.18;
+    public static final double kDefaultPos = 0.32;
 
     public static final double kIntakePos = 0.027;
     public static final double kSubwooferPos = 0.037;
@@ -281,7 +280,7 @@ public final class Constants {
     public static final double kYawSpeed = 0.7;
     public static final int kSetX = 4;
     public static final int kIntake = 1;
-    public static final int kHoldArmDown = 5;
+    public static final int kStowArm = 5;
     public static final int kAutoIntake = 3; 
     public static final int kAutoAmp = 6;
     public static final int kSelfDestruct = 9;
