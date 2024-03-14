@@ -64,7 +64,7 @@ public final class Constants {
 
     public static final boolean kGyroReversed = true;
 
-    public static final double kYawP = 0.05;
+    public static final double kYawP = 0.03;
     public static final double kYawI = 0.0;
     public static final double kYawD = 0.0;
     public static final double kMaxYawRateDegPerS = 8;
@@ -217,7 +217,7 @@ public final class Constants {
     public static final int kLeftID = 6;
     public static final int kRightID = 7;
     public static final double kStowPos = 0.18;
-    public static final double kDefaultPos = 0.32;
+    public static final double kDefaultPos = 0.032;
 
     public static final double kIntakePos = 0.027;
     public static final double kSubwooferPos = 0.037;
@@ -227,7 +227,7 @@ public final class Constants {
     // 3m position
     public static final double k3mPos = 0.06;
 
-    public static final double kBackAmpPos = 0.3;
+    public static final double kBackAmpPos = 0.28;
     public static final double kUpperLimit = 0.35;
     public static final double kLowerLimit = 0.023;
     public static final double kOverrunLimit = 0;
@@ -321,5 +321,13 @@ public final class Constants {
   public static final class FieldConstants {
     public static final double kSubwooferDepth = 0.917575;
     public static final double kChainDist = 0.422275;
+  }
+
+  public static final class LEDConstants {
+    public static final double green = 0.77;
+    public static final double purple = 0.91;
+    public static final double red = -0.31;
+    public static final double blue = -0.29;
+    public static final double grey = -0.33;
   }
 }

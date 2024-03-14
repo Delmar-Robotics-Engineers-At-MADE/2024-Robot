@@ -79,8 +79,8 @@ public class Intake extends SubsystemBase{
     // }
 
     public boolean isNote() {
-        //return opticalOne.get() || opticalTwo.get();
-        return opticalOne.get();
+        return opticalOne.get() || opticalTwo.get();
+        //return opticalOne.get();
     }
 
     public double getPosition() {
@@ -114,5 +114,13 @@ public class Intake extends SubsystemBase{
 
     public void loCurrent() {
         intake.setSmartCurrentLimit(5);
+    }
+
+    public boolean isLeft() {
+        return opticalTwo.get();
+    }
+
+    public boolean isRight() {
+        return opticalOne.get();
     }
 }

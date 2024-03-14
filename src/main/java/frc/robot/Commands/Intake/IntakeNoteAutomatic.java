@@ -5,18 +5,21 @@
 package frc.robot.Commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.Intake;
 
 public class IntakeNoteAutomatic extends Command {
   private Intake intake;
   private boolean end;
   private boolean capture;
+  private Blinkin blinkin;
   /** Creates a new IntakeNoteAutomatic. */
-  public IntakeNoteAutomatic(Intake in) {
+  public IntakeNoteAutomatic(Intake in/*, Blinkin blinkin*/) {
     intake = in;
     end = false;
+    //this.blinkin = blinkin;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(in);
+    addRequirements(in, blinkin);
   }
 
   // Called when the command is initially scheduled.
@@ -32,13 +35,12 @@ public class IntakeNoteAutomatic extends Command {
   public void execute() {
     if(intake.isNote()) {
       capture = true;
-    }
-    if(!capture) {
-      intake.autoIntake();
-    }
-    else {
       System.out.println("¡CAPTURE!");
+      /*blinkin.indCapture();*/
       end = true;
+    }
+    else if(!capture) {
+      intake.autoIntake();
     }
   }
 

@@ -72,6 +72,7 @@ public class PIDDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("MJS: executing PIDDrive: " + latPID.calculate(x, PIDDriveConstants.latGoal) + " " + longPID.calculate(y, PIDDriveConstants.longGoal) + " " + yawPID.calculate(yaw, PIDDriveConstants.yawGoal));
     drivetrain.drive(latPID.calculate(x + cameraOffset, PIDDriveConstants.latGoal),
     longPID.calculate(y + cameraDepth, PIDDriveConstants.longGoal),
     yawPID.calculate(yaw, PIDDriveConstants.yawGoal), 
@@ -84,6 +85,7 @@ public class PIDDrive extends Command {
       return true;
     }
     else {
+      System.out.println("MJS: PIDDrive: not at goal: " + latPID.atGoal() + " " + longPID.atGoal() + " " + yawPID.atGoal() + " " + yawPID.getPositionError() + " " + yawPID.getPositionTolerance());
       return false;
     }
   }
@@ -98,3 +100,27 @@ public class PIDDrive extends Command {
     return false;
   }
 }
+
+
+
+
+  // // Called every time the scheduler runs while the command is scheduled.
+  // @Override
+  // public void execute() {
+  //   System.out.println("MJS: executing PIDDrive: " + latPID.calculate(x, PIDDriveConstants.latGoal) + " " + longPID.calculate(y, PIDDriveConstants.longGoal) + " " + yawPID.calculate(yaw, PIDDriveConstants.yawGoal));
+  //   drivetrain.drive(latPID.calculate(x, PIDDriveConstants.latGoal),
+  //   longPID.calculate(y, PIDDriveConstants.longGoal),
+  //   yawPID.calculate(yaw, PIDDriveConstants.yawGoal), 
+  //   false, 
+  //   true);
+  // }
+
+  // public boolean atGoal() {
+  //   if(latPID.atGoal() && longPID.atGoal() && yawPID.atGoal()) {
+  //     return true;
+  //   }
+  //   else {
+  //     System.out.println("MJS: PIDDrive: not at goal: " + latPID.atGoal() + " " + longPID.atGoal() + " " + yawPID.atGoal() + " " + yawPID.getPositionError() + " " + yawPID.getPositionTolerance());
+  //     return false;
+  //   }
+  // }

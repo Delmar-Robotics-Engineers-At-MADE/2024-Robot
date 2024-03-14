@@ -47,6 +47,8 @@ public class Dashboard extends SubsystemBase{
         Shuffleboard.getTab("intake").addDouble("velocity", () -> intake.getVelocity());
         Shuffleboard.getTab("intake").addDouble("temp", () -> intake.getTemp());
         Shuffleboard.getTab("intake").addBoolean("thermal safe", () -> intake.isSafeTemp());
+        Shuffleboard.getTab("intake").addBoolean("left", ()-> intake.isLeft());
+        Shuffleboard.getTab("intake").addBoolean("right", ()-> intake.isRight());
         
         Shuffleboard.getTab("shooter").addDouble("top speed", () -> shooter.getTopVelocity());
         Shuffleboard.getTab("shooter").addDouble("bottom Speed", () -> shooter.getBottomVelocity());

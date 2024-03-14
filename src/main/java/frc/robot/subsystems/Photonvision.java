@@ -20,7 +20,7 @@ public class Photonvision extends SubsystemBase {
   /** Creates a new Photonvision. */
   public Photonvision(NetworkTableInstance nt) {
     fronCam = new PhotonCamera(nt, "Microsoft_LifeCam_HD-3000");
-    backCam = new PhotonCamera(nt, "USB_Camera");
+    backCam = new PhotonCamera(nt, "HD_Pro_Webcam_C920");
     fronCam.setPipelineIndex(0);
   }
   // AprilTags
