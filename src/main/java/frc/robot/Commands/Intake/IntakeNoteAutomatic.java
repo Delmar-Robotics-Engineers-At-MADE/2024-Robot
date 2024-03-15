@@ -19,7 +19,7 @@ public class IntakeNoteAutomatic extends Command {
     end = false;
     //this.blinkin = blinkin;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(in, blinkin);
+    addRequirements(in);
   }
 
   // Called when the command is initially scheduled.

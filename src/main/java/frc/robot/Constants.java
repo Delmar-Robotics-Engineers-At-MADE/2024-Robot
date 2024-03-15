@@ -165,6 +165,7 @@ public final class Constants {
 
     // init v should be 8.2 m/s
     public static final double k3mSpeed = 1500;
+    public static final double kAngleSpeed = 1500;
 
     public static final double kCompenstion = 1.6;
 
@@ -221,6 +222,7 @@ public final class Constants {
 
     public static final double kIntakePos = 0.027;
     public static final double kSubwooferPos = 0.037;
+    public static final double kAnglePos = 0.06;
 
     public static final double kFrontAmpPos = 0.18;
 
@@ -255,8 +257,8 @@ public final class Constants {
     public static final int kPortID = 15;
     public static final int kStarboardID = 16;
     public static final int kPortDIO = 3;
-    public static final int kStarboardDIO = 4;
-    public static final double kP = 2; 
+    public static final int kStarboardDIO = 2;
+    public static final double kP = 0.01; 
     public static final double kI = 0;
     public static final double kD = 0; 
     public static final double kIz = 0; 
@@ -265,10 +267,10 @@ public final class Constants {
     public static final double kMinOutput = -1;
 
     public static final double kHomeSpeed = -0.4;
-    
-    public static final double kUpperLimit = 10;
-    public static final double kLowerLimit = 0;
-    public static final double kManualSpeed = 1000;
+    // > 630
+    public static final double kUpperLimit = 750;
+    public static final double kLowerLimit = 5;
+    public static final double kManualSpeed = 1500;
     public static final double kDirectSpeed = 0.5;
     public static final double kTolearance = 5;
     

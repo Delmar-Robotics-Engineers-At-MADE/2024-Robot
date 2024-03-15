@@ -28,7 +28,7 @@ public class HomeClimber extends Command {
   @Override
   public void execute() {
     if (climber.isHomed()) {
-      System.out.println("¡HOMED!");
+      climber.stop();
       end = true;
     }
     else {

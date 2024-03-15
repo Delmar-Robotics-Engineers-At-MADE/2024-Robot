@@ -47,7 +47,7 @@ public class Climber extends SubsystemBase {
     }
 
     public void home() {
-        if(!limitSwitch.get()) {
+        if(limitSwitch.get()) {
             motor.set(ClimberConstants.kHomeSpeed);
             homed = false;
         }
@@ -58,6 +58,10 @@ public class Climber extends SubsystemBase {
         }
     }
 
+    public void stop() {
+        motor.set(0);
+    }
+
     public void runOpenLoop(double speed) {
         motor.set(speed);
         System.out.println("¡DIRECT CTRL! ¡OVEREXTEND POSSIBLE!");
@@ -65,10 +69,10 @@ public class Climber extends SubsystemBase {
 
     public void runAtVelocity(double speed) {
         if(!isHomed()) {
-            pid.setReference(speed, ControlType.kVelocity);
+            motor.set(speed);
             System.out.println("¡NOT HOMED! ¡OVEREXTEND POSSIBLE!");
         }
-        else if (isHomed() && speed < 0) {
+        else if (!limitSwitch.get() && speed < 0) {
             motor.set(0);
         }
         else if (isHomed()) {
@@ -77,7 +81,7 @@ public class Climber extends SubsystemBase {
                 System.out.println("¡CLIMBER TOO HIGH! ¡OVEREXTEND! ¡OVEREXTEND!");
             }
             else {
-                pid.setReference(speed, ControlType.kVelocity);
+                pid.setReference(ClimberConstants.kUpperLimit, ControlType.kPosition);
             }
         }
     }    
@@ -98,10 +102,5 @@ public class Climber extends SubsystemBase {
 
     public double getPos() {
         return encoder.getPosition();
-    }
-
-    @Override
-    public void periodic() {
-        homed = limitSwitch.get();
     }
 }

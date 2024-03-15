@@ -45,26 +45,8 @@ public class RapidHeading extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(x, y, m_PID.calculate(drivetrain.getHeading(), heading), true, true);
+    drivetrain.drive(x, y, m_PID.calculate(drivetrain.getHeading(), Toolkit.convertCardinalDirections(heading)), true, true);
   }
-
-  
-  // public double convertCardinalDirections(int povAngleDeg) {
-  //   // change d-pad values for left and right to specified angle
-  //   // if (povAngleDeg == 270) {
-  //   //   povAngleDeg = -90;
-  //   // } 
-  //   // else if (povAngleDeg == 90) {
-  //   //   povAngleDeg = 90;
-  //   // }
-  //   // else if (povAngleDeg == 0) {
-  //   //   povAngleDeg = 1
-  //   // }
-  //   // targetHeadingDegrees is counterclockwise so need to flip povAngle
-  //   //povAngleDeg = 180 - povAngleDeg;
-  //   povAngleDeg = -povAngleDeg + 180;
-  //   return povAngleDeg;
-  // }
 
   // Called once the command ends or is interrupted.
   @Override

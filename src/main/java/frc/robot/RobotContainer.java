@@ -5,7 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,9 +20,11 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.Utils.Dashboard;
 import frc.robot.Utils.Toolkit;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Photonvision;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -37,14 +39,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-
-import frc.robot.Commands.BlindFire;
-import frc.robot.Commands.Warning;
-import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
 import frc.robot.Commands.Arm.RunArmOpenLoop;
-import frc.robot.Commands.CMDGroup.FeedAndShootPodium;
 import frc.robot.Commands.CMDGroup.ForceFeed;
 import frc.robot.Commands.Climbers.HoldClimber;
 import frc.robot.Commands.Climbers.HomeClimber;
@@ -72,8 +68,10 @@ public class RobotContainer {
   private final Arm m_arm = new Arm(ArmConstants.kLeftID, ArmConstants.kRightID);
   private final Intake m_intake = new Intake(IntakeConstants.kIntakeID, IntakeConstants.kPortSensorDIOPort, IntakeConstants.kStarboardSensorDIOPort);
   private final Shooter m_shooter = new Shooter(ShooterConstants.kTopID, ShooterConstants.kBottomID);
-  private final Climber m_portClimber = new Climber(ClimberConstants.kPortID, ClimberConstants.kPortDIO, false);
-  private final Climber m_starboardClimber = new Climber(ClimberConstants.kStarboardID, ClimberConstants.kStarboardDIO, true);
+  private final Climber m_portClimber = new Climber(ClimberConstants.kPortID, ClimberConstants.kPortDIO, true);
+  private final Climber m_starboardClimber = new Climber(ClimberConstants.kStarboardID, ClimberConstants.kStarboardDIO, false);
+  private final Blinkin blinkin = Blinkin.getInstance();
+  //private final Photonvision m_photonvision = new Photonvision(NetworkTableInstance.getDefault());
 
   // The driver's controller
   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
@@ -145,6 +143,20 @@ public class RobotContainer {
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
           new RunShooterEternal(m_shooter, ShooterConstants.k3mSpeed, true),
+          new Feed(m_intake)
+        ),
+        Toolkit.sout("Fire end")
+      );
+
+  SequentialCommandGroup angleFire = new SequentialCommandGroup(
+        Toolkit.sout("Fire init"),
+        new ParallelCommandGroup(
+          new RunArmClosedLoop(m_arm, ArmConstants.kAnglePos),
+          new AccelerateShooter(m_shooter, ShooterConstants.kAngleSpeed)),
+        Toolkit.sout("shoot init"),
+        new ParallelRaceGroup(
+          new WaitCommand(ShooterConstants.kLaunchTime),
+          new RunShooterEternal(m_shooter, ShooterConstants.kAngleSpeed, true),
           new Feed(m_intake)
         ),
         Toolkit.sout("Fire end")
@@ -353,16 +365,14 @@ public class RobotContainer {
 
     m_operatorController.back().whileTrue(homeClimbers);
     m_operatorController.rightBumper().whileTrue(new RunClimberNormalLaw(m_starboardClimber, ClimberConstants.kManualSpeed));
-    m_operatorController.rightTrigger().whileTrue(new RunClimberNormalLaw(m_portClimber, -ClimberConstants.kManualSpeed));
+    m_operatorController.rightTrigger().whileTrue(new RunClimberNormalLaw(m_starboardClimber, -ClimberConstants.kManualSpeed));
     m_operatorController.leftBumper().whileTrue(new RunClimberNormalLaw(m_portClimber, ClimberConstants.kManualSpeed));
     m_operatorController.leftTrigger().whileTrue(new RunClimberNormalLaw(m_portClimber, -ClimberConstants.kManualSpeed));
 
     m_operatorController.a().whileTrue(backAmp);
     m_operatorController.b().whileTrue(distanceFire);
     m_operatorController.y().whileTrue(subwooferFire);
-    m_operatorController.x().whileTrue(new ParallelCommandGroup(
-    new IntakeNoteAutomatic(m_intake),
-    new RunArmClosedLoop(m_arm, ArmConstants.kIntakePos)));
+    m_operatorController.x().whileTrue(angleFire);
   }
     
 
