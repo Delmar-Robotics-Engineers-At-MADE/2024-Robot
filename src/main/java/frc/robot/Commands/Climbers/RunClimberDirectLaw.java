@@ -5,14 +5,15 @@
 package frc.robot.Commands.Climbers;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
 
 public class RunClimberDirectLaw extends Command {
   private final Climber climber;
+  private final boolean up;
   /** Creates a new RunClimberDirectLaw. */
-  public RunClimberDirectLaw(Climber climber) {
+  public RunClimberDirectLaw(Climber climber, boolean up) {
     this.climber = climber;
+    this.up = up;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -23,7 +24,7 @@ public class RunClimberDirectLaw extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.runOpenLoop(ClimberConstants.kDirectSpeed);
+    climber.runOpenLoop(up);
   }
 
   // Called once the command ends or is interrupted.
