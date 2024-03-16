@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Climber;
 
 public class RunClimberNormalLaw extends Command {
-  private Climber climber;
-  private double velocity;
+  private final Climber climber;
+  private final boolean up;
   /** Creates a new RunClimberManual. */
-  public RunClimberNormalLaw(Climber climb, double speed) {
+  public RunClimberNormalLaw(Climber climb, boolean up) {
     climber = climb;
-    velocity = speed;
+    this.up = up;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(climb);
   }
@@ -25,7 +25,7 @@ public class RunClimberNormalLaw extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      climber.runAtVelocity(velocity);
+      climber.runInDirection(up);
   }
 
   // Called once the command ends or is interrupted.

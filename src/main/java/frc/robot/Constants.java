@@ -171,7 +171,7 @@ public final class Constants {
 
     public static final double kIdleSpeed = 700;
     public static final double kAmpSpeed = 900;
-
+    public static final double kShuttleSpeed = 2500;
     public static final double kP = /*0.00025*/ 0;
     public static final double kI = 0.0;
     public static final double kD = /*0.000077*/ 0;
@@ -229,6 +229,7 @@ public final class Constants {
     // 3m position
     public static final double k3mPos = 0.06;
 
+    public static final double kShuttlePos = 0.07;
     public static final double kBackAmpPos = 0.28;
     public static final double kUpperLimit = 0.35;
     public static final double kLowerLimit = 0.023;
