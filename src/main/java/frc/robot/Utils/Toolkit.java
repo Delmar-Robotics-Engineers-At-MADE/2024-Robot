@@ -8,11 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.AprilTags;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.States;
-import frc.robot.Constants.VisionConstants;
 
 public final class Toolkit {
     

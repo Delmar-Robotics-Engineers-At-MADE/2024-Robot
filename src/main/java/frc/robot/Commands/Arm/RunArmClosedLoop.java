@@ -4,6 +4,8 @@
 
 package frc.robot.Commands.Arm;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Utils.Toolkit;
@@ -13,17 +15,12 @@ public class RunArmClosedLoop extends Command {
   private Arm arm;
   private double setpoint;
   private boolean end;
+  private TrapezoidProfile.State state;
   /** Creates a new RunArmClosedLoop. */
   public RunArmClosedLoop(Arm ar, double target) {
     arm = ar;
     setpoint = target;
     end = false;
-    if(end == false) {
-      System.out.println("RunArmClosedLoop end false");
-    }
-    else{
-      System.out.println("RunArmClosedLoop end true");
-    }
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(ar);
   }
@@ -43,7 +40,8 @@ public class RunArmClosedLoop extends Command {
       end = true;
     }
     else {
-      arm.runToPosition(setpoint);
+      state = new State(setpoint, 0);
+      arm.runToPosition(state);
       end = false;
     }
   }
@@ -55,9 +53,6 @@ public class RunArmClosedLoop extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(end == true) {
-      System.out.println("END IS TRUE");
-    }
     return end;
   }
 }

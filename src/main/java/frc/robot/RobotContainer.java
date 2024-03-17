@@ -42,6 +42,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
+import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
 import frc.robot.Commands.Arm.RunArmOpenLoop;
 import frc.robot.Commands.CMDGroup.ForceFeed;
@@ -125,9 +127,8 @@ public class RobotContainer {
   // Firing Sequences
   SequentialCommandGroup subwooferFire = new SequentialCommandGroup(
         Toolkit.sout("sFire init"),
-        new ParallelCommandGroup(
           new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos),
-          new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed)),
+          new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed),
         Toolkit.sout("shoot init"),
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
@@ -139,9 +140,8 @@ public class RobotContainer {
 
   SequentialCommandGroup distanceFire = new SequentialCommandGroup(
         Toolkit.sout("Fire init"),
-        new ParallelCommandGroup(
           new RunArmClosedLoop(m_arm, ArmConstants.k3mPos),
-          new AccelerateShooter(m_shooter, ShooterConstants.k3mSpeed)),
+          new AccelerateShooter(m_shooter, ShooterConstants.k3mSpeed),
         Toolkit.sout("shoot init"),
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
@@ -153,9 +153,8 @@ public class RobotContainer {
 
   SequentialCommandGroup shuttleFire = new SequentialCommandGroup(
         Toolkit.sout("Fire init"),
-        new ParallelCommandGroup(
           new RunArmClosedLoop(m_arm, ArmConstants.kShuttlePos),
-          new AccelerateShooter(m_shooter, ShooterConstants.kShuttleSpeed)),
+          new AccelerateShooter(m_shooter, ShooterConstants.kShuttleSpeed),
         Toolkit.sout("shoot init"),
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
@@ -168,9 +167,8 @@ public class RobotContainer {
 
   SequentialCommandGroup angleFire = new SequentialCommandGroup(
         Toolkit.sout("Fire init"),
-        new ParallelCommandGroup(
           new RunArmClosedLoop(m_arm, ArmConstants.kAnglePos),
-          new AccelerateShooter(m_shooter, ShooterConstants.kAngleSpeed)),
+          new AccelerateShooter(m_shooter, ShooterConstants.kAngleSpeed),
         Toolkit.sout("shoot init"),
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
@@ -182,9 +180,8 @@ public class RobotContainer {
 
   SequentialCommandGroup backAmp = new SequentialCommandGroup(
         Toolkit.sout("AMP init"),
-        new ParallelCommandGroup(
           new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
-          new AccelerateShooter(m_shooter, ShooterConstants.kAmpSpeed)),
+          new AccelerateShooter(m_shooter, ShooterConstants.kAmpSpeed),
         Toolkit.sout("shoot init"),
         new ParallelRaceGroup(
           new WaitCommand(ShooterConstants.kLaunchTime),
@@ -334,7 +331,9 @@ public class RobotContainer {
 
     // Subsystem Default Commands
     m_intake.setDefaultCommand(new HoldIntake(m_intake));
-    m_arm.setDefaultCommand(new RunArmClosedLoop(m_arm, ArmConstants.kDefaultPos));
+    m_arm.setDefaultCommand(new SequentialCommandGroup(
+      new RunArmClosedLoop(m_arm, ArmConstants.kDefaultPos),
+      new HoldArm(m_arm)));
     m_shooter.setDefaultCommand(new RunShooterAtVelocity(m_shooter, ShooterConstants.kIdleSpeed, false));
     m_portClimber.setDefaultCommand(new HoldClimber(m_portClimber));
     m_starboardClimber.setDefaultCommand(new HoldClimber(m_starboardClimber));
@@ -358,7 +357,7 @@ public class RobotContainer {
             m_robotDrive));
 
     m_driverController.button(DriverConstants.kIntake).whileTrue(intake);
-    m_driverController.button(DriverConstants.kStowArm).toggleOnTrue(new RunCommand(() -> m_arm.runToPosition(ArmConstants.kStowPos), m_arm));
+    m_driverController.button(DriverConstants.kStowArm).toggleOnTrue(new RunArmClosedLoop(m_arm, ArmConstants.kStowPos));
     m_driverController.button(DriverConstants.kAutoIntake).and(m_driverController.button(DriverConstants.kIntake)).onTrue(
       new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)
     );
@@ -392,10 +391,10 @@ public class RobotContainer {
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmOpenLoop(m_arm, ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmOpenLoop(m_arm, -ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(new ForceFeed(m_intake, m_shooter));
-    m_operatorController.start().and(m_operatorController.rightBumper().whileTrue(new RunClimberDirectLaw(m_starboardClimber, true)));
-    m_operatorController.start().and(m_operatorController.leftBumper().whileTrue(new RunClimberDirectLaw(m_portClimber, true)));
-    m_operatorController.start().and(m_operatorController.rightTrigger().whileTrue(new RunClimberDirectLaw(m_starboardClimber, false)));
-    m_operatorController.start().and(m_operatorController.leftTrigger().whileTrue(new RunClimberDirectLaw(m_portClimber, false)));
+    // m_operatorController.start().and(m_operatorController.rightBumper().whileTrue(new RunClimberDirectLaw(m_starboardClimber, true)));
+    // m_operatorController.start().and(m_operatorController.leftBumper().whileTrue(new RunClimberDirectLaw(m_portClimber, true)));
+    // m_operatorController.start().and(m_operatorController.rightTrigger().whileTrue(new RunClimberDirectLaw(m_starboardClimber, false)));
+    // m_operatorController.start().and(m_operatorController.leftTrigger().whileTrue(new RunClimberDirectLaw(m_portClimber, false)));
 
     m_operatorController.back().whileTrue(homeClimbers);
     m_operatorController.rightBumper().whileTrue(new RunClimberNormalLaw(m_starboardClimber, true));
@@ -404,7 +403,7 @@ public class RobotContainer {
     m_operatorController.leftTrigger().whileTrue(new RunClimberNormalLaw(m_portClimber, false));
 
     m_operatorController.a().whileTrue(backAmp);
-    m_operatorController.b().whileTrue(new AutoFire3D(m_robotDrive, m_photonvision, Toolkit.getFiducialID(AprilTags.SPEAKER_CENTRE), distanceFire));
+    m_operatorController.b().whileTrue(shuttleFire);
     m_operatorController.y().whileTrue(subwooferFire);
     m_operatorController.x().whileTrue(angleFire);
   }

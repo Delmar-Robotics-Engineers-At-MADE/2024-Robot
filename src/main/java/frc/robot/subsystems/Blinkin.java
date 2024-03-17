@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -23,14 +24,24 @@ public class Blinkin extends SubsystemBase {
 
     return instance;
   }
-  private final Spark blinkin;
+  private final Spark one;
+  private final Spark two;
   /** Creates a new Blinkin. */
   public Blinkin() {
-    blinkin = new Spark(0);
+    one = new Spark(0);
+    two = new Spark(1);
+  }
+
+  public Command setOne(double colour) {
+    return runOnce(()-> one.set(colour));
+  }
+
+  public Command setTwo(double colour) {
+    return runOnce(()-> two.set(colour));
   }
 
   public Command set(double colour) {
-    return runOnce(()-> blinkin.set(colour));
+    return setOne(colour);
   }
 
   public void setDefault() {

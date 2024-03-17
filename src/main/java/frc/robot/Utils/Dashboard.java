@@ -41,7 +41,9 @@ public class Dashboard extends SubsystemBase{
         Shuffleboard.getTab("arm").addDouble("arm pos", () -> arm.getPos());
         Shuffleboard.getTab("arm").addDouble("left temp", () -> arm.getTemp()[0]);
         Shuffleboard.getTab("arm").addDouble("right temp", () -> arm.getTemp()[1]);
-
+        Shuffleboard.getTab("arm").addDouble("left current", () -> arm.getCurrent()[0]);
+        Shuffleboard.getTab("arm").addDouble("right current", () -> arm.getCurrent()[1]);
+        
         Shuffleboard.getTab("intake").addBoolean("capture", () -> intake.isNote());
         Shuffleboard.getTab("intake").addDouble("current", () -> intake.getOutputCurrent());
         Shuffleboard.getTab("intake").addDouble("velocity", () -> intake.getVelocity());

@@ -22,6 +22,7 @@ public class Photonvision extends SubsystemBase {
     fronCam = new PhotonCamera(nt, "Microsoft_LifeCam_HD-3000");
     backCam = new PhotonCamera(nt, "HD_Pro_Webcam_C920");
     fronCam.setPipelineIndex(0);
+
   }
   // AprilTags
   public double[] getTagData(int id) {

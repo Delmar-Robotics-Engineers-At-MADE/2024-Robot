@@ -40,9 +40,10 @@ public class AutoFire3D extends PIDDrive {
   public void execute() {
     if(!(photon.get3DTagData(tag).length == 0)) {
       double x = photon.get3DTagData(tag)[0];
-      if (x != 0) {x = (1 - x)*15;}  // MJS: zero means no target, so leave it zero
+      if (x != 0) {x = (VisionConstants.kTagCamXOffset + 1.3 - x)*15;}  // MJS: zero means no target, so leave it zero
       double y = 0;//photon.get3DTagData(tag)[0]*10;
       double z = photon.get3DTagData(tag)[1]*30;
+      if (z != 0) {z = (VisionConstants.kTagCamYOffset + 1.3 - x)*15;}
       this.setValues(x, y, z); // MJS: minus Z, and multiply x/y, and swap them
       super.execute();
       if(this.atGoal()) {

@@ -161,7 +161,7 @@ public final class Constants {
     public static final int kBottomID = 9;
 
     // init v should be 6.7 m/s for subwoofer at intake pos
-    public static final double kSubwooferSpeed = 1259;
+    public static final double kSubwooferSpeed = 1325;
 
     // init v should be 8.2 m/s
     public static final double k3mSpeed = 1500;
@@ -235,7 +235,7 @@ public final class Constants {
     public static final double kLowerLimit = 0.023;
     public static final double kOverrunLimit = 0;
 
-    public static final double kP = 6; 
+    public static final double kP = 7; 
     public static final double kI = 0;
     public static final double kD = 0.7; 
     public static final double kIz = 0; 
@@ -249,7 +249,7 @@ public final class Constants {
     public static final double kManualSpeed = 0.3;
 
     public static final double kSVolts = 0;
-    public static final double kGVolts = 0.335;
+    public static final double kGVolts = 0.4;
     public static final double kVVoltSecondPerRad = 6.24;
     public static final double kAVoltSecondSquaredPerRad = 0.04;
   }
@@ -269,7 +269,7 @@ public final class Constants {
 
     public static final double kHomeSpeed = -0.4;
     // > 630, < 750
-    public static final double kUpperLimit = 700;
+    public static final double kUpperLimit = 400;
     public static final double kLowerLimit = 5;
     public static final double kManualSpeed = 1500;
     public static final double kDirectSpeed = 0.5;
@@ -295,9 +295,9 @@ public final class Constants {
   }
 
   public static final class VisionConstants {
-    public static final double kObjCamXOffset = 0.3;
-    public static final double kTagCamXOffset = 0.3;
-    public static final double kTagCamYOffset = 0.3;
+    public static final double kObjCamXOffset = 0.3302;
+    public static final double kTagCamXOffset = 0.3302;
+    public static final double kTagCamYOffset = 0.254;
   }
 
   public enum AprilTags {

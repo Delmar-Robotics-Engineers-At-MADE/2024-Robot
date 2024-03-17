@@ -81,7 +81,7 @@ public class Climber extends SubsystemBase {
                 System.out.println("¡CLIMBER TOO HIGH! ¡OVEREXTEND! ¡OVEREXTEND!");
             }
             else {
-                pid.setReference(up ? ClimberConstants.kUpperLimit : -ClimberConstants.kUpperLimit, ControlType.kPosition);
+                pid.setReference(up ? ClimberConstants.kUpperLimit : ClimberConstants.kLowerLimit, ControlType.kPosition);
             }
         }
     }    

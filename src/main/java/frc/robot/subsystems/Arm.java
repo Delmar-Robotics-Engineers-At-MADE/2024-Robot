@@ -79,7 +79,7 @@ public class Arm extends SubsystemBase{
         armPID.setReference(setpoint.position, ControlType.kPosition,0, feedforward);
     }
 
-    public void runToPosition(double setpoint) {
+    public void runToPosition(TrapezoidProfile.State setpoint) {
         //these are included safety measures. not necessary, but useful
         if(getPos() >= ArmConstants.kUpperLimit) {
             left.set(0);
@@ -90,7 +90,8 @@ public class Arm extends SubsystemBase{
             System.out.println("¡TOO LOW! ¡LOWER LIMIT! " + getPos());
         }
         else{
-            armPID.setReference(setpoint, ControlType.kPosition);
+            double feedforward = ff.calculate(setpoint.position*2*Math.PI, setpoint.velocity);
+            armPID.setReference(setpoint.position, ControlType.kPosition, 0, feedforward);
         }
     }
 
@@ -101,5 +102,10 @@ public class Arm extends SubsystemBase{
     public double[] getTemp() {
        double result[] = {left.getMotorTemperature(), right.getMotorTemperature()};
        return result;
-    } 
+    }
+    
+    public double[] getCurrent() {
+        double result[] = {left.getOutputCurrent(), right.getOutputCurrent()};
+        return result;
+    }
 }
