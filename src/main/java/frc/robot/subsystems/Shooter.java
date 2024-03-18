@@ -6,7 +6,10 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Commands.Shooter.RunShooterAtVelocity;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase{
@@ -60,6 +63,8 @@ public class Shooter extends SubsystemBase{
         bottomVelController.setIZone(ShooterConstants.kIz);
         bottomVelController.setFF(ShooterConstants.kFF);
         bottomVelController.setOutputRange(-ShooterConstants.kMaxRPM, ShooterConstants.kMaxRPM);
+
+        setDefaultCommand(new RunShooterAtVelocity(this, ShooterConstants.kIdleSpeed, false));
     }
 
     public void runAtSpeed(double target) {
@@ -108,5 +113,7 @@ public class Shooter extends SubsystemBase{
             return true;
         }
     }
+
+
     
 }

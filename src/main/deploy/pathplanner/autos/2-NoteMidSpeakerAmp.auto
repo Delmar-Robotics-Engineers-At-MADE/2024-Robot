@@ -50,10 +50,16 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "SubwooferToAmpNoteReturn"
+                              "pathName": "SubwooferToAmpNote"
                             }
                           }
                         ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "AmpNoteToSubwoofer"
                       }
                     },
                     {

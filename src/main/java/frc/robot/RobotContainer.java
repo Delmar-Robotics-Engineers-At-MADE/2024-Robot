@@ -47,6 +47,7 @@ import frc.robot.Commands.Arm.HoldArm;
 import frc.robot.Commands.Arm.RunArmClosedLoop;
 import frc.robot.Commands.Arm.RunArmOpenLoop;
 import frc.robot.Commands.CMDGroup.ForceFeed;
+import frc.robot.Commands.CMDGroup.ForceReverse;
 import frc.robot.Commands.Climbers.HoldClimber;
 import frc.robot.Commands.Climbers.HomeClimber;
 import frc.robot.Commands.Climbers.RunClimberDirectLaw;
@@ -357,7 +358,10 @@ public class RobotContainer {
             m_robotDrive));
 
     m_driverController.button(DriverConstants.kIntake).whileTrue(intake);
-    m_driverController.button(DriverConstants.kStowArm).toggleOnTrue(new RunArmClosedLoop(m_arm, ArmConstants.kStowPos));
+    m_driverController.button(DriverConstants.kStowArm).toggleOnTrue(new SequentialCommandGroup(
+      new RunArmClosedLoop(m_arm, ArmConstants.kStowPos),
+      new HoldArm(m_arm)
+    ));
     m_driverController.button(DriverConstants.kAutoIntake).and(m_driverController.button(DriverConstants.kIntake)).onTrue(
       new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)
     );
@@ -370,8 +374,9 @@ public class RobotContainer {
     m_driverController.button(DriverConstants.kSelfDestruct).onTrue(
       new InstantCommand(() -> System.out.println("¡KABOOM!"))
     );
-    m_driverController.button(6).whileTrue(new AutoFire3D(m_robotDrive, m_photonvision, Toolkit.getFiducialID(AprilTags.AMP),
+    m_driverController.button(6).whileTrue(
     new SequentialCommandGroup(
+        new AutoFire3D(m_robotDrive, m_photonvision, Toolkit.getFiducialID(AprilTags.AMP)),
         Toolkit.sout("AMP init"),
         new ParallelCommandGroup(
           new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
@@ -383,14 +388,15 @@ public class RobotContainer {
           new Feed(m_intake)
         ),
         Toolkit.sout("Amp end")
-      )));
+      ));
     m_driverController.button(DriverConstants.kAutoIntake).whileTrue(new AutoIntake(m_robotDrive, m_intake, m_photonvision, m_arm));
 
     m_operatorController.start().onTrue(new InstantCommand(() -> override = true));
     m_operatorController.start().onFalse(new InstantCommand(() -> override = false));
     m_operatorController.start().and(m_operatorController.povUp()).whileTrue(new RunArmOpenLoop(m_arm, ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmOpenLoop(m_arm, -ArmConstants.kManualSpeed));
-    m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(new ForceFeed(m_intake, m_shooter));
+    m_operatorController.start().and(m_operatorController.povRight()).whileTrue(new ForceFeed(m_intake, m_shooter));
+    m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(new ForceReverse(m_intake, m_shooter));
     // m_operatorController.start().and(m_operatorController.rightBumper().whileTrue(new RunClimberDirectLaw(m_starboardClimber, true)));
     // m_operatorController.start().and(m_operatorController.leftBumper().whileTrue(new RunClimberDirectLaw(m_portClimber, true)));
     // m_operatorController.start().and(m_operatorController.rightTrigger().whileTrue(new RunClimberDirectLaw(m_starboardClimber, false)));
@@ -403,7 +409,10 @@ public class RobotContainer {
     m_operatorController.leftTrigger().whileTrue(new RunClimberNormalLaw(m_portClimber, false));
 
     m_operatorController.a().whileTrue(backAmp);
-    m_operatorController.b().whileTrue(shuttleFire);
+    m_operatorController.b().whileTrue(new SequentialCommandGroup(
+      new AutoFire3D(m_robotDrive, m_photonvision, Toolkit.getFiducialID(AprilTags.SPEAKER_CENTRE)),
+      distanceFire
+    ));
     m_operatorController.y().whileTrue(subwooferFire);
     m_operatorController.x().whileTrue(angleFire);
   }

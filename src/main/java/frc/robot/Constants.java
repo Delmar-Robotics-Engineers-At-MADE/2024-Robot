@@ -219,7 +219,7 @@ public final class Constants {
     public static final int kRightID = 7;
     public static final double kStowPos = 0.18;
     public static final double kDefaultPos = 0.032;
-
+    // intake go lower
     public static final double kIntakePos = 0.027;
     public static final double kSubwooferPos = 0.037;
     public static final double kAnglePos = 0.06;
@@ -235,7 +235,7 @@ public final class Constants {
     public static final double kLowerLimit = 0.023;
     public static final double kOverrunLimit = 0;
 
-    public static final double kP = 7; 
+    public static final double kP = 6; 
     public static final double kI = 0;
     public static final double kD = 0.7; 
     public static final double kIz = 0; 

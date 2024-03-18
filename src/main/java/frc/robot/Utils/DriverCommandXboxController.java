@@ -17,14 +17,18 @@ public class DriverCommandXboxController extends CommandXboxController {
     }
 
     public Trigger intake() {
-        return intake;
+        return leftBumper().or(rightBumper());
     }
 
     public Trigger gyroReset() {
-        return rightBumper().and(y());
+        return intake().and(y());
     }
 
-    public Trigger frontAmp() {
+    public Trigger autointake() {
+        return y();
+    }
+
+    public Trigger shuttle() {
         return b();
     }
 
@@ -42,7 +46,7 @@ public class DriverCommandXboxController extends CommandXboxController {
 
     public double getYaw() {
         if(Toolkit.isInTolarance(getRightX(), 0.0, kDeadband)) {
-            return Toolkit.manageTriggers(getLeftTriggerAxis(), getRightTriggerAxis());
+            return Toolkit.manageTriggers(getLeftTriggerAxis(), getRightTriggerAxis(), kDeadband);
         }
         else {
             return Toolkit.stickAugments(getRightX(), kDeadband);
@@ -69,8 +73,9 @@ public class DriverCommandXboxController extends CommandXboxController {
         return Toolkit.stickAugments(super.getLeftY(), kDeadband);
     }
 
-    public Trigger intake = new Trigger(() -> leftBumper().getAsBoolean() || rightBumper().getAsBoolean());
-
+    public Trigger slow() {
+        return leftStick().or(rightStick());
+    }
     
 
 

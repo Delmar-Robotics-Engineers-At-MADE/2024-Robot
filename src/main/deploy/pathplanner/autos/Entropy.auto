@@ -12,54 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "homePort"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "homeStarboard"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "shootSubwoofer"
-                      }
-                    },
-                    {
-                      "type": "parallel",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Entropy"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "armDown"
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
+            "pathName": "Entropy"
           }
         }
       ]

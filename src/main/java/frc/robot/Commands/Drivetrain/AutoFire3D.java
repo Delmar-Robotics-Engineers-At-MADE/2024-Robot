@@ -5,7 +5,6 @@
 package frc.robot.Commands.Drivetrain;
 
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Photonvision;
@@ -16,12 +15,9 @@ public class AutoFire3D extends PIDDrive {
   private Photonvision photon;
   private int tag;
   private boolean end;
-  private SequentialCommandGroup cmd;
   /** Creates a new AutoFire. */
-  public AutoFire3D(DriveSubsystem dt, Photonvision pv, int tagID, 
-    SequentialCommandGroup sequence) {
+  public AutoFire3D(DriveSubsystem dt, Photonvision pv, int tagID) {
     super(dt, VisionConstants.kTagCamXOffset, VisionConstants.kTagCamYOffset);
-    cmd = sequence;
     photon = pv;
     tag = tagID;
     end = false;
@@ -47,8 +43,7 @@ public class AutoFire3D extends PIDDrive {
       this.setValues(x, y, z); // MJS: minus Z, and multiply x/y, and swap them
       super.execute();
       if(this.atGoal()) {
-      cmd.execute();
-      end = cmd.isFinished();
+        end = true;
       }
       else {
         end = false;

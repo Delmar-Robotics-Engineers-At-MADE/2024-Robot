@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Commands.Intake.HoldIntake;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 
@@ -40,6 +41,7 @@ public class Intake extends SubsystemBase{
 
         ff = new SimpleMotorFeedforward(IntakeConstants.kS, IntakeConstants.kV);
 
+        this.setDefaultCommand(new HoldIntake(this));
     }
 
     public void hold(double pos) {

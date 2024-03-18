@@ -109,8 +109,8 @@ public final class Toolkit {
         return new InstantCommand(() -> System.out.println(input));
     }
 
-    public static double manageTriggers(double left, double right) {
-        return -left + right;
+    public static double manageTriggers(double left, double right, double deadband) {
+        return stickAugments(-left + right, deadband);
     }
 
     public static int convertCardinalDirections(int povAngleDeg) {
