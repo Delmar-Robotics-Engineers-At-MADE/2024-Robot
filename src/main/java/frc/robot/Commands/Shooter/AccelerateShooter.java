@@ -4,8 +4,6 @@
 
 package frc.robot.Commands.Shooter;
 
-import edu.wpi.first.hal.FRCNetComm.tResourceType;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Utils.Toolkit;

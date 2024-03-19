@@ -5,13 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.Commands.Drivetrain.AutoFire3D;
-import frc.robot.Commands.Drivetrain.AutoIntake;
-import frc.robot.Constants.AprilTags;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.DriverConstants;
@@ -26,7 +22,6 @@ import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Photonvision;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -57,7 +52,6 @@ import frc.robot.Commands.Intake.RunIntakeOpenLoop;
 import frc.robot.Commands.Shooter.AccelerateShooter;
 import frc.robot.Commands.Shooter.RunShooterAtVelocity;
 import frc.robot.Commands.Shooter.RunShooterEternal;
-import frc.robot.Commands.Shooter.ShootNote;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -74,7 +68,6 @@ public class RobotContainer {
   private final Climber m_portClimber = new Climber(ClimberConstants.kPortID, ClimberConstants.kPortDIO, true);
   private final Climber m_starboardClimber = new Climber(ClimberConstants.kStarboardID, ClimberConstants.kStarboardDIO, false);
   private final Blinkin blinkin = Blinkin.getInstance();
-  private final Photonvision m_photonvision = new Photonvision(NetworkTableInstance.getDefault());
 
   // The driver's controller
   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
@@ -87,24 +80,6 @@ public class RobotContainer {
   private boolean override = false;
 
   // Command Groups
-  ParallelCommandGroup feedAndShootSubwoofer = new ParallelCommandGroup(
-    new ShootNote(m_shooter, ShooterConstants.kSubwooferSpeed),
-    new Feed(m_intake)
-  );
-  ParallelCommandGroup feedAndShootPodium = new ParallelCommandGroup(
-    new ShootNote(m_shooter, ShooterConstants.k3mSpeed),
-    new Feed(m_intake)
-  );
-  SequentialCommandGroup shootSubwoofer = new SequentialCommandGroup(
-    new RunArmClosedLoop(m_arm, ArmConstants.kSubwooferPos),
-    new AccelerateShooter(m_shooter, ShooterConstants.kSubwooferSpeed),
-    feedAndShootSubwoofer
-  );
-  SequentialCommandGroup shootPodium = new SequentialCommandGroup(
-    new RunArmClosedLoop(m_arm, ArmConstants.k3mPos),
-    new AccelerateShooter(m_shooter, ShooterConstants.k3mSpeed),
-    feedAndShootPodium
-  );
   ParallelCommandGroup intake = new ParallelCommandGroup(
     new IntakeNoteAutomatic(m_intake),
     new RunArmClosedLoop(m_arm, ArmConstants.kIntakePos)
@@ -202,20 +177,6 @@ public class RobotContainer {
       );
 
   private final SendableChooser<Command> autoChooser;
-
-  // temp strings
-  // private String k1NC = "1-Note Center";
-  // private String k1NAS = "1-NoteAmpSide";
-  // private String k2NAS = "2-NoteAmpSide";
-  // private String k2NFC = "2-NoteFieldCenter";
-  // private String k2NMS = "2-NoteMidSpeaker";
-  // private String k2NMSA = "2-NoteMidSpeakerAmp";
-  // private String k3NAS = "3-NoteAmpSide";
-  // private String k3NMSC = "3-NoteMidSpeakerCenter";
-  // private String kBL = "BasicLeave";
-  // private String kBS = "BasicShoot";
-  // private String kEntropy = "Entropy";
-
   
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -263,22 +224,6 @@ public class RobotContainer {
       () -> m_robotDrive.drive(
         0, 0, 0, false, true), m_robotDrive));
 
-    // Build an auto chooser. This will use Commands.none() as the default option.
-    // autoChooser = new SendableChooser<>();
-    // autoChooser.addOption("1-Note Center", new PathPlannerAuto(k1NC));
-    // autoChooser.addOption("1-NoteAmpSide", new PathPlannerAuto(k1NAS));
-    // autoChooser.addOption("2-NoteAmpSide", new PathPlannerAuto(k2NAS));
-    // autoChooser.addOption("2-NoteFieldCenter", new PathPlannerAuto(k2NFC));
-    // autoChooser.addOption("2-NoteMidSpeaker", new PathPlannerAuto(k2NMS));
-    // autoChooser.addOption("2-MidSpeakerAmp", new PathPlannerAuto(k2NMSA));
-    // autoChooser.addOption("3-NoteAmpSide", new PathPlannerAuto(k3NAS));
-    // autoChooser.addOption("3-NoteMidSpeakerCenter", new PathPlannerAuto(k3NMSC));
-    // autoChooser.addOption("BasicLeave", new PathPlannerAuto(kBL));
-    // autoChooser.addOption("BasicShoot", new PathPlannerAuto(kBS));
-    // autoChooser.addOption("Entropy", new PathPlannerAuto(kEntropy));
-    // autoChooser.addOption("Entropy Path", new PathPlannerAuto("EntropyPath"));
-
-
     // Another option that allows you to specify the default auto by its name
     autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
@@ -294,30 +239,6 @@ public class RobotContainer {
           -MathUtil.applyDeadband(m_driverController.getY()*DriverConstants.kDefaultSpeed, OIConstants.kDriveDeadband),
           -MathUtil.applyDeadband(m_driverController.getTwist()*DriverConstants.kYawSpeed, OIConstants.kDriveDeadband),
           true, true), m_robotDrive));
-
-    // m_robotDrive.setDefaultCommand(
-    //   new RunCommand(
-    //     () -> m_robotDrive.drive(
-    //       m_driverControllerX.getLeftY()*0.8, 
-    //       m_driverControllerX.getLeftX()*0.8, 
-    //       m_driverControllerX.getYaw()*DriverConstants.kYawSpeed, true, true), m_robotDrive)
-    // );
-
-    // m_driverControllerX.turbo().whileTrue(
-    //   new RunCommand(
-    //     () -> m_robotDrive.drive(
-    //       m_driverControllerX.getLeftY(), 
-    //       m_driverControllerX.getLeftX(), 
-    //       m_driverControllerX.getYaw()*DriverConstants.kYawSpeed, true, true), m_robotDrive)
-    // );
-
-    // m_driverControllerX.override().whileTrue(
-    //   new RunCommand(
-    //     () -> m_robotDrive.drive(
-    //       -MathUtil.applyDeadband(m_driverControllerX.getLeftY(), OIConstants.kDriveDeadband),
-    //       -MathUtil.applyDeadband(m_driverControllerX.getLeftX(), OIConstants.kDriveDeadband),
-    //       -MathUtil.applyDeadband(m_driverControllerX.getRightX()*DriverConstants.kYawSpeed, OIConstants.kDriveDeadband),
-    //       false, true), m_robotDrive));
 
     // The left stick controls translation of the robot.
     // Turning is controlled by the X axis of the right stick.
@@ -386,50 +307,6 @@ public class RobotContainer {
     m_driverController.button(DriverConstants.kSelfDestruct).onTrue(
       new InstantCommand(() -> System.out.println("¡KABOOM!"))
     );
-    m_driverController.button(6).whileTrue(
-    new SequentialCommandGroup(
-        new AutoFire3D(m_robotDrive, m_photonvision, Toolkit.getFiducialID(AprilTags.AMP)),
-        Toolkit.sout("AMP init"),
-        new ParallelCommandGroup(
-          new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
-          new AccelerateShooter(m_shooter, ShooterConstants.kAmpSpeed)),
-        Toolkit.sout("shoot init"),
-        new ParallelRaceGroup(
-          new WaitCommand(ShooterConstants.kLaunchTime),
-          new RunShooterEternal(m_shooter, ShooterConstants.kAmpSpeed, true),
-          new Feed(m_intake)
-        ),
-        Toolkit.sout("Amp end")
-      ));
-    m_driverController.button(DriverConstants.kAutoIntake).whileTrue(new AutoIntake(m_robotDrive, m_intake, m_photonvision, m_arm));
-
-    // m_driverControllerX.xMode().whileTrue(new RunCommand(
-    //         () -> m_robotDrive.setX(),
-    //         m_robotDrive));
-    // m_driverControllerX.intake().whileTrue(intake);
-    // m_driverControllerX.stow().toggleOnTrue(new SequentialCommandGroup(
-    //   new RunArmClosedLoop(m_arm, ArmConstants.kStowPos),
-    //   new HoldArm(m_arm)
-    // ));
-    // m_driverControllerX.gyroReset().onTrue(
-    //   new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)
-    // );
-    // m_driverControllerX.backAmp().whileTrue(
-    // new SequentialCommandGroup(
-    //     new AutoFire3D(m_robotDrive, m_photonvision, Toolkit.getFiducialID(AprilTags.AMP)),
-    //     Toolkit.sout("AMP init"),
-    //     new ParallelCommandGroup(
-    //       new RunArmClosedLoop(m_arm, ArmConstants.kBackAmpPos),
-    //       new AccelerateShooter(m_shooter, ShooterConstants.kAmpSpeed)),
-    //     Toolkit.sout("shoot init"),
-    //     new ParallelRaceGroup(
-    //       new WaitCommand(ShooterConstants.kLaunchTime),
-    //       new RunShooterEternal(m_shooter, ShooterConstants.kAmpSpeed, true),
-    //       new Feed(m_intake)
-    //     ),
-    //     Toolkit.sout("Amp end")
-    //   ));
-    // m_driverControllerX.autointake().whileTrue(intake);
 
     m_operatorController.start().onTrue(new InstantCommand(() -> override = true));
     m_operatorController.start().onFalse(new InstantCommand(() -> override = false));
@@ -437,10 +314,6 @@ public class RobotContainer {
     m_operatorController.start().and(m_operatorController.povDown()).whileTrue(new RunArmOpenLoop(m_arm, -ArmConstants.kManualSpeed));
     m_operatorController.start().and(m_operatorController.povRight()).whileTrue(new ForceFeed(m_intake, m_shooter));
     m_operatorController.start().and(m_operatorController.povLeft()).whileTrue(new ForceReverse(m_intake, m_shooter));
-    // m_operatorController.start().and(m_operatorController.rightBumper().whileTrue(new RunClimberDirectLaw(m_starboardClimber, true)));
-    // m_operatorController.start().and(m_operatorController.leftBumper().whileTrue(new RunClimberDirectLaw(m_portClimber, true)));
-    // m_operatorController.start().and(m_operatorController.rightTrigger().whileTrue(new RunClimberDirectLaw(m_starboardClimber, false)));
-    // m_operatorController.start().and(m_operatorController.leftTrigger().whileTrue(new RunClimberDirectLaw(m_portClimber, false)));
 
     m_operatorController.back().whileTrue(homeClimbers);
     m_operatorController.rightBumper().whileTrue(new RunClimberNormalLaw(m_starboardClimber, true));
