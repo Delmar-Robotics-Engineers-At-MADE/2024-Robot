@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -18,7 +17,6 @@ import frc.robot.Constants.LEDConstants;
 
 public class Blinkin extends SubsystemBase {
   private static Blinkin instance = null;
-
   public static Blinkin getInstance() {
     if (instance == null) instance = new Blinkin();
 
@@ -32,16 +30,13 @@ public class Blinkin extends SubsystemBase {
     two = new Spark(1);
   }
 
-  public Command setOne(double colour) {
-    return runOnce(()-> one.set(colour));
-  }
-
-  public Command setTwo(double colour) {
-    return runOnce(()-> two.set(colour));
+  public void setColour(double input) {
+    one.set(input);
+    two.set(input);
   }
 
   public Command set(double colour) {
-    return setOne(colour);
+    return runOnce(() -> setColour(colour));
   }
 
   public void setDefault() {
