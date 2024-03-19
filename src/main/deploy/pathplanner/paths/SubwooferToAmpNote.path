@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3144778607379546,
-        "y": 5.569743324916193
+        "x": 1.2323229944473133,
+        "y": 5.542358369484951
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6609802631068245,
-        "y": 5.5680997558356085
+        "x": 1.5788253968161832,
+        "y": 5.540714800404366
       },
       "isLocked": false,
       "linkedName": "MidSubwoofer"
@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.9,
+      "waypointRelativePos": 1.0,
       "rotationDegrees": 20.0,
       "rotateFast": false
     }
@@ -38,8 +38,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

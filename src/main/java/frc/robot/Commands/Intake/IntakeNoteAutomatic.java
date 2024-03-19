@@ -35,6 +35,7 @@ public class IntakeNoteAutomatic extends Command {
   public void execute() {
     if(intake.isNote()) {
       capture = true;
+      intake.hold(intake.getPosition()-0.5);
       System.out.println("¡CAPTURE!");
       /*blinkin.indCapture();*/
       end = true;

@@ -164,7 +164,7 @@ public final class Constants {
     public static final double kSubwooferSpeed = 1325;
 
     // init v should be 8.2 m/s
-    public static final double k3mSpeed = 1500;
+    public static final double k3mSpeed = 1395;
     public static final double kAngleSpeed = 1500;
 
     public static final double kCompenstion = 1.6;
@@ -217,17 +217,17 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int kLeftID = 6;
     public static final int kRightID = 7;
-    public static final double kStowPos = 0.18;
+    public static final double kStowPos = 0.26;
     public static final double kDefaultPos = 0.032;
     // intake go lower
-    public static final double kIntakePos = 0.027;
+    public static final double kIntakePos = 0.0232;
     public static final double kSubwooferPos = 0.037;
     public static final double kAnglePos = 0.06;
 
     public static final double kFrontAmpPos = 0.18;
 
     // 3m position
-    public static final double k3mPos = 0.06;
+    public static final double k3mPos = 0.064;
 
     public static final double kShuttlePos = 0.07;
     public static final double kBackAmpPos = 0.28;
@@ -249,7 +249,7 @@ public final class Constants {
     public static final double kManualSpeed = 0.3;
 
     public static final double kSVolts = 0;
-    public static final double kGVolts = 0.4;
+    public static final double kGVolts = 0.33;
     public static final double kVVoltSecondPerRad = 6.24;
     public static final double kAVoltSecondSquaredPerRad = 0.04;
   }

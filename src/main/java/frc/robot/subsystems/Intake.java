@@ -68,6 +68,7 @@ public class Intake extends SubsystemBase{
         }
         else {
             intake.set(0);
+            System.out.println("capture");
         }
     }
 
@@ -81,7 +82,7 @@ public class Intake extends SubsystemBase{
     // }
 
     public boolean isNote() {
-        return opticalOne.get() || opticalTwo.get();
+        return opticalTwo.get();
         //return opticalOne.get();
     }
 

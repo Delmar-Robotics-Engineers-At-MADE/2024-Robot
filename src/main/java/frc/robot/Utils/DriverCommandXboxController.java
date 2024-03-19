@@ -55,12 +55,12 @@ public class DriverCommandXboxController extends CommandXboxController {
 
     @Override
     public double getLeftTriggerAxis() {
-        return (1/super.getLeftTriggerAxis())/10;
+        return (1/super.getLeftTriggerAxis())/20;
     }
 
     @Override
     public double getRightTriggerAxis() {
-        return (1/super.getRightTriggerAxis())/10;
+        return (1/super.getRightTriggerAxis())/20;
     }
 
     @Override
@@ -73,11 +73,12 @@ public class DriverCommandXboxController extends CommandXboxController {
         return Toolkit.stickAugments(super.getLeftY(), kDeadband);
     }
 
-    public Trigger slow() {
-        return leftStick().or(rightStick());
+    public Trigger turbo() {
+        return leftStick();
     }
-    
 
-
+    public Trigger stow() {
+        return back();
+    }
 }
 

@@ -110,7 +110,7 @@ public final class Toolkit {
     }
 
     public static double manageTriggers(double left, double right, double deadband) {
-        return stickAugments(-left + right, deadband);
+        return stickAugments(left - right, deadband);
     }
 
     public static int convertCardinalDirections(int povAngleDeg) {
