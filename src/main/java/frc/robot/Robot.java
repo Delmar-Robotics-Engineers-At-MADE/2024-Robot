@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
     // UsbCamera camera = CameraServer.startAutomaticCapture();
     // Shuffleboard.getTab("match").add(camera);
     this.blinkin = Blinkin.getInstance();
+    Shuffleboard.getTab("match").addCamera("camera", "Microsoft_LifeCam_HD-3000", "https://photonvision.local:1181/");
   }
 
   /**

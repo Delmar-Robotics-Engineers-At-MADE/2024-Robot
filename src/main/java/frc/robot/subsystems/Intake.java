@@ -48,6 +48,10 @@ public class Intake extends SubsystemBase{
         intake.set(posPID.calculate(getPosition(), pos));
     }
 
+    public void halt() {
+        intake.set(velPID.calculate(getVelocity(), 0));
+    }
+
     public void runAtVelocity(double setpoint) {
         intake.set(velPID.calculate(getVelocity(), setpoint) + ff.calculate(setpoint));
     }
