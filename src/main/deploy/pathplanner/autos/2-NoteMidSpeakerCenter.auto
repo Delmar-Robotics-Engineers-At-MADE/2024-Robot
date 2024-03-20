@@ -16,18 +16,6 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "homePort"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "homeStarboard"
-                }
-              },
-              {
                 "type": "sequential",
                 "data": {
                   "commands": [
