@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase{
         opticalTwo = new DigitalInput(portSensorDIO);
         opticalOne = new DigitalInput(starboardSensorDIO);
 
-        intake.setSmartCurrentLimit(20);
+        intake.setSmartCurrentLimit(25);
         encoder = intake.getEncoder();
 
         velPID = new PIDController(IntakeConstants.kP, IntakeConstants.kI, IntakeConstants.kD);
@@ -49,7 +49,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void halt() {
-        intake.set(velPID.calculate(getVelocity(), 0));
+        intake.set(0);
     }
 
     public void runAtVelocity(double setpoint) {
@@ -116,7 +116,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void hiCurrent() {
-        intake.setSmartCurrentLimit(20);
+        intake.setSmartCurrentLimit(25);
     }
 
     public void loCurrent() {

@@ -230,7 +230,7 @@ public final class Constants {
     public static final double k3mPos = 0.064;
 
     public static final double kShuttlePos = 0.07;
-    public static final double kBackAmpPos = 0.28;
+    public static final double kBackAmpPos = 0.265;
     public static final double kUpperLimit = 0.35;
     public static final double kLowerLimit = 0.023;
     public static final double kOverrunLimit = 0;

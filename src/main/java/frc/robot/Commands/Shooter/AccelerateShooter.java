@@ -44,6 +44,7 @@ public class AccelerateShooter extends Command {
     }
     else {
       shooter.runAtSpeed(setpoint);
+      System.out.println(shooter.getAvgVelocity());
     }
   }
 

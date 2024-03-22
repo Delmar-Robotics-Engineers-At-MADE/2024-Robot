@@ -20,7 +20,7 @@ public class Feed extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //intake.hiCurrent();
+    intake.hiCurrent();
     System.out.println("feed init");
   }
 
@@ -28,7 +28,7 @@ public class Feed extends Command {
   @Override
   public void execute() {
     //intake.runAtVelocity(IntakeConstants.kFeedSpeed);
-    intake.runAtVelocity(IntakeConstants.kFeedSpeed);
+    intake.runOpenLoop(1);
   }
 
   // Called once the command ends or is interrupted.
